@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button class="show-done-button" (click)="modalDone()"></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="image-modal-wrapper">
+    <ion-slides #slides pager="true" [options]="slideOpts">
+      <ion-slide *ngFor="let item of images">
+        <img src="{{ item }}" alt="슬라이드 이미지" />
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>

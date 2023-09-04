@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>좋아요한 글</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list id="like-container">
+    <ion-item
+      (click)="goFeedDetail(item.postId)"
+      lines="full"
+      *ngFor="let item of likedPostList"
+    >
+      <span class="icon">
+        <svg width="14px" height="14px" viewBox="0 0 14 14">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-170.000000, -590.000000)">
+              <rect x="0" y="0" width="375" height="1233"></rect>
+              <g
+                id="icon/20/댓글-copy-2"
+                transform="translate(167.000000, 587.000000)"
+              >
+                <path
+                  d="M9.78104418,3.56898248 C10.1138456,3.46441904 10.4862975,3.47540183 10.8275663,3.62464382 C11.1616073,3.77072502 11.4109617,4.02606955 11.5439583,4.32946495 C11.6740032,4.62612684 11.6917894,4.96803848 11.5691708,5.29263776 L11.5691708,5.29263776 L10.4938957,8.14928437 L15.0016374,8.15021672 C15.4389151,8.1501799 15.8559148,8.33028742 16.1422944,8.64779809 C16.4199656,8.95565385 16.5462596,9.36371765 16.4846721,9.76666651 L16.4846721,9.76666651 L15.7917163,14.2852517 C15.7367631,14.6314038 15.5530288,14.9315893 15.2933959,15.1464536 C15.0268064,15.3670751 14.6803461,15.4982522 14.3082335,15.5 L14.3082335,15.5 L6.5,15.5 L6.5,7.92676291 L8.97683035,4.20819259 C9.15629989,3.89258288 9.44948539,3.67315548 9.78104418,3.56898248 Z"
+                  class="stroke-main"
+                  fill-rule="nonzero"
+                ></path>
+                <rect
+                  class="fill-main"
+                  x="3"
+                  y="6"
+                  width="4"
+                  height="11"
+                  rx="1"
+                ></rect>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </span>
+      <ion-label>
+        <p class="text row-ellipsis">{{item.postId.text}}</p>
+        <p class="date">{{item.dateLiked | date:'yyyy-MM-dd'}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

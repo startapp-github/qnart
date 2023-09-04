@@ -1,0 +1,120 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-button class="back" (click)="back()">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>주소록 정보 관리</ion-title>
+    <ion-button
+      *ngIf="user"
+      [disabled]="(user.recipient && !validation('recipient')) || !user.address || (user.deliveryPhone && !validation('deliveryPhone'))"
+      fill="default"
+      slot="end"
+      (click)="save()"
+      class="save"
+    >
+      저장
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="user">
+    <ion-item class="input-box">
+      <ion-label position="stacked">수령인</ion-label>
+      <ion-input
+        [(ngModel)]="user.recipient"
+        type="text"
+        placeholder="이름을 입력해주세요."
+        minlength="2"
+        maxlength="8"
+      ></ion-input>
+      <div *ngIf="user.recipient && !validation('recipient')" class="val">
+        2자 이상 입력해주세요.
+      </div>
+    </ion-item>
+
+    <ion-item class="input-box">
+      <ion-label position="stacked">주소</ion-label>
+      <div class="input-address">
+        <ion-item class="input-address-inner">
+          <ion-input [(ngModel)]="user.postCode" disabled></ion-input>
+          <ion-input [(ngModel)]="user.address" class="address-inner" disabled>
+          </ion-input>
+        </ion-item>
+
+        <div class="btn-address" (click)="openDaumPopup()">
+          <ion-button fill="default">
+            <span> 우편번호 검색 </span>
+          </ion-button>
+          <!-- <img src="assets/imgs/shop/next-icon3.png" alt="" /> -->
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </div>
+
+      <ion-input
+        class="addr2"
+        [(ngModel)]="user.addressDetail"
+        type="text"
+        placeholder="상세주소를 입력해주세요."
+      >
+      </ion-input>
+    </ion-item>
+
+    <ion-item class="input-box">
+      <ion-label position="stacked">배송 연락처</ion-label>
+      <ion-input
+        [(ngModel)]="user.deliveryPhone"
+        type="tel"
+        inputmode="numeric"
+        placeholder="하이픈(-)없이 입력해주세요."
+        minlength="10"
+        maxlength="11"
+      ></ion-input>
+      <div
+        *ngIf="user.deliveryPhone && !validation('deliveryPhone')"
+        class="val"
+      >
+        번호를 정확히 입력해주세요.
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<div
+  #daum_popup
+  class="daum"
+  style="
+    display: none;
+    padding-bottom: 3.5625rem;
+    position: fixed;
+    overflow: hidden;
+    z-index: 1;
+    -webkit-overflow-scrolling: touch;
+  "
+>
+  <div class="popup-top">
+    <p>주소 검색</p>
+    <ion-button (click)="closeDaumPopup()" fill="clear">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+  </div>
+</div>

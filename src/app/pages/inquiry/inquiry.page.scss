@@ -1,0 +1,106 @@
+#inquiry-container {
+    height: 100%;
+    background: #fff;
+    .list-none {
+        height: calc(100vh - 56px);
+    }
+    .inquiry-list {
+        height: fit-content;
+        background: #ededf2;
+        ion-item {
+            padding-bottom: 0.5rem;
+            background: #ededf2;
+            --background: #fff;
+            overflow: visible;
+            &::part(native) {
+                flex-direction: column;
+            }
+            .item-inner {
+                box-shadow: 0 2px 6px rgba(62, 61, 66, 0.3);
+                padding: 0 4.26666666667%;
+                width: 100%;
+            }
+            &.fin {
+                .quest {
+                    padding-bottom: 4.66472303207%;
+                    .badge {
+                        color: var(--ion-color-main);
+                        border-color: var(--ion-color-main);
+                    }
+                }
+                .answer {
+                    display: block;
+                    margin: 1rem;
+                    margin-top: 0;
+                    margin-left: 0;
+                    padding: 0.75rem;
+                    width: 100%;
+                    font-weight: 400;
+                    font-size: 1rem;
+                    line-height: 1.5rem;
+                    color: #161616;
+                    white-space: pre-line;
+                    word-break: break-all;
+                    background-color: #ededf2;
+                }
+            }
+            .quest {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 5.83090379009% 0;
+                width: 100%;
+                font-weight: 400;
+                font-size: 1rem;
+                line-height: 1.5rem;
+                ion-label {
+                    margin-right: 3.2%;
+                }
+                .date {
+                    margin-top: 1.16618075802%;
+                    font-weight: 400;
+                    font-size: 0.875rem;
+                    line-height: 1.25rem;
+                    color: #918f97;
+                }
+                .badge {
+                    padding: 0.125rem 0.5rem;
+                    font-weight: 600;
+                    font-size: 1rem;
+                    line-height: 1.5rem;
+                    color: #918f97;
+                    border: 1px solid #918f97;
+                }
+            }
+            .answer {
+                display: none;
+                margin: 1rem;
+                margin-top: 0;
+                padding: 0.75rem;
+                width: 100%;
+                font-weight: 400;
+                font-size: 1rem;
+                line-height: 1.5rem;
+                color: #161616;
+                white-space: pre-line;
+                word-break: break-all;
+                background-color: #ededf2;
+            }
+
+            .badge {
+            }
+        }
+    }
+}
+
+ion-fab-button {
+    position: fixed;
+    right: 16px;
+    bottom: 20px;
+    width: 3.75rem;
+    height: 3.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    --color: #fff;
+}

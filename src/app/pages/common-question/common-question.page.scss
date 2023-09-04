@@ -1,0 +1,50 @@
+ion-header {
+  ion-button {
+    height: 44px;
+  }
+}
+
+// 공지사항(notice), 자주묻는질문(common-question)
+ion-accordion-group {
+  ion-accordion {
+    //   &.mat-expansion-panel:first-of-type,
+    //   &.mat-expansion-panel:last-of-type {
+    //     border-bottom-right-radius: 0 !important;
+    //     border-bottom-left-radius: 0 !important;
+    //   }
+    //   &:not([class*="mat-elevation-z"]) {
+    //     border-bottom: 1px solid #d3d1d7;
+    //     box-shadow: unset;
+    //   }
+    ion-item[slot="header"] {
+      padding: 1.125rem 4.26666666667%;
+      min-height: 56px;
+      height: auto;
+      border-bottom: 1px solid #d3d1d7;
+      box-shadow: unset;
+      box-sizing: border-box;
+
+      ion-label {
+        font-size: 1rem;
+        line-height: 1.25rem;
+        white-space: pre-line;
+        word-break: break-all;
+        box-sizing: border-box;
+      }
+    }
+    div[slot="content"] {
+      padding: 0.75rem 4.26666666667%;
+      background-color: #f0f0f4;
+      font-weight: 400;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      color: #66656b;
+      white-space: pre-line;
+      word-break: break-all;
+      border-bottom: 1px solid #d3d1d7;
+    }
+  }
+  //   .mat-expansion-panel-spacing {
+  //     margin: 0;
+  //   }
+}

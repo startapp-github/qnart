@@ -1,0 +1,311 @@
+$gray: #595959;
+$main2: #333333;
+$main: #3f3f3f;
+ion-list {
+    padding-top: 1.0625rem;
+
+    .step {
+        display: block;
+        height: 0.875rem;
+        padding: 0.625rem 0;
+        background: url(../../../../assets/imgs/shop/step-2.png) no-repeat;
+        background-position: center;
+        background-size: 100%;
+        margin-bottom: 0.625rem;
+    }
+
+    .step-txt {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 1.875rem;
+        margin-right: -1.375rem;
+        margin-bottom: 2.3125rem;
+
+        span {
+            width: calc(25% - 1.5rem);
+            margin-right: 1.5rem;
+            display: block;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 500;
+            color: $gray;
+        }
+
+        .step-txt-ac {
+            font-weight: bold;
+            color: $main2;
+        }
+    }
+
+    h2 {
+        font-size: 1rem;
+        font-weight: 500;
+        color: $gray;
+        padding: 0 1rem 0.8125rem;
+    }
+
+    .all-checkbox {
+        font-size: 1rem;
+        font-weight: 500;
+        --color: #bbbbbb;
+        margin: 0 1rem;
+        padding-bottom: 0.875rem;
+        border-bottom: 1px solid #ddd;
+        ion-checkbox {
+            --border-radius: 2px;
+            --border-width: 1px;
+            --border-style: solid;
+            --border-color: transparent;
+            --background: center / 100% no-repeat url(../../../../assets/imgs/shop/check-off.png);
+            --background-checked: center / 100% no-repeat url(../../../../assets/imgs/shop/check-on-b.png);
+            --border-color-checked: transparent;
+            --checkmark-color: transparent;
+            --checkmark-width: 0;
+            --size: 1.5rem;
+            margin-right: 0.6875rem;
+        }
+    }
+
+    .item-wrap {
+        padding: 0 1rem;
+
+        .item-inner {
+            padding: 1.4375rem 0;
+            margin-bottom: 0.4375rem;
+            border-bottom: 1px solid #ddd;
+        }
+        ion-item {
+            align-items: flex-start;
+
+            ion-checkbox {
+                --border-radius: 2px;
+                --border-width: 1px;
+                --border-style: solid;
+                --border-color: transparent;
+                --background: center / 100% no-repeat url(../../../../assets/imgs/shop/check-off.png);
+                --background-checked: center / 100% no-repeat url(../../../../assets/imgs/shop/check-on-b.png);
+                --border-color-checked: transparent;
+                --checkmark-color: transparent;
+                --checkmark-width: 0;
+                --size: 1.5rem;
+                margin-right: 0.6875rem;
+            }
+
+            ion-thumbnail {
+                margin: 0;
+                width: 5.9375rem;
+                height: 5.9375rem;
+                margin-right: 0.8125rem;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            ion-label {
+                margin: 0;
+
+                h4 {
+                    margin: 0;
+                    margin-bottom: 1.25rem;
+                    font-weight: 500;
+                    color: $gray;
+                    white-space: normal;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    max-height: 3.5625rem;
+                    line-height: 1.1875rem;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .item-box {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    .item-info {
+                        display: flex;
+                        align-items: center;
+                        flex-wrap: wrap;
+
+                        font-size: 1rem;
+                        font-weight: 500;
+                        color: $main;
+
+                        h5 {
+                            margin: 0;
+                            display: flex;
+                            align-items: center;
+                            font-size: 1rem;
+                            font-weight: 500;
+                            color: $gray;
+                            line-height: 1.1875rem;
+                            margin-right: 0.625rem;
+                            white-space: pre-line;
+                        }
+
+                        .item-title {
+                            line-height: 1.1875rem;
+                            display: block;
+                            font-size: 1rem;
+                            font-weight: 500;
+                            color: $gray;
+
+                            // white-space: pre-line;
+                        }
+
+                        .number {
+                            margin-left: 0.625rem;
+                            font-size: 1rem;
+                            font-weight: 500;
+                            color: #333;
+                            background: #f0f0f0;
+                            border-radius: 4px;
+                            display: block;
+                            padding: 0 7px;
+                            line-height: 1.1875rem;
+                        }
+                    }
+
+                    h6 {
+                        font-size: 1rem;
+                        font-weight: 500;
+                        color: $main;
+
+                        strong {
+                            font-size: 1.125rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        .select-box {
+            margin-top: 1.25rem;
+            padding-left: 2rem;
+            ion-item {
+                border: 1px solid #ddd;
+                margin-bottom: 0.625rem;
+
+                ion-select {
+                    width: 100%;
+                    max-width: 100%;
+                    --padding-top: 0.6875rem;
+                    --padding-end: 0.5rem;
+                    --padding-bottom: 0.6875rem;
+                    --padding-start: 0.625rem;
+                    --placeholder-color: #bbbbbb;
+                    --placeholder-opacity: 1;
+                    color: $main;
+                    font-size: 1rem;
+                }
+                ion-select::part(icon) {
+                    color: transparent;
+                    opacity: 1;
+                    background: url(../../../../assets/imgs/shop/select2.png) no-repeat;
+                    background-size: cover;
+                    background-position: center;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+
+            ion-item:last-child {
+                margin: 0;
+            }
+        }
+    }
+    .info-txt {
+        display: flex;
+        align-items: flex-start;
+        padding: 0 1rem;
+
+        img {
+            width: 1.5rem;
+            height: 1.5rem;
+            display: block;
+            margin-right: 0.5rem;
+        }
+
+        span {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: $gray;
+        }
+    }
+}
+
+.footer-inner {
+    padding: 0.9375rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+
+    .button-block {
+        width: calc(50% - 0.3125rem);
+        height: 3.5rem;
+        --border-width: 1px;
+        --border-color: #1f1f1f;
+        --border-style: solid;
+        color: #1f1f1f;
+        font-weight: bold;
+        font-size: 1.125rem;
+        --border-radius: 5px;
+        border-radius: 5px;
+        --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .button-block:first-child {
+        --border-width: 1px;
+        --border-color: #dbdbdb;
+        --border-style: solid;
+        color: #333333;
+        opacity: 1;
+        --background: #fff;
+    }
+
+    .button-block.button-disabled {
+        --border-width: 1px;
+        --border-color: #dbdbdb;
+        --border-style: solid;
+        color: #dddddd;
+        opacity: 1;
+        --background: #fff;
+    }
+}
+
+@media screen and (max-width: 374px) {
+    ion-list {
+        .step-txt {
+            padding: 0 1.25rem;
+            margin-right: 0.625rem;
+
+            span {
+                width: calc(25% - 1.25rem);
+                margin-right: 1.25rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 330px) {
+    ion-list {
+        .step-txt {
+            padding: 0;
+            margin-right: 0;
+
+            span {
+                width: 25%;
+                margin-right: 0;
+                text-align: center;
+            }
+        }
+    }
+}

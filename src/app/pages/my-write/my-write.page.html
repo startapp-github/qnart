@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>내가 작성한 글</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list id="write-container">
+    <ion-item
+      (click)="goFeedDetail(item)"
+      lines="full"
+      *ngFor="let item of allContent"
+    >
+      <span class="icon">
+        <!-- 작성한 글 아이콘 -->
+        <svg
+          width="14px"
+          height="14px"
+          viewBox="0 0 14 14"
+          *ngIf="item.type === 'post'"
+        >
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g
+              transform="translate(-19.000000, -126.000000)"
+              class="stroke-main"
+            >
+              <g transform="translate(16.000000, 123.000000)">
+                <rect x="3.5" y="5.5" width="11" height="11" rx="2"></rect>
+                <rect
+                  class="fill-800"
+                  x="5.5"
+                  y="3.5"
+                  width="11"
+                  height="11"
+                  rx="2"
+                ></rect>
+                <rect x="8.5" y="9" width="5" height="0.1"></rect>
+                <rect x="8.5" y="11.5" width="3" height="0.1"></rect>
+                <rect x="8.5" y="6.5" width="5" height="0.1"></rect>
+              </g>
+            </g>
+          </g>
+        </svg>
+        <!-- 작성한 댓 아이콘 -->
+        <svg
+          width="14px"
+          height="14px"
+          viewBox="0 0 14 14"
+          *ngIf="item.type=='comment'"
+        >
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g
+              transform="translate(-19.000000, -243.000000)"
+              class="stroke-main"
+            >
+              <g transform="translate(16.000000, 240.000000)">
+                <path
+                  d="M10.3761535,3.49999098 C12.0918843,3.58748233 13.5692708,4.23364123 14.6446236,5.24573819 C15.7359422,6.27286183 16.410597,7.67525541 16.5000187,9.23691906 C16.5009588,10.5481745 16.2836815,11.4899313 15.8527267,12.3431443 C15.3354253,13.378195 14.5479753,14.2227409 13.6005704,14.8086361 C12.6531654,15.3945313 11.5458054,15.7217757 10.3875736,15.7222252 C9.37154168,15.7248742 8.37024058,15.4702128 7.47748259,14.9804595 L7.47748259,14.9804595 L3.79056942,16.2094306 L5.01954039,12.5225177 C4.5297872,11.6297536 4.27512566,10.6285382 4.27777651,9.61131628 C4.27822426,8.45419465 4.6054687,7.34683461 5.19136389,6.39942963 C5.77725907,5.45202465 6.62180499,4.66457474 7.658753,4.14632007 C8.50131392,3.72074057 9.432124,3.49936216 10.3761535,3.49999098 Z"
+                ></path>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </span>
+      <ion-label>
+        <p class="text row-ellipsis">{{item.text}}</p>
+        <p class="desc" *ngIf="item.type=='post'">
+          회원님이 게시물을 등록했습니다.
+        </p>
+        <p class="desc" *ngIf="item.type=='comment'">
+          회원님이 {{item.postCreatedBy.nickName}}님의 게시물에 댓글을
+          남겼습니다.
+        </p>
+        <p class="date">{{item.dateCreated | date:'yyyy.MM.dd'}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="findNext($event)">
+    <ion-infinite-scroll-content> </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

@@ -1,0 +1,151 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-button class="back" (click)="back()">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>교환, 반품 신청</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="cart">
+    <span class="step"></span>
+    <div class="step-txt">
+      <span class="step-txt-ac"> 방법 선택 </span>
+
+      <span class="step-txt-ac"> 상품 선택 </span>
+
+      <span> 사유 작성 </span>
+
+      <span> 신청 완료 </span>
+    </div>
+
+    <!-- <h2>상품을 선택해주세요.</h2>
+
+    <ion-item class="all-checkbox">
+      <ion-checkbox
+        slot="start"
+        (ionChange)="allCheck(true)"
+        [(ngModel)]="allChecked"
+      ></ion-checkbox>
+      전체선택
+    </ion-item> -->
+
+    <div class="item-wrap">
+      <div class="item-inner">
+        <ion-item>
+          <!-- <ion-checkbox
+            *ngIf="cart.isDisabled"
+            slot="start"
+            [disabled]="cart.isDisabled"
+            (click)="checkDisabeld(cart.isDisabled)"
+          ></ion-checkbox>
+          <ion-checkbox
+            *ngIf="!cart.isDisabled"
+            slot="start"
+            (ionChange)="allCheck(false)"
+            [(ngModel)]="cart.isChecked"
+          ></ion-checkbox> -->
+          <ion-thumbnail slot="start">
+            <img [src]="cart.productInfo.images[0]" />
+          </ion-thumbnail>
+
+          <ion-label>
+            <h4 *ngIf="method == 'change' ">
+              {{cart.productInfo.productName}}&nbsp;<ng-container
+                *ngFor="let option of cart.changeOptions; last as isLast"
+              >
+                {{option.value}}<ng-container *ngIf="!isLast"
+                  >,&nbsp;</ng-container
+                >
+              </ng-container>
+            </h4>
+            <h4 *ngIf="method !== 'change'">
+              {{cart.productInfo.productName}}&nbsp;<ng-container
+                *ngFor="let option of cart.options; last as isLast"
+              >
+                {{option.value}}<ng-container *ngIf="!isLast"
+                  >,&nbsp;</ng-container
+                >
+              </ng-container>
+            </h4>
+
+            <div class="item-box">
+              <div class="item-info">
+                X
+                <span class="number">{{cart.count}}</span>
+              </div>
+
+              <h6>
+                <strong>
+                  {{cart.productInfo.discountPrice?(cart.productInfo.discountPrice|number):(cart.productInfo.price|number)}}
+                </strong>
+                원
+              </h6>
+            </div>
+          </ion-label>
+        </ion-item>
+
+        <!-- 
+        교환시 보여주기
+         -->
+        <div class="select-box" *ngIf="method == 'change'">
+          <ion-item
+            *ngFor="let options of cart.productId.options; let i = index"
+          >
+            <ion-select
+              [interfaceOptions]="select"
+              placeholder="옵션 선택"
+              okText="확인"
+              cancelText="닫기"
+              [(ngModel)]="cart.options[i]"
+            >
+              <ion-label>{{options.title}}</ion-label>
+
+              <ion-select-option
+                *ngFor="let optionItem of options.values"
+                [value]="{title:options.title, value:optionItem}"
+                >{{optionItem}}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <div class="footer-inner" *ngIf="cart">
+    <ion-button expand="block" fill="default" (click)="gomethod()">
+      이전
+    </ion-button>
+    <ion-button
+      expand="block"
+      fill="default"
+      (click)="goreason()"
+      [disabled]="cart.productId?.options?.length !== checkCartOption()"
+    >
+      다음
+    </ion-button>
+  </div>
+</ion-footer>

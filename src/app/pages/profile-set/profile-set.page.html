@@ -1,0 +1,139 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>프로필 관리</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        class="suc"
+        [disabled]="!nickNameAvailable"
+        (click)="passwordChangeBtn()"
+        >완료</ion-button
+      >
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content scrollY="false">
+  <div id="profile-set-container" *ngIf="userData">
+    <ion-list class="input-wrapper">
+      <ion-item class="margin">
+        <ion-label>이메일 주소</ion-label>
+        <ion-input
+          class="email-input"
+          inputmode="email"
+          type="email"
+          readonly="true"
+          [(ngModel)]="userData.email"
+        ></ion-input>
+      </ion-item>
+      <form [formGroup]="nickNameForm">
+        <ion-item class="margin">
+          <ion-label>닉네임</ion-label>
+          <div class="flex-layout">
+            <ion-input
+              inputmode="text"
+              type="text"
+              minlength="2"
+              maxlength="8"
+              formControlName="nickName"
+              (ionChange)="nickNameAvailable = false"
+              placeholder="닉네임을 입력해 주세요."
+            ></ion-input>
+
+            <ion-button
+              class="db-btn"
+              [disabled]="!nickNameForm.controls.nickName.valid &&
+  nickNameForm.controls.nickName.dirty"
+              (click)="checkNickname()"
+              >중복확인</ion-button
+            >
+          </div>
+          <p
+            class="val"
+            *ngIf="nickNameForm.controls.nickName.touched && !nickNameForm.controls.nickName.valid &&
+        nickNameForm.controls.nickName.dirty"
+          >
+            2자 이상 8자 이내 한글, 영어, 숫자로 입력해 주세요.
+          </p>
+        </ion-item>
+      </form>
+      <ion-item>
+        <ion-label>프로필 사진 <span>(선택)</span></ion-label>
+        <!-- 프로필사진 없는 경우 -->
+        <!-- <ion-avatar (click)="picActionsheet()">
+          <img src="assets/imgs/icon-profile-empty.png" alt="" />
+        </ion-avatar> -->
+        <!-- 프로필사진 있는 경우 -->
+        <ion-avatar class="profile" (click)="picActionsheet()">
+          <img
+            src="{{ uploadImage ? uploadImage : userData.profileImage }}"
+            alt=""
+          />
+        </ion-avatar>
+      </ion-item>
+    </ion-list>
+
+    <ion-list
+      class="address-info-wrap"
+      *ngIf="dataService.type.includes('mall')"
+    >
+      <div class="title">
+        <h2>주소록 정보</h2>
+
+        <ion-button fill="default" (click)="goAddress()"> 수정 </ion-button>
+      </div>
+
+      <div *ngIf="userData" class="cont-wrap">
+        <div>
+          <span> 수령인 </span>
+
+          <h3 class="none-info">
+            {{ userData.recipient ? userData.recipient : '미지정' }}
+          </h3>
+        </div>
+
+        <div>
+          <span> 주소 </span>
+          <h3 class="none-info">
+            {{ userData.address ? userData.address : '미지정' }}
+          </h3>
+          <!-- <h3>
+            [01126] 서울특별시 성동구 서울숲SK V1 타워
+          </h3> -->
+        </div>
+
+        <div>
+          <span> 배송 연락처 </span>
+          <h3 class="none-info">
+            {{ userData.deliveryPhone ? userData.deliveryPhone : '미지정' }}
+          </h3>
+          <!-- <h3>
+            (010)292-0020
+          </h3> -->
+        </div>
+      </div>
+    </ion-list>
+  </div>
+</ion-content>

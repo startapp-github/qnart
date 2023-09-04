@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar class="light">
+    <ion-button slot="end" fill="clear" (click)="goHome()">
+      <img src="assets/imgs/shop/nav-close.png" alt="" />
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="order && user">
+    <div class="cont-wrap">
+      <div class="top">
+        <img src="assets/imgs/shop/smile.png" alt="" />
+
+        <span> 감사합니다! </span>
+        <span> 구매가 완료되었습니다. </span>
+      </div>
+
+      <!--2021.03.02-->
+      <span class="data"> {{ order.dateCreated | date:'yyyy.MM.dd' }} </span>
+    </div>
+
+    <div class="cont-wrap item-wrap">
+      <ion-item *ngFor="let item of order.cartIds">
+        <ion-thumbnail slot="start">
+          <img [src]="item.productInfo.images[0]" />
+        </ion-thumbnail>
+
+        <ion-label>
+          <h4>{{ item.productInfo.productName }}</h4>
+
+          <div class="item-box">
+            <div class="item-info">
+              <h5 *ngIf="item.options && item.options.length>0">
+                <span
+                  *ngFor="let option of item.options; last as isLast"
+                  class="item-title"
+                >
+                  {{ option.value }}
+                  <ng-container *ngIf="!isLast">,&nbsp;</ng-container></span
+                >
+              </h5>
+              X
+              <span class="number">{{ item.count }}</span>
+            </div>
+
+            <h6>
+              <strong
+                >{{ item.productInfo.discountPrice?
+                (item.productInfo.discountPrice|number:'') :
+                (item.productInfo.price | number:'') }}
+              </strong>
+              원
+            </h6>
+          </div>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <div class="cont-wrap info-Price">
+      <div>
+        <span> 상품 금액 </span>
+
+        <span> {{ totalPrice()|number:'' }}원 </span>
+      </div>
+
+      <div class="deliveryCharge">
+        <span> 배송비 </span>
+
+        <span> {{ deliveryCharge|number:'' }}원 </span>
+      </div>
+
+      <div class="Final">
+        <strong> 최종 결제 금액 </strong>
+
+        <span> {{ (totalPrice()+deliveryCharge)|number:'' }}원 </span>
+      </div>
+    </div>
+
+    <div class="top-box">
+      <h2>배송지</h2>
+
+      <div class="address">
+        <span class="address-detail">
+          {{ user.address }}&nbsp;{{ user.addressDetail }}
+        </span>
+
+        <span class="name"> {{ user.recipient }} </span>
+
+        <span class="number"> {{ user.deliveryPhone }} </span>
+      </div>
+    </div>
+
+    <ion-button fill="default" expand="block" (click)="goOrderList()">
+      주문 목록 보기
+    </ion-button>
+  </ion-list>
+</ion-content>

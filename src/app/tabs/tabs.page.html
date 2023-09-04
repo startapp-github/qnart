@@ -1,0 +1,209 @@
+<ion-tabs #tabs (ionTabsWillChange)="tabChange(tabs)">
+  <ion-fab-button
+    *ngIf="(!dataService.type.includes('chat') && dataService.type.includes('mall')) || (dataService.type.includes('chat') && !dataService.type.includes('mall'))"
+    class="write-btn"
+    (click)="feedWrite()"
+  >
+    <svg width="18px" height="18px" viewBox="0 0 18 18">
+      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-178.000000, 6.000000)" class="stroke-800">
+          <g transform="translate(175.000000, -9.000000)">
+            <path
+              d="M17.1779033,3.50444283 C18.0423268,3.54771791 18.8241386,3.90459437 19.4118469,4.46365426 C19.9884531,5.01215323 20.378373,5.75521191 20.4760022,6.58767233 L20.4760022,6.58767233 L7.77310632,17.5354768 L3.63737744,18.3626226 L4.45609136,14.2690529 Z"
+            ></path>
+            <rect x="3.5" y="20.5" width="17" height="1"></rect>
+          </g>
+        </g>
+      </g>
+    </svg>
+  </ion-fab-button>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" class="home">
+      <svg width="19px" height="18px" viewBox="0 0 19 18" class="on">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g transform="translate(-28.000000, -1609.000000)" class="fill-main">
+            <g transform="translate(-0.500000, 1576.000000)">
+              <g transform="translate(4.000000, 33.000000)">
+                <g transform="translate(25.000000, 0.000000)">
+                  <path
+                    d="M9,0 L18,7 L18,9 L16,9 L16,18 L2,18 L2,9 L0,9 L0,7 L9,0 Z M11,12.0031549 L7,12.0031549 L7,18 L11,18 L11,12.0031549 Z"
+                    id="Combined-Shape"
+                  ></path>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+      <svg width="18px" height="18px" viewBox="0 0 18 18" class="off">
+        <g
+          id="ui"
+          stroke="none"
+          stroke-width="1"
+          fill="none"
+          fill-rule="evenodd"
+        >
+          <g transform="translate(-29.000000, -765.000000)" class="stroke-300">
+            <g transform="translate(0.000000, 732.000000)">
+              <g transform="translate(4.000000, 30.000000)">
+                <g transform="translate(22.000000, 0.000000)">
+                  <path
+                    d="M12,3.63343079 L20.5,10.2445419 L20.5,11.5 L18.5,11.5 L18.5,20.5 L14.499,20.5 L14.5,14.5031549 L9.5,14.5031549 L9.5,20.5 L5.5,20.5 L5.5,11.5 L3.5,11.5 L3.5,10.2445419 L12,3.63343079 Z"
+                    id="Combined-Shape"
+                  ></path>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+      <ion-label>홈</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button
+      tab="chatting"
+      class="chat"
+      *ngIf="dataService.type.includes('chat')"
+    >
+      <svg width="21px" height="17px" viewBox="0 0 21 17" class="off">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g transform="translate(-102.000000, -1610.000000)">
+            <g transform="translate(-0.500000, 1576.000000)">
+              <g transform="translate(79.000000, 34.000000)">
+                <g transform="translate(24.000000, 0.000000)">
+                  <path
+                    d="M10,0.5 C12.6379472,0.5 15.0290129,1.34981427 16.7587203,2.73358016 C18.4434633,4.08137453 19.5,5.93903754 19.5,8 C19.5,10.0609625 18.4434633,11.9186255 16.7587203,13.2664198 C15.0290129,14.6501857 12.6379472,15.5 10,15.5 C8.79104745,15.5 7.63426981,15.3213969 6.56891773,14.9947689 C5.15158626,15.3468868 3.78761237,15.5214421 2.18215803,15.5253817 L2.18215803,15.5253817 L3.93747197,13.7709848 C1.85253257,12.4033875 0.5,10.3322146 0.5,8 C0.5,5.93903754 1.55653675,4.08137453 3.24127971,2.73358016 C4.97098707,1.34981427 7.36205276,0.5 10,0.5 Z"
+                    class="stroke-300"
+                  ></path>
+                  <circle class="fill-300" cx="10" cy="8" r="1"></circle>
+                  <circle class="fill-300" cx="14" cy="8" r="1"></circle>
+                  <circle class="fill-300" cx="6" cy="8" r="1"></circle>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+
+      <svg width="20px" height="17px" viewBox="0 0 20 17" class="on">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g
+            transform="translate(-103.000000, -766.000000)"
+            fill="var(--ion-color-main)"
+          >
+            <g transform="translate(0.000000, 732.000000)">
+              <g transform="translate(79.000000, 34.000000)">
+                <g transform="translate(24.000000, 0.000000)">
+                  <path
+                    d="M10,0 C15.5228475,0 20,3.581722 20,8 C20,12.418278 15.5228475,16 10,16 C8.73936639,16 7.53321524,15.8133863 6.42235557,15.4728061 C4.99500978,15.9198835 3.18745623,16.0957069 1,16 L3.16299334,13.8381367 C1.21629254,12.3784937 0,10.302879 0,8 C0,3.581722 4.4771525,0 10,0 Z M10,7 C9.44771525,7 9,7.44771525 9,8 C9,8.55228475 9.44771525,9 10,9 C10.5522847,9 11,8.55228475 11,8 C11,7.44771525 10.5522847,7 10,7 Z M14,7 C13.4477153,7 13,7.44771525 13,8 C13,8.55228475 13.4477153,9 14,9 C14.5522847,9 15,8.55228475 15,8 C15,7.44771525 14.5522847,7 14,7 Z M6,7 C5.44771525,7 5,7.44771525 5,8 C5,8.55228475 5.44771525,9 6,9 C6.55228475,9 7,8.55228475 7,8 C7,7.44771525 6.55228475,7 6,7 Z"
+                  ></path>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+      <ion-label>채팅</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button
+      tab="mall"
+      class="mall"
+      *ngIf="dataService.type.includes('mall')"
+    >
+      <ion-icon class="off" name="gift-outline"></ion-icon>
+      <ion-icon class="on" name="gift"></ion-icon>
+      <ion-label>쇼핑몰</ion-label>
+    </ion-tab-button>
+    <ion-tab-button
+      class="write"
+      *ngIf="(!dataService.type.includes('chat') && dataService.type.includes('mall')) || (dataService.type.includes('chat') && !dataService.type.includes('mall'))"
+    >
+      <ion-icon></ion-icon>
+      <ion-label>게시물 작성</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="push" class="push">
+      <svg width="16px" height="20px" viewBox="0 0 16 20" class="off">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g transform="translate(-255.000000, -764.000000)">
+            <g transform="translate(0.000000, 732.000000)">
+              <g transform="translate(229.000000, 30.000000)">
+                <g transform="translate(22.000000, 0.000000)">
+                  <path
+                    d="M12,2.5 L12.1543532,2.50783562 C12.4080844,2.53374343 12.6431217,2.622839 12.8433622,2.75930446 C13.091039,2.92809826 13.2857332,3.16898821 13.3968633,3.4519304 C15.0720443,4.14680424 16.2453523,5.00258724 17.0909331,6.14785767 C17.9256289,7.2783854 18.441166,8.69118122 18.4952678,10.230278 L18.4952678,10.230278 L18.5000226,15.0230125 C18.5680216,15.7864002 18.8384473,16.9457459 19.3177874,18.5 L19.3177874,18.5 L4.68221258,18.5 C5.16160583,16.9455738 5.43203827,15.7861434 5.5,15.0227589 L5.5,15.0227589 L5.5,10.5074045 C5.54970545,8.85254333 6.05719692,7.37755427 6.88594513,6.21110861 C7.73308788,5.01877301 8.91561025,4.14999454 10.2795449,3.74778495 C10.7144784,3.16845903 10.9091053,2.92782739 11.1567058,2.75917647 C11.3969595,2.59552976 11.6873407,2.5 12,2.5 L12,2.5 Z"
+                    class="stroke-300"
+                  ></path>
+                  <rect
+                    class="fill-300"
+                    x="10"
+                    y="21"
+                    width="4"
+                    height="1"
+                    rx="0.5"
+                  ></rect>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+
+      <svg width="16px" height="20px" viewBox="0 0 16 20" class="on">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g
+            transform="translate(-255.000000, -764.000000)"
+            fill="var(--ion-color-main)"
+          >
+            <g transform="translate(0.000000, 732.000000)">
+              <g transform="translate(229.000000, 30.000000)">
+                <g transform="translate(22.000000, 0.000000)">
+                  <path
+                    d="M12,2 C12.8466322,2 13.5703965,2.5260601 13.8622535,3.26914091 C16.8240968,4.14172858 19,7.04860925 19,10.5 L19,10.5 L19,15 C19.0790885,15.8458073 19.4124218,17.1791406 20,19 L4,19 C4.58757819,17.1791406 4.92091152,15.8458073 5,15 L5,10.5 L5.00374159,10.2524336 C5.10490814,6.91023473 7.2470044,4.12076159 10.1381213,3.26820248 C10.4296035,2.5260601 11.1533678,2 12,2 Z"
+                  ></path>
+                  <rect x="10" y="21" width="4" height="1" rx="0.5"></rect>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+      <ion-label>알림</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="mypage" class="my">
+      <svg width="16px" height="20px" viewBox="0 0 16 20" class="off">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g transform="translate(-330.000000, -764.000000)" class="stroke-300">
+            <g transform="translate(0.000000, 732.000000)">
+              <g transform="translate(304.000000, 30.000000)">
+                <g transform="translate(22.000000, 0.000000)">
+                  <path
+                    d="M12,2.5 C13.2426407,2.5 14.3676407,3.00367966 15.1819805,3.81801948 C15.9963203,4.63235931 16.5,5.75735931 16.5,7 C16.5,8.38729779 15.8721793,9.6279177 14.8852923,10.4534301 C14.675374,10.6290228 14.4498401,10.785307 14.2119626,10.9203256 C14.4718954,11.024607 14.7237395,11.1430767 14.9662389,11.2756586 C17.4248474,12.6198553 19.1807376,15.5556389 19.4608084,19.023843 L19.4608084,19.023843 L19.4933798,21.5 L4.5,21.5 L4.5,19.0227195 C4.81895847,15.555352 6.57511414,12.6197992 9.03432292,11.2738254 C9.2772482,11.1408676 9.52954096,11.0220484 9.78944305,10.9174504 C9.55085081,10.7829031 9.32491024,10.6268442 9.11465295,10.4513567 C8.12758838,9.62752076 7.5,8.38704587 7.5,7 C7.5,5.75735931 8.00367966,4.63235931 8.81801948,3.81801948 C9.63235931,3.00367966 10.7573593,2.5 12,2.5 Z"
+                  ></path>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+
+      <svg width="16px" height="20px" viewBox="0 0 16 20" class="on">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g transform="translate(-330.000000, -764.000000)">
+            <rect class="fill-800" x="0" y="0" width="375" height="812"></rect>
+            <g transform="translate(0.000000, 732.000000)" class="fill-main">
+              <g transform="translate(304.000000, 30.000000)">
+                <g transform="translate(22.000000, 0.000000)">
+                  <path
+                    d="M12,2 C14.7614237,2 17,4.23857625 17,7 C17,8.54132435 16.3025809,9.91975774 15.2060964,10.8369463 C17.7958033,12.2528187 19.6696201,15.335703 19.9605457,19.0005775 L20,19 L20,22 L4,22 L4,19 L4.03945434,19.0005775 C4.33037993,15.335703 6.20419666,12.2528187 8.79426658,10.835222 C7.69741914,9.91975774 7,8.54132435 7,7 C7,4.23857625 9.23857625,2 12,2 Z"
+                  ></path>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+      <ion-label>마이페이지</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

@@ -1,0 +1,41 @@
+
+:: 빌드 주의사항 :: 
+
+> ANDROID(안드로이드)
+1. release 뽑을 때 defaultTargetSdkVersion 31으로 맞춰주세요
+
+
+* 안드로이드 플랫폼 삭제한 경우 AndroidManifest.xml에 다시 추가해주어야 합니다.
+<!-- 아임포트 액티비티 추가 -->
+<activity
+     android:name="kr.iamport.capacitor.IamportActivity"
+     android:label="IamportActivity"
+>
+</activity>
+
+
+
+
+> IOS(애플)
+1. 영어로 빌드하기 -> 
+2. info.plist 잘 확인하기
+
+
+
+
+
+:: 개발 주의사항 :: 
+
+// 이외 빌드시 추가 필요사항
+// ex) cordova-plugin-test 지우고 재 설치 후 빌드하기.
+
+
+
+
+
+:: 프로젝트 버전 :: 
+
+> cordova : cordova10
+> cordova-android: cordova-android@9
+> cordova-ios:
+

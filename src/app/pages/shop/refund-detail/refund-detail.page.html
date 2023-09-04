@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"
+        text=""
+        icon="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>취소·교환·반품</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="order">
+    <div class="cont-title cont-wrap">
+      <span class="refund-info error">
+        {{order.status}}
+        <!-- 반품 완료 / 반품 대기 / 교환 완료 / 교환 대기 -->
+      </span>
+
+      <span class="date"> {{order.dateCreated | date:'yyyy.MM.dd'}} </span>
+    </div>
+
+    <div class="cont-wrap cont-item">
+      <ion-item *ngFor="let cart of order.cartIds">
+        <ion-thumbnail slot="start">
+          <img [src]="cart.productInfo.images[0] | thumbs" />
+        </ion-thumbnail>
+
+        <ion-label>
+          <h4>
+            {{cart.productInfo.productName}}&nbsp;<ng-container *ngFor="let option of cart.options; last as isLast">
+              {{option.value}}<ng-container *ngIf="!isLast">,&nbsp;</ng-container>
+            </ng-container>
+          </h4>
+
+          <div class="item-box">
+            <div class="item-info">
+              X
+              <span class="number">{{cart.count}}</span>
+            </div>
+
+            <h6>
+              <strong>
+                {{cart.productInfo.discountPrice?(cart.productInfo.discountPrice|number) :
+                (cart.productInfo.price|number)}}
+              </strong>
+              원
+            </h6>
+          </div>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <div class="cont-wrap info-Price">
+      <div>
+        <span> 상품 금액 </span>
+
+        <span> {{(order.totalPrice - deliveryCharge)|number}}원 </span>
+      </div>
+
+      <div class="deliveryCharge">
+        <span> 배송비 </span>
+
+        <span> {{deliveryCharge|number}}원 </span>
+      </div>
+
+      <div class="Final">
+        <strong> 최종 결제 금액 </strong>
+
+        <span> {{order.totalPrice |number}}원 </span>
+      </div>
+    </div>
+
+    <!-- <div class="cancel-reson" *ngIf="order.status !=='취소대기' && order.status !=='취소완료'">
+      <h2>취소 사유</h2>
+      <p>핑크에이드,XL</p>
+    </div> -->
+  </ion-list>
+</ion-content>

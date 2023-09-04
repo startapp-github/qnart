@@ -1,0 +1,133 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="cancel-btn" (click)="modalCancel()">취소</ion-button>
+    </ion-buttons>
+    <ion-title>게시물 {{modify?'수정':'작성'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        class="up-btn"
+        (click)="submit()"
+        [disabled]="resultSelect === '게시판 선택' || !newPost.title || !newPost.text"
+      >
+        {{modify?'저장':'완료'}}</ion-button
+      >
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="feed-write-container">
+    <div class="layout">
+      <div class="picker-wrapper">
+        <ion-button class="picker-btn" (click)="openPicker()">
+          <span class="result-text">{{resultSelect}}</span>
+          <span class="icon"></span
+        ></ion-button>
+      </div>
+
+      <div class="input-wrapper">
+        <ion-item class="title-item">
+          <ion-textarea
+            class="title-textarea"
+            inputmode="text"
+            type="text"
+            [(ngModel)]="newPost.title"
+            minlength="1"
+            maxlength="60"
+            rows="1"
+            autoGrow
+            placeholder="제목을 입력해 주세요."
+          ></ion-textarea>
+        </ion-item>
+
+        <ion-item class="content-item" (click)="setfocus(myTextarea)">
+          <ion-textarea
+            class="content-textarea"
+            #myTextarea
+            inputmode="text"
+            type="text"
+            [(ngModel)]="newPost.text"
+            minlength="1"
+            autoGrow
+            rows="8"
+            next
+            enterkeyhint="done"
+            placeholder="내용을 입력해 주세요."
+          >
+          </ion-textarea>
+        </ion-item>
+      </div>
+    </div>
+
+    <!-- 사진이 2장 이하인 경우 -->
+    <div
+      class="images-wrapper"
+      *ngIf="uploadingImage.length + newPost.images.length < 3"
+    >
+      <div
+        class="image-item"
+        *ngFor="let item of newPost.images; let i = index"
+      >
+        <ion-button
+          class="del-btn"
+          (click)="deleteImage('image',i)"
+        ></ion-button>
+        <img src="{{item}}" alt="" />
+      </div>
+
+      <div
+        class="image-item"
+        *ngFor="let item of uploadingImage; let i = index"
+      >
+        <ion-button
+          class="del-btn"
+          (click)="deleteImage('newImage',i)"
+        ></ion-button>
+        <img src="{{item}}" alt="" />
+      </div>
+    </div>
+    <!-- 사진이 3장 이상인 경우 -->
+    <ion-slides
+      #slides2
+      class="slides-wrapper"
+      [options]="slideOpts2"
+      *ngIf="uploadingImage.length + newPost.images.length > 2"
+    >
+      <ion-slide *ngFor="let item of newPost.images; let i = index">
+        <ion-button
+          class="del-btn"
+          (click)="deleteImage('image', i)"
+        ></ion-button>
+        <img src="{{item}}" alt="" />
+      </ion-slide>
+      <ion-slide *ngFor="let item of uploadingImage; let i = index">
+        <ion-button
+          class="del-btn"
+          (click)="deleteImage('newImage',i)"
+        ></ion-button>
+        <img src="{{item}}" alt="" />
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div>
+      <ion-buttons class="button-wrapper">
+        <ion-button
+          class="camera-btn"
+          fill="default"
+          (click)="imageFromCamera()"
+        ></ion-button>
+        <ion-button
+          class="galley-btn"
+          fill="default"
+          (click)="imageFromGalley()"
+        ></ion-button>
+      </ion-buttons>
+      <ion-label class="txt">사진은 최대 10장까지 업로드 가능합니다.</ion-label>
+    </div>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,164 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/tabs/mypage" text="" icon="/">
+      </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+
+    <ion-title>주문 목록</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content #content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <ng-container *ngIf="order$|async as order;">
+    <p class="cont-none" *ngIf="order?.length === 0">목록이 없습니다.</p>
+
+    <div class="order-box" *ngFor="let item of order">
+      <ng-container
+        *ngFor="let cart of item.cartIds; first as isFirst; last as isLast;"
+      >
+        <div class="top" *ngIf="isFirst">
+          <h2>{{item.dateCreated| date:'yyyy.MM.dd'}}</h2>
+
+          <ion-button fill="default" (click)="goDetail(item)">
+            주문 상세 <img src="assets/imgs/shop/next.png" alt="" />
+          </ion-button>
+        </div>
+
+        <div class="item-inner">
+          <span
+            *ngIf="item.isFirst && isFirst"
+            [ngClass]="{'Preparing': item.shipmentStatus !== '배송완료' || item.shipmentStatus !== '취소완료' , 'Completion': item.shipmentStatus === '배송완료'  || item.shipmentStatus === '취소완료' }"
+          >
+            {{item.status}}
+          </span>
+          <span
+            *ngIf="!item.isFirst && cart.productStatus"
+            [ngClass]="{'Preparing': !cart.doneSwitch, 'Completion': cart.doneSwitch}"
+          >
+            {{cart.productStatus}}{{cart.doneSwitch? '완료' : '대기'}}
+          </span>
+          <span
+            *ngIf="!item.isFirst && !cart.productStatus"
+            [ngClass]="{'Preparing': item.shipmentStatus !== '배송완료' || item.shipmentStatus !== '취소완료' , 'Completion': item.shipmentStatus === '배송완료'  || item.shipmentStatus === '취소완료' }"
+          >
+            {{item.status}}
+          </span>
+
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <img [src]="cart.productInfo.images[0]" />
+            </ion-thumbnail>
+
+            <ion-label>
+              <h4>
+                {{cart.productInfo.productName}}<ng-container
+                  *ngIf="cart.options && cart.options.length>0"
+                  ><br /><span
+                    *ngFor="let option of cart.options; last as isLast"
+                    >{{option.value}}<ng-container *ngIf="!isLast">
+                      ,&nbsp;</ng-container
+                    ></span
+                  >
+                </ng-container>
+              </h4>
+
+              <div class="item-box">
+                <div class="item-info">
+                  X
+                  <span class="number">{{cart.count}}</span>
+                </div>
+
+                <h6>
+                  <strong>
+                    {{cart.productInfo.discountPrice ?
+                    (cart.productInfo.discountPrice | number:'') :
+                    (cart.productInfo.price | number:'') }}
+                  </strong>
+                  원
+                </h6>
+              </div>
+            </ion-label>
+          </ion-item>
+
+          <!-- 
+        배송 준비중일 때 보이는 버튼
+       -->
+
+          <ion-button
+            *ngIf="item.status === '배송준비중' && isLast"
+            fill="default"
+            expaned="block"
+            class="order-cancel"
+            (click)="orderCancel(item)"
+          >
+            주문 취소
+          </ion-button>
+
+          <ion-buttons
+            *ngIf="item.status !== '배송준비중'  && item.status !== '취소대기' && item.status !== '취소완료' "
+          >
+            <ion-button
+              fill="default"
+              (click)="goChange(cart, item)"
+              *ngIf="((item.status === '배송완료' || item.status === '배송중') && !cart.productStatus)"
+            >
+              교환/반품 신청
+            </ion-button>
+
+            <ion-button
+              fill="default"
+              (click)="changeCancel(cart, item)"
+              *ngIf="(item.status === '배송완료' || item.status === '배송중') && cart.productStatus && !cart.doneSwitch"
+            >
+              교환/반품 신청 취소
+            </ion-button>
+            <ion-button
+              fill="default"
+              (click)="del(cart, item)"
+              [disabled]="cart.productStatus && !cart.doneSwitch"
+              [ngClass]="{'width-100': cart.productStatus && cart.doneSwitch}"
+            >
+              삭제
+            </ion-button>
+          </ion-buttons>
+          <ion-buttons *ngIf="item.status === '취소완료' ">
+            <ion-button
+              fill="default"
+              (click)="del(cart, item)"
+              [disabled]="cart.productStatus && !cart.doneSwitch"
+              class="width-100"
+            >
+              삭제
+            </ion-button>
+          </ion-buttons>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <ion-fab id="scroll6" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="light" (click)="top()">
+      <img src="assets/imgs/shop/top.png" alt="페이지 상단으로 이동" />
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

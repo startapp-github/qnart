@@ -1,0 +1,132 @@
+<ion-header class="search-header">
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-searchbar
+      inputmode="text"
+      #q
+      type="text"
+      enterkeyhint="search"
+      [debounce]="1000"
+      [(ngModel)]="text"
+      (ionChange)="handleChange($event)"
+      placeholder="검색어를 입력해 주세요."
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="search-container">
+    <!-- 검색 진입 -->
+    <div class="search-in" *ngIf="!searchText">
+      <ion-item class="top">
+        <ion-label>최근 검색</ion-label>
+        <ion-button (click)="deleteAllRecent()" *ngIf="recentSearch.length"
+          >전체 삭제</ion-button
+        >
+      </ion-item>
+      <div class="list-none" *ngIf="!recentSearch.length">
+        <p>최근 검색한 내용이 없습니다.</p>
+      </div>
+      <ion-list *ngIf="recentSearch.length">
+        <ion-item *ngFor="let item of recentSearch; let i = index;">
+          <ion-label (click)="selectText(item)" tappable>{{item}}</ion-label>
+          <ion-button
+            class="del-btn"
+            (click)="deleteSearchKeyword(i)"
+          ></ion-button>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <!-- 검색어가 없는 경우 -->
+    <div
+      class="list-none"
+      *ngIf=" searchText && !(postList | search:searchText).length"
+    >
+      <p>
+        <span>{{searchText}}</span>에 대한 검색 결과가 없습니다.<br />
+        다른 검색어를 입력해 주세요.
+      </p>
+    </div>
+
+    <!--searchbar 포커스 -->
+    <div
+      class="search-focus"
+      *ngIf="searchText && (postList | search:searchText).length"
+    >
+      <div class="picker-wrapper">
+        <ion-button (click)="openPicker()"
+          >{{resultSelect}}<span class="icon"></span
+        ></ion-button>
+      </div>
+
+      <ion-list>
+        <!-- 사진이  한장 있는 레이아웃 default, -->
+        <!-- 사진이  없는 레이아웃 paragraph, -->
+        <!-- 사진 여러 장 있는 레이아웃 pic class를 추가해 작업하였습니다.-->
+        <ion-item
+          class="default"
+          [ngClass]="checkClass(item)"
+          *ngFor="let item of postList | search:searchText:resultSelect"
+          (click)="feedDetail(item)"
+        >
+          <ion-card>
+            <div class="top">
+              <ion-card-header>
+                <ion-card-title class="rows-ellipsis-title"
+                  >{{item.title}}</ion-card-title
+                >
+                <!-- 검색어와 일치하는 내용은 span 태그로 감쌌습니다..! -->
+                <ion-card-subtitle class="rows-ellipsis"
+                  >{{item.text}}
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-thumbnail>
+                <div class="num-wrapper" *ngIf="item.images.length>1">
+                  <span> + {{item.images.length -1 }}</span>
+                </div>
+                <img src="assets/samples/sample-10.jpeg" alt="" />
+              </ion-thumbnail>
+            </div>
+            <ion-card-content>
+              <p class="left">
+                <span
+                  >{{dataService.getCategoryNameById(item.categoryId)}}</span
+                >
+                <span>{{item.dateCreated | dateFormat}}</span>
+              </p>
+              <p class="right">
+                <span class="icon like"></span>
+                <span class="num">{{item.likedUsers.length}}</span>
+                <span class="icon comment"></span>
+                <span class="num">{{item.comments.length}}</span>
+              </p>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

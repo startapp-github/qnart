@@ -1,0 +1,238 @@
+/** @format */
+
+$main: #1f1f1f;
+$main2: #333;
+$gray: #bbbbbb;
+$line: #f7f7f7;
+
+$red: #ff3d1e;
+$gray2: #3f3f3f;
+
+.search {
+  background-color: #fff;
+  padding: 0.25rem 1rem;
+  ion-searchbar {
+    padding: 0;
+    height: 2.75rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+    letter-spacing: -0.1px;
+    --placeholder-font-weight: 400;
+    --placeholder-color: #918f97;
+    --border-radius: 0;
+  }
+}
+
+ion-list {
+  padding: 1rem 1rem;
+  overflow: hidden;
+  h2 {
+    font-size: 1rem;
+    font-weight: bold;
+    color: $main;
+    margin-bottom: 0.9375rem;
+  }
+
+  ion-item {
+    padding: 0.8125rem 0;
+    border-bottom: 1px solid $line;
+    ion-label {
+      margin: 0;
+      h3 {
+        font-size: 1rem;
+        color: $main2;
+      }
+    }
+
+    span {
+      font-size: 1rem;
+      color: $gray;
+      line-height: 1.3125rem;
+      margin-right: 0.5rem;
+      margin: 0;
+      margin-left: 0.5rem;
+      display: flex;
+      align-items: center;
+
+      .button-default {
+        margin-left: 0.5rem;
+        img {
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+      }
+    }
+  }
+
+  ion-item:last-of-type {
+    margin-bottom: 0.8125rem;
+  }
+
+  .del {
+    float: right;
+    height: 1.5rem;
+    width: 5.125rem;
+    --box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+    --border-radius: 5px;
+    color: $main2;
+    font-size: 0.875rem;
+    --border-width: 1px;
+    --border-style: solid;
+    --border-color: #ddd;
+  }
+}
+.cont-none {
+  height: calc(100vh - 8rem - 1rem - 1.1875rem - 0.9375rem - 3.5rem - 1rem);
+}
+
+.cont-item-box {
+  // padding: 3rem 1.6rem;
+  .filter {
+    margin-bottom: 0.9375rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h3 {
+      font-size: 1.125rem;
+      line-height: 1.3125rem;
+      color: $main;
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      strong {
+        display: block;
+      }
+    }
+
+    ion-item {
+      padding: 0;
+      border-bottom: 0;
+      margin: 0;
+      ion-select {
+        color: #3f3f3f;
+        margin: 0;
+        padding: 0;
+      }
+
+      ion-select::part(icon) {
+        color: transparent;
+        opacity: 1;
+        background: url(../../../../assets/imgs/shop/select.png) no-repeat;
+        background-size: cover;
+        background-position: center;
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+    }
+  }
+
+  /*
+     * 컨텐츠
+     */
+  .cont {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .cont-inner {
+      width: calc(50% - 0.1563rem);
+      margin-bottom: 2.5rem;
+
+      .cont-img-inner {
+        position: relative;
+        margin-bottom: 0.625rem;
+
+        .cont-img {
+          padding-bottom: 140%;
+          position: relative;
+
+          img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+          }
+        }
+
+        .button-default {
+          z-index: 1;
+          width: 1.5rem;
+          position: absolute;
+          --background: transparent;
+          bottom: 0.3125rem;
+          right: 0.3125rem;
+        }
+      }
+
+      .cont-txt {
+        min-height: 5rem;
+        h4 {
+          font-size: 1rem;
+          font-weight: normal;
+          color: $gray;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-bottom: 0.25rem;
+        }
+
+        .cost-price1 {
+          display: block;
+          font-size: 0.875rem;
+          font-weight: normal;
+          color: #999;
+          text-decoration: line-through;
+        }
+        .cost-price2 {
+          display: block;
+          font-size: 1rem;
+          font-weight: bold;
+          color: #000;
+        }
+
+        .sale {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 2px;
+
+          h5 {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #000;
+          }
+
+          span {
+            display: block;
+            font-size: 1rem;
+            color: $red;
+            font-weight: 500;
+            line-height: 1.125rem;
+          }
+        }
+
+        .heart {
+          display: flex;
+          align-items: center;
+          img {
+            width: 0.875rem;
+            height: 0.875rem;
+            margin-right: 3px;
+          }
+          span {
+            display: block;
+            font-size: 0.875rem;
+            color: #999999;
+          }
+        }
+      }
+    }
+  }
+}

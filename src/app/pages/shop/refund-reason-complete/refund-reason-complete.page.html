@@ -1,0 +1,152 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-button class="back" (click)="back()">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>교환, 반품 신청</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="cart && order">
+    <span class="step"></span>
+    <div class="step-txt">
+      <span class="step-txt-ac"> 방법 선택 </span>
+
+      <span class="step-txt-ac"> 상품 선택 </span>
+
+      <span class="step-txt-ac"> 사유 작성 </span>
+
+      <span class="step-txt-ac"> 신청 완료 </span>
+    </div>
+
+    <!-- <h2>
+      고객님의 <strong>
+        반품 신청</strong>이 <br> 완료 되었습니다.
+    </h2> -->
+
+    <h2>
+      고객님의 <strong> 상품 {{cart.productStatus}} 신청</strong>이 <br />
+      완료 되었습니다.
+    </h2>
+
+    <div class="cont-wrap item-wrap">
+      <div class="item-info-title">
+        <!-- <span class="item-title">
+          <strong>
+            1
+          </strong>
+          개 상품
+        </span> -->
+
+        <span class="data"> {{cart.dateCreated | date:'yyyy.MM.dd'}} </span>
+      </div>
+
+      <div class="item-cont">
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img [src]="cart.productInfo.images[0]" />
+          </ion-thumbnail>
+
+          <ion-label>
+            <h4 *ngIf="cart.productStatus == '교환'">
+              {{cart.productInfo.productName}}&nbsp;
+              <ng-container
+                *ngIf="cart.changeOptions && cart.changeOptions.length>0"
+              >
+                <ng-container
+                  *ngFor="let option of cart.changeOptions; last as isLast"
+                  >{{option.value}}
+                  <ng-container *ngIf="!isLast">,&nbsp;</ng-container>
+                </ng-container>
+              </ng-container>
+            </h4>
+            <h4 *ngIf="cart.productStatus !== '교환'">
+              {{cart.productInfo.productName}}&nbsp;
+              <ng-container *ngIf="cart.options && cart.options.length>0">
+                <ng-container
+                  *ngFor="let option of cart.options; last as isLast"
+                  >{{option.value}}
+                  <ng-container *ngIf="!isLast">,&nbsp;</ng-container>
+                </ng-container>
+              </ng-container>
+            </h4>
+
+            <div class="item-box">
+              <div class="item-info">
+                X
+                <span class="number">{{cart.count}}</span>
+              </div>
+
+              <h6>
+                <strong>
+                  {{cart.productInfo.discountPrice?(cart.productInfo.discountPrice|number):(cart.productInfo.price
+                  | number)}}
+                </strong>
+                원
+              </h6>
+            </div>
+          </ion-label>
+        </ion-item>
+
+        <!-- 
+          교환신청시 보이기
+         -->
+        <div
+          class="item-cont-inner"
+          *ngIf="cart.productStatus == '교환' && cart.options && cart.options.length>0"
+        >
+          <strong> 변경 옵션 </strong>
+
+          <span>
+            <ng-container *ngFor="let item of cart.options; last as isLast"
+              >{{item.value}}
+              <ng-container *ngIf="!isLast">,&nbsp;</ng-container>
+            </ng-container>
+          </span>
+        </div>
+      </div>
+
+      <div class="top-box">
+        <h3>교환/반품 수거지 정보</h3>
+
+        <div class="address">
+          <span class="address-detail">
+            {{order.address}}&nbsp;{{order.addressDetail}}
+          </span>
+
+          <span class="name"> {{order.recipient}} </span>
+
+          <span class="number"> {{order.deliveryPhone}} </span>
+        </div>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <div class="footer-inner">
+    <ion-button expand="block" fill="default" (click)="goOrderList()">
+      주문 목록 보기
+    </ion-button>
+  </div>
+</ion-footer>

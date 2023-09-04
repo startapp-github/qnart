@@ -1,0 +1,451 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>{{ partner?.isMaster ? 'KN' : partner?.nickName }} </ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="more-btn" (click)="userChatMoreSheet()">
+        <img src="assets/imgs/icon-more.png" alt="" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #container>
+  <ion-list id="chat-container" *ngIf="chat$ | async as chats">
+    <div
+      class="none"
+      *ngIf="chats.messages.length == 0 || chats[user?.uid]?.startIndex == chats.messages?.length"
+    >
+      대화 내용이 없습니다.<br />새로운 대화를 시작해보세요!
+    </div>
+    <!-- !!!날짜!!! -->
+    <article
+      *ngFor="let msg of chats.messages | slice: chats[user?.id]?.startIndex : chats?.messages?.length; let i = index;  trackBy: customTrackBy;"
+    >
+      <div
+        class="date-line"
+        *ngIf="i == 0 || (chats.messages[i + (chats[user?.id].startIndex)]?.dateCreated | date:'yyyyMMdd') != (chats.messages[i + (chats[user?.id].startIndex) - 1]?.dateCreated  | date:'yyyyMMdd')"
+      >
+        <span class="line"></span>{{ msg.dateCreated | date : 'yyyy년 MM월 dd일'
+        }} ({{ common.getDayFormat(msg.dateCreated) }})<span
+          class="line"
+        ></span>
+      </div>
+      <!-- ######## user class에 my class가 생기면 우측 메세지(내 채팅메세지)로 나타납니다! ############ -->
+      <!-- default는 좌측메세지(상대방메세지) 레이아웃입니다! -->
+      <ion-item class="user" *ngIf="partner?.uid === msg.uid">
+        <ion-avatar class="profile">
+          <img
+            src="{{partner.isMaster ? 'assets/imgs/logo-kn.png' : partner.profileImage}}"
+            alt=""
+          />
+        </ion-avatar>
+        <ion-label class="content">
+          <p class="nickname">{{partner.isMaster ? 'KN' : partner.nickName}}</p>
+          <div
+            class="box only"
+            [ngClass]="checkClass(msg.content)"
+            *ngIf="msg.type =='img'"
+          >
+            <div class="image-wrapper">
+              <div
+                (click)="imgDetail( msg.content)"
+                *ngFor="let image of msg.content"
+              >
+                <img src="{{image}}" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="box" *ngIf="msg.type !=='img'">
+            <p class="text">{{ msg.content }}</p>
+          </div>
+          <ion-label class="date"
+            >{{ msg.dateCreated | date:'HH:mm' }}</ion-label
+          >
+        </ion-label>
+      </ion-item>
+
+      <ion-item class="user my" *ngIf="user?.uid === msg.uid">
+        <ion-avatar class="profile">
+          <img src="assets/samples/sample-7.png" alt="" />
+        </ion-avatar>
+        <ion-label class="content">
+          <!-- <p class="nickname">코코아빠</p> -->
+          <div
+            class="box only"
+            [ngClass]="checkClass(msg.content)"
+            *ngIf="msg.type =='img'"
+          >
+            <div class="image-wrapper">
+              <div
+                (click)="imgDetail( msg.content)"
+                *ngFor="let image of msg.content"
+              >
+                <img src="{{image}}" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="box" *ngIf="msg.type !=='img'">
+            <p class="text">{{ msg.content }}</p>
+          </div>
+          <ion-label class="date"
+            >{{ msg.dateCreated | dateFormat:'chat' }}</ion-label
+          >
+        </ion-label>
+      </ion-item>
+
+      <!-- <ion-item class="user">
+        <ion-avatar class="profile">
+          <img src="assets/samples/sample-7.png"
+            alt="" />
+        </ion-avatar>
+        <ion-label class="content">
+          <p class="nickname">코코아빠</p> -->
+      <!-- 사진 한 장 nth-1 -->
+      <!-- 사진만 들어가는 모든 box는 only class가 추가되어야 합니다... -->
+      <!-- <div class="box only nth-1">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-10.jpeg"
+                  alt="" /></div>
+            </div>
+          </div>
+          <div class="box">
+            <p class="txt">예쁘죠?</p>
+          </div>
+          <ion-label class="date">오후 04:21</ion-label>
+        </ion-label>
+      </ion-item> -->
+
+      <!-- <ion-item class="user my">
+        <ion-avatar class="profile">
+          <img src="assets/samples/sample-7.png"
+            alt="" />
+        </ion-avatar>
+        <ion-label class="content">
+          <p class="nickname">코코아빠</p> -->
+      <!-- 사진 두 장  nth-2 class -->
+      <!-- <div class="box only nth-2">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-10.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-4.jpeg"
+                  alt="" /></div>
+            </div>
+          </div> -->
+      <!-- 사진 세 장  nth-3 class -->
+      <!-- <div class="box only nth-3">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-10.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-2.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-3.jpeg"
+                  alt="" /></div>
+            </div>
+          </div> -->
+
+      <!-- 사진 네 장  nth-4 class -->
+      <!-- <div class="box only nth-4">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-4.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-9.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-7.png"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-8.jpeg"
+                  alt="" /></div>
+            </div>
+          </div> -->
+
+      <!-- 사진 다섯 장 nth-5 class -->
+      <!-- <div class="box only nth-5">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-7.png"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-10.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-6.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-12.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-11.jpeg"
+                  alt="" /></div>
+            </div>
+          </div> -->
+
+      <!-- 사진 여섯 장 nth-6 class -->
+      <!-- <div class="box only nth-6">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-1.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-2.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-3.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-10.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-11.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-9.jpeg"
+                  alt="" /></div>
+            </div>
+          </div> -->
+
+      <!-- 사진 일곱 장 nth-7 class -->
+      <!-- <div class="box only nth-7">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-5.png"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-14.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-13.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-12.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-13.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-14.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-10.jpeg"
+                  alt="" /></div>
+            </div>
+          </div> -->
+
+      <!-- 사진 여덟 장 nth-8 class -->
+      <!-- <div class="box only nth-8">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-5.png"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-4.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-13.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-12.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-7.png"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-13.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-8.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-10.jpeg"
+                  alt="" /></div>
+            </div>
+          </div> -->
+
+      <!-- 사진 아홉 장 nth-9 class -->
+      <!-- <div class="box only nth-9">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-5.png"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-4.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-14.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-13.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-7.png"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-12.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-8.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-10.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-3.jpeg"
+                  alt="" /></div>
+            </div>
+          </div> -->
+
+      <!-- 사진 열 장  nth-10 class -->
+
+      <!-- <div class="box only nth-10">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-1.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-2.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-3.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-4.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-5.png"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-6.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-7.png"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-8.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-9.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-10.jpeg"
+                  alt="" /></div>
+            </div>
+          </div> -->
+      <!-- 
+          <div class="box">
+            <p class="text">제가 더 많네요.</p>
+          </div>
+          <ion-label class="date">오후 04:25</ion-label>
+        </ion-label>
+      </ion-item> -->
+
+      <!-- !!!날짜!!! -->
+      <!-- <div class="date-line"><span class="line"></span>2142년 13월 49일<span class="line"></span></div> -->
+
+      <!-- <ion-item class="user">
+        <ion-avatar class="profile">
+          <img src="assets/samples/sample-7.png"
+            alt="" />
+        </ion-avatar>
+        <ion-label class="content">
+          <p class="nickname">코코아빠</p> -->
+      <!-- 사진 두 장  nth-2 class -->
+      <!-- <div class="box only nth-2">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-10.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-4.jpeg"
+                  alt="" /></div>
+            </div>
+          </div> -->
+
+      <!-- 사진 여섯 장 nth-6 class -->
+      <!-- <div class="box only nth-6">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-1.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-2.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-3.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-10.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-11.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-9.jpeg"
+                  alt="" /></div>
+            </div>
+          </div> -->
+
+      <!-- 사진 일곱 장 nth-7 class -->
+      <!-- <div class="box only nth-7">
+            <div class="image-wrapper">
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-5.png"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-14.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-13.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-12.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-13.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-14.jpeg"
+                  alt="" /></div>
+              <div (click)="imagesMoreModal()"><img src="assets/samples/sample-10.jpeg"
+                  alt="" /></div>
+            </div>
+          </div> -->
+
+      <!-- <div class="box">
+            <p class="text">아직 안 끝났는데요아직 안 끝났는데요아직 안 끝났는데요아직 안 끝났는데요아직 안 끝났는데요</p>
+            <p></p>
+          </div> -->
+      <!-- 
+          <ion-label class="date">오전 08:21</ion-label>
+        </ion-label>
+      </ion-item> -->
+    </article>
+  </ion-list>
+</ion-content>
+
+<ion-footer class="chat-footer" [ngClass]="{'boxShadow': buttonsItem}">
+  <div class="chat-slide-wrap" *ngIf="uploadingImage.length>0">
+    <div class="slide-inner" *ngFor="let item of uploadingImage; let i = index">
+      <ion-button class="del-btn" (click)="deleteImage(i)"></ion-button>
+      <img src="{{item}}" alt="" />
+    </div>
+
+    <!-- <ion-slides #slides2 class="slides-wrapper" [options]="slideOpts2">
+      <ion-slide *ngFor="let item of uploadingImage; let i = index">
+        <ion-button class="del-btn" (click)="deleteImage(i)"></ion-button>
+        <img src="{{item}}" alt="" />
+      </ion-slide>
+    </ion-slides> -->
+  </div>
+  <ion-item class="pic-item" *ngIf="buttonsItem">
+    <ion-buttons>
+      <ion-button fill="default">
+        <img
+          src="assets/imgs/icon-chat-camera.png"
+          alt=""
+          (click)="selectImage('camera')"
+        />
+      </ion-button>
+      <ion-button fill="default">
+        <img
+          src="assets/imgs/icon-chat-galley.png"
+          alt=""
+          (click)="selectImage('gallery')"
+        />
+      </ion-button>
+    </ion-buttons>
+    <ion-label>사진은 최대 10장까지 업로드 가능합니다.</ion-label>
+  </ion-item>
+  <ion-toolbar>
+    <div>
+      <ion-button class="more" (click)="toggleChecked()">
+        <img
+          [src]="buttonsItem ? 'assets/imgs/icon-chat-more-ac.png' : 'assets/imgs/icon-chat-more.png' "
+          alt=""
+        />
+        <!-- <img src="assets/imgs/icon-chat-more.png" alt="" /> -->
+        <!-- <img src="assets/imgs/icon-chat-more-ac.png" alt="" /> -->
+      </ion-button>
+      <ion-textarea
+        #sendInput
+        [(ngModel)]="text"
+        rows="1"
+        class="chatting-textarea"
+        [placeholder]="partner?.exitSwitch ? '탈퇴한 사용자와는 대화할 수 없어요.' : uploadingImage.length?'사진을 전송하시겠습니까?' :'내용을 입력해 주세요.'"
+        autoGrow
+        inputmode="text"
+        [disabled]="uploadingImage.length"
+        minlength="1"
+      ></ion-textarea>
+
+      <!-- disabled -->
+      <ion-button
+        [disabled]="!text"
+        class="send"
+        (click)="submit()"
+      ></ion-button>
+    </div>
+    <ion-textarea class="hidden" #hiddenInput></ion-textarea>
+  </ion-toolbar>
+</ion-footer>

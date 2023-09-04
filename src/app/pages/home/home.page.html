@@ -1,0 +1,271 @@
+<ion-header>
+  <ion-toolbar>
+    <h1 class="logo">
+      <img src="assets/imgs/logo.png" alt="" />
+    </h1>
+    <ion-buttons slot="end">
+      <ion-button class="go-serch" (click)="goSearch()">
+        <svg width="44px" height="44px" viewBox="0 0 44 44">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g>
+              <rect x="0" y="0" width="44" height="44"></rect>
+              <g transform="translate(10.000000, 10.000000)">
+                <rect x="0" y="0" width="24" height="24"></rect>
+                <circle class="stroke-100" cx="10.5" cy="10.5" r="7"></circle>
+                <line
+                  x1="15.4325509"
+                  y1="15.4325509"
+                  x2="20"
+                  y2="20"
+                  class="stroke-100"
+                ></line>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <div class="slides-wrapper">
+    <div class="slide-fixed-wrapper">
+      <div class="slide-fixed-filter" (click)="goSubject()">
+        <img src="assets/imgs/icon-filter.png" alt="" />
+      </div>
+    </div>
+    <ion-list class="slide-list">
+      <ion-item class="item" *ngFor="let item of dataService.categories">
+        <p>{{item.name}}</p>
+        <ion-checkbox
+          slot="start"
+          [(ngModel)]="item.checked"
+          disabled
+        ></ion-checkbox>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-header>
+
+<ion-content #content>
+  <div id="home-container">
+    <div class="picker-wrapper">
+      <ion-button (click)="openPicker()"
+        >{{resultSelect}}<span class="icon"></span
+      ></ion-button>
+    </div>
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content> </ion-refresher-content>
+      <!-- (수정) -->
+    </ion-refresher>
+    <ng-template #feedLoading>
+      <div class="loading-container">
+        <img src="assets/imgs/logo-kn.png" alt="" />
+        <!-- <span class="nth-1"></span>
+        <span class="nth-2"></span>
+        <span class="nth-3"></span> -->
+      </div>
+    </ng-template>
+
+    <ion-list
+      class="list-wrapper"
+      *ngIf="loaded; else feedLoading"
+      [@myAnimation]
+    >
+      <!--
+      사진 두장인 경우 nth-2 class,
+      세장 이상인 경우 nth-3 class,
+      이미지가 없는 경우는 none-img class를 붙여 작업하였습니다.
+      -->
+
+      <ion-item
+        [ngClass]="{'nth-3': item.data.images.length > 2, 'nth-2': item.data.images.length === 2,'none-img': item.data.images && item.data.images.length === 0} "
+        *ngFor="let item of (items$ | async); trackBy: trackById"
+        (click)="goPostDetail(item)"
+      >
+        <ion-card>
+          <div class="type">
+            {{dataService.getCategoryNameById(item.data.categoryId)}}
+          </div>
+          <ion-card-header>
+            <ion-card-title class="row-ellipsis"
+              >{{item.data.title}}</ion-card-title
+            >
+          </ion-card-header>
+          <ion-card-content>
+            <p class="rows-ellipsis">{{item.data.text}}</p>
+            <div class="card-img" *ngIf="item.data.images.length">
+              <div class="left">
+                <img src="{{item.data.images[0]}}" alt="" />
+              </div>
+              <div class="right">
+                <span class="top" *ngIf="item.data.images.length > 1">
+                  <img src="{{item.data.images[1]}}" alt="" />
+                </span>
+                <span class="bottom" *ngIf="item.data.images.length > 2">
+                  <img src="{{item.data.images[2]}}" alt="" />
+                </span>
+              </div>
+            </div>
+            <ion-label class="layout">
+              <div class="left">
+                <span class="nickname">{{item.createdBy.nickName}}</span>
+                <span class="time"
+                  >{{item.data.dateCreated | dateFormat }}</span
+                >
+              </div>
+              <div class="right">
+                <div class="card-num">
+                  <span class="icon view">
+                    <svg width="16px" height="12px" viewBox="0 0 16 12">
+                      <g
+                        stroke="none"
+                        stroke-width="1"
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <g
+                          transform="translate(-2.000000, -4.000000)"
+                          class="stroke-300"
+                        >
+                          <path
+                            d="M10,4.5 C11.6800205,4.5 13.2385517,5.06760326 14.5291765,6.03557188 C15.8268635,7.00883714 16.8541087,8.38573295 17.4670305,10.0001237 C16.853979,11.6144409 15.8267816,12.9912243 14.5291765,13.9644281 C13.2385517,14.9323967 11.6800205,15.5 10,15.5 C8.31997952,15.5 6.76144835,14.9323967 5.47082352,13.9644281 C4.1731365,12.9911629 3.14589129,11.614267 2.53296947,9.99987629 C3.14602102,8.38555906 4.17321845,7.00877569 5.47082352,6.03557188 C6.76144835,5.06760326 8.31997952,4.5 10,4.5 Z"
+                          ></path>
+                          <path
+                            d="M10,7 C8.34,7 7,8.34 7,10 C7,11.66 8.34,13 10,13 C11.66,13 13,11.66 13,10 C13,8.34 11.66,7 10,7 L10,7 Z"
+                          ></path>
+                        </g>
+                      </g>
+                    </svg>
+                  </span>
+                  <span class="num">{{item.data.checkUserNumber}}</span>
+                </div>
+
+                <div class="card-num">
+                  <!-- (수정) -->
+                  <span class="icon like">
+                    <svg
+                      width="14px"
+                      height="14px"
+                      viewBox="0 0 14 14"
+                      class="like-off"
+                      *ngIf="!checkLike(item)"
+                    >
+                      <g
+                        stroke="none"
+                        stroke-width="1"
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <g transform="translate(-279.000000, -544.000000)">
+                          <rect x="0" y="0" width="375" height="1656"></rect>
+                          <g
+                            transform="translate(276.000000, 541.000000)"
+                            class="stroke-300"
+                          >
+                            <g transform="translate(3.000000, 3.000000)">
+                              <path
+                                d="M6.78104418,0.568982475 C7.11384561,0.464419044 7.48629753,0.475401832 7.82756625,0.624643821 C8.16160726,0.770725023 8.4109617,1.02606955 8.5439583,1.32946495 C8.67400319,1.62612684 8.69178935,1.96803848 8.56917084,2.29263776 L8.56917084,2.29263776 L7.4938957,5.14928437 L12.0016374,5.15021672 C12.4389151,5.1501799 12.8559148,5.33028742 13.1422944,5.64779809 C13.4199656,5.95565385 13.5462596,6.36371765 13.4846721,6.76666651 L13.4846721,6.76666651 L12.7917163,11.2852517 C12.7367631,11.6314038 12.5530288,11.9315893 12.2933959,12.1464536 C12.0268064,12.3670751 11.6803461,12.4982522 11.3082335,12.5 L11.3082335,12.5 L3.5,12.5 L3.5,4.92676291 L5.97683035,1.20819259 C6.15629989,0.892582885 6.44948539,0.673155478 6.78104418,0.568982475 Z"
+                                fill-rule="nonzero"
+                              ></path>
+                              <rect
+                                x="0.5"
+                                y="3.5"
+                                width="3"
+                                height="10"
+                                rx="1"
+                              ></rect>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+
+                    <svg
+                      width="14px"
+                      height="14px"
+                      viewBox="0 0 14 14"
+                      class="like-on"
+                      *ngIf="checkLike(item)"
+                    >
+                      <g
+                        stroke="none"
+                        stroke-width="1"
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <g transform="translate(-170.000000, -590.000000)">
+                          <rect x="0" y="0" width="375" height="1233"></rect>
+                          <g
+                            id="icon/20/댓글-copy-2"
+                            transform="translate(167.000000, 587.000000)"
+                          >
+                            <path
+                              d="M9.78104418,3.56898248 C10.1138456,3.46441904 10.4862975,3.47540183 10.8275663,3.62464382 C11.1616073,3.77072502 11.4109617,4.02606955 11.5439583,4.32946495 C11.6740032,4.62612684 11.6917894,4.96803848 11.5691708,5.29263776 L11.5691708,5.29263776 L10.4938957,8.14928437 L15.0016374,8.15021672 C15.4389151,8.1501799 15.8559148,8.33028742 16.1422944,8.64779809 C16.4199656,8.95565385 16.5462596,9.36371765 16.4846721,9.76666651 L16.4846721,9.76666651 L15.7917163,14.2852517 C15.7367631,14.6314038 15.5530288,14.9315893 15.2933959,15.1464536 C15.0268064,15.3670751 14.6803461,15.4982522 14.3082335,15.5 L14.3082335,15.5 L6.5,15.5 L6.5,7.92676291 L8.97683035,4.20819259 C9.15629989,3.89258288 9.44948539,3.67315548 9.78104418,3.56898248 Z"
+                              class="stroke-main"
+                              fill-rule="nonzero"
+                            ></path>
+                            <rect
+                              class="fill-main"
+                              x="3"
+                              y="6"
+                              width="4"
+                              height="11"
+                              rx="1"
+                            ></rect>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </span>
+                  <span class="num">{{item.data.likedUsers.length}}</span>
+                </div>
+
+                <div class="card-num">
+                  <span class="icon comment">
+                    <svg width="14px" height="14px" viewBox="0 0 14 14">
+                      <g
+                        stroke="none"
+                        stroke-width="1"
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <g transform="translate(-326.000000, -544.000000)">
+                          <rect x="0" y="0" width="375" height="812"></rect>
+                          <g
+                            transform="translate(323.000000, 541.000000)"
+                            class="stroke-300"
+                          >
+                            <path
+                              d="M10.3761535,3.49999098 C12.0918843,3.58748233 13.5692708,4.23364123 14.6446236,5.24573819 C15.7359422,6.27286183 16.410597,7.67525541 16.5000187,9.23691906 C16.5009588,10.5481745 16.2836815,11.4899313 15.8527267,12.3431443 C15.3354253,13.378195 14.5479753,14.2227409 13.6005704,14.8086361 C12.6531654,15.3945313 11.5458054,15.7217757 10.3875736,15.7222252 C9.37154168,15.7248742 8.37024058,15.4702128 7.47748259,14.9804595 L7.47748259,14.9804595 L3.79056942,16.2094306 L5.01954039,12.5225177 C4.5297872,11.6297536 4.27512566,10.6285382 4.27777651,9.61131628 C4.27822426,8.45419465 4.6054687,7.34683461 5.19136389,6.39942963 C5.77725907,5.45202465 6.62180499,4.66457474 7.658753,4.14632007 C8.50131392,3.72074057 9.432124,3.49936216 10.3761535,3.49999098 Z"
+                            ></path>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </span>
+                  <span class="num">{{item.comments.length}}</span>
+                </div>
+              </div>
+            </ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="findNext($event)">
+      <ion-infinite-scroll-content *ngIf="(items$ | async)?.length">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+  <ion-fab
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed"
+    *ngIf="(dataService.type.includes('community') && !dataService.type.includes('chat')&& !dataService.type.includes('mall'))||(dataService.type.includes('community') && dataService.type.includes('chat')&& dataService.type.includes('mall'))"
+  >
+    <!-- *ngIf="!(dataService.type.includes('mall') && dataService.type.includes('community')) || dataService.type.includes('chat')"-->
+    <ion-fab-button class="write-btn" (click)="feedWrite()">
+      <img src="assets/imgs/icon-tab-3.png" alt="" />
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

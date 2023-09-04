@@ -1,0 +1,60 @@
+.cancel {
+  width: 36px;
+  height: 36px;
+}
+
+.wrap {
+  padding: 16px;
+  p {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #666;
+    text-align: center;
+    vertical-align: middle;
+    span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #161616;
+      margin-right: 10px;
+    }
+  }
+  .top-modal-box {
+    margin-bottom: 40px;
+    border-bottom: 4px solid #f0f0f0;
+    padding-bottom: 30px;
+  }
+
+  .err-box {
+    padding: 40px 20px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    white-space: pre-line;
+    word-break: keep-all;
+    text-align: center;
+    color: #797979;
+    font-weight: 500;
+    line-height: 23px;
+  }
+}
+
+ion-grid {
+  ion-row {
+    border-bottom: 1px solid #ddd;
+    ion-col {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: #161616;
+      vertical-align: middle;
+      line-height: 1.5rem;
+      padding: 0.5rem 0;
+      word-break: keep-all;
+      &.done {
+        font-weight: 600;
+        color: #102aa8;
+      }
+      &[size="8"] {
+        padding-left: 1rem;
+      }
+    }
+  }
+}

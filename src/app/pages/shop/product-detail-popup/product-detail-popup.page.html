@@ -1,0 +1,121 @@
+<ion-content (click)="dismiss()" [scrollY]="false"> </ion-content>
+
+<ion-footer>
+  <div class="footer-box">
+    <div class="footer-select">
+      <ng-container *ngIf="product.options && product.options.length>0">
+        <ion-item *ngFor="let option of product.options; let i = index">
+          <ion-select
+            [interfaceOptions]="select"
+            placeholder="{{option.title}} 선택"
+            okText="확인"
+            cancelText="닫기"
+            [(ngModel)]="cart.options[i]"
+          >
+            <ion-label>{{option.title}}</ion-label>
+
+            <ion-select-option
+              *ngFor="let item of option.values"
+              [value]="{title:option.title, value:item}"
+              >{{item}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+      </ng-container>
+
+      <!-- 
+        선택된 상품 보여주기
+       -->
+      <div
+        class="item-box-detail"
+        *ngIf="product?.options?.length === checkCartOption()"
+      >
+        <div class="item-box-info">
+          <h3>
+            <ng-container *ngFor="let item of cart.options; last as isLast">
+              <span> {{item.value}} </span>
+              <span *ngIf="!isLast">, &nbsp;</span>
+            </ng-container>
+          </h3>
+
+          <ion-button
+            fill="default"
+            *ngIf="product?.options?.length>0 "
+            (click)="deleteSet()"
+          >
+            <img src="assets/imgs/shop/close.png" alt="" />
+          </ion-button>
+        </div>
+
+        <div class="item-box-number">
+          <div class="count">
+            <ion-button
+              fill="default"
+              class="minus"
+              (click)="countUpdate('minus')"
+              [disabled]="2 > cart.count"
+            >
+              -
+            </ion-button>
+            <div class="number">{{cart.count}}</div>
+
+            <ion-button
+              fill="default"
+              class="plus"
+              (click)="countUpdate('plus')"
+              [disabled]="product.stockCount <= cart.count"
+            >
+              +
+            </ion-button>
+          </div>
+
+          <h4>{{checkMileage()|number:''}}&nbsp;원</h4>
+        </div>
+      </div>
+
+      <!-- 
+     선택된 상품 없을 때!
+       -->
+      <div
+        class="item-box-none"
+        *ngIf="product?.options?.length !== cart?.options?.length"
+      >
+        <h2>상품 0개</h2>
+        <span>
+          <strong>
+            {{product.discountPrice
+            ?(product.discountPrice|number:''):(product.price|number:'')}}
+          </strong>
+          원
+        </span>
+      </div>
+
+      <!-- 
+     선택된 상품 있을 때!
+       -->
+      <div
+        class="item-box"
+        *ngIf="product?.options?.length === cart?.options?.length"
+      >
+        <h2>상품 {{cart.count}}개</h2>
+        <span>
+          <strong> {{checkMileage() | number:''}} </strong>
+          원
+        </span>
+      </div>
+    </div>
+
+    <div class="footer-inner">
+      <ion-buttons>
+        <ion-button class="like-btn" fill="default" (click)="basket()">
+          <!-- <img src="assets/imgs/shop/footer-basket.png" alt="" /> -->
+          <ion-icon name="cart-outline" color="light"></ion-icon>
+        </ion-button>
+
+        <ion-button fill="default" class="buy" (click)="goOrder()">
+          구매하기
+        </ion-button>
+      </ion-buttons>
+    </div>
+  </div>
+</ion-footer>

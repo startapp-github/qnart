@@ -1,0 +1,275 @@
+ion-header {
+    ion-toolbar {
+        --padding-top: 0.5rem;
+        --padding-end: 1rem;
+        --padding-bottom: 0.5rem;
+    }
+    ion-buttons {
+        padding-top: 0.5rem;
+    }
+    ion-searchbar {
+        padding: 0;
+        min-height: 56px;
+        font-weight: 400;
+        line-height: 1.25rem;
+        letter-spacing: -0.1px;
+        --placeholder-font-weight: 400;
+        --placeholder-color: #918f97;
+        --border-radius: 0;
+    }
+}
+
+ion-content {
+    // --background: #ededf2;
+}
+
+#search-container {
+    height: 100%;
+    // 검색진입
+    .search-in {
+        background-color: #fff;
+        .top {
+            padding: 1.25rem 4.26666666667% 0.75rem;
+            ion-label {
+                font-weight: 400;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                color: #66656b;
+            }
+            ion-button {
+                font-weight: 400;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                color: #918f97;
+            }
+        }
+
+        .list-none {
+            height: calc(100vh - 56px - 3.25rem);
+        }
+
+        ion-list {
+            padding: 0 1rem;
+            ion-item {
+                margin-bottom: 3.2%;
+                &::part(native) {
+                    align-items: flex-start;
+                }
+                ion-label {
+                    margin-right: 3.2%;
+                    font-weight: 400;
+                    font-size: 1rem;
+                    line-height: 1.5rem;
+                    white-space: pre-line;
+                }
+                ion-button {
+                    width: 1.25rem;
+                    height: 1.25rem;
+                    background: url(../../../assets/imgs/icon-del-sm.png) no-repeat center center / 100% 100%;
+                }
+            }
+        }
+    }
+
+    // 검색어가 없는 경우
+    .list-none {
+        height: calc(100vh - 56px);
+        background-color: #fff;
+        p {
+            span {
+                font-weight: 600;
+                color: var(--ion-color-main);
+            }
+        }
+    }
+
+    // 검색 포커스
+    .search-focus {
+        height: 100%;
+        background-color: #ededf2;
+        .picker-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0.5rem 4.26666666667% 0.5rem;
+            background-color: #fff;
+            ion-button {
+                padding: 0.3125rem 0.25rem 0.3125rem 0.5rem;
+                font-weight: 400;
+                font-size: 1rem;
+                line-height: 1.375rem;
+                color: #66656b;
+                border: 1px solid #d3d1d7;
+                background: #fff;
+                --background: #fff;
+            }
+            .icon {
+                display: block;
+                margin-left: 0.125rem;
+                width: 1.25rem;
+                height: 1.25rem;
+                background: url(../../../assets/imgs/icon-picker-arrow.png) no-repeat center center/ 100% 100%;
+            }
+        }
+
+        ion-list {
+            background: #ededf2;
+            overflow: hidden;
+            ion-item {
+                margin-bottom: 2.13333333333%;
+                box-shadow: 0 2px 6px rgba(62, 61, 66, 0.3);
+                &:first-child {
+                    ion-card {
+                        padding-top: 0.75rem;
+                    }
+                }
+                &.paragraph {
+                    ion-card {
+                        ion-card-header {
+                            max-width: 100%;
+                        }
+                        ion-thumbnail {
+                            display: none;
+                        }
+                    }
+                }
+                &.pic {
+                    position: relative;
+                    ion-thumbnail {
+                        .num-wrapper {
+                            position: absolute;
+                            right: 0;
+                            bottom: 0;
+                            display: flex !important;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 0.3125rem;
+                            width: 2rem;
+                            height: 2rem;
+                            background-color: #161616;
+                            z-index: 1;
+                            img {
+                                object-fit: cover;
+                            }
+                            span {
+                                font-weight: 600;
+                                font-size: 0.875rem;
+                                line-height: 1.375rem;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+            }
+            ion-card {
+                width: 100%;
+                padding: 1.25rem 4.26666666667%;
+                .top {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 3.2%;
+                    width: 100%;
+                    ion-card-header {
+                        margin-right: 3.2%;
+                        max-width: 68.805%;
+                        width: 100%;
+                        ion-card-title {
+                            margin-bottom: 2.33236151603%;
+                            font-weight: 600;
+                            font-size: 1rem;
+                            line-height: 1.5rem;
+                        }
+                        ion-card-subtitle {
+                            font-weight: 400;
+                            font-size: 0.875rem;
+                            line-height: 1.3125rem;
+                            color: #66656b;
+                            span {
+                                font-size: 0.875rem;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+
+                    ion-thumbnail {
+                        position: relative;
+                        width: 27.697%;
+                        height: 0;
+                        padding-bottom: 27.697%;
+                        .num-wrapper {
+                            display: none;
+                        }
+                        img {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                }
+
+                ion-card-content {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+                    .left {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 0;
+                        span {
+                            display: flex;
+                            align-items: center;
+                            font-weight: 400;
+                            font-size: 0.875rem;
+                            line-height: 1.25rem;
+                            color: #66656b;
+                            &:first-child {
+                                font-weight: 600;
+                                color: var(--ion-color-main);
+                                &::after {
+                                    margin: 0 0.375rem;
+                                    display: block;
+                                    content: "";
+                                    width: 1px;
+                                    height: calc(1.5rem / 2);
+                                    background-color: #66656b;
+                                }
+                            }
+                        }
+                    }
+                    .right {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 0;
+                        span {
+                            display: block;
+                            font-weight: 400;
+                            font-size: 0.875rem;
+                            line-height: 1.25rem;
+                            color: #66656b;
+                            &.icon {
+                                margin-left: 0.5rem;
+                                width: 1.25rem;
+                                height: 1.25rem;
+                                background: no-repeat center center / 100% 100%;
+                                &.like {
+                                    background-image: url(../../../assets/imgs/icon-like.png);
+                                }
+                                &.comment {
+                                    background-image: url(../../../assets/imgs/icon-comment.png);
+                                }
+                            }
+                            &.num {
+                                margin-left: 0.25rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

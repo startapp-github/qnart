@@ -1,0 +1,169 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>상품 리뷰/문의</ion-title>
+  </ion-toolbar>
+  <div class="seg-top">
+    <ion-segment [(ngModel)]="type">
+      <ion-segment-button value="리뷰"> 리뷰 </ion-segment-button>
+      <ion-segment-button value="문의"> 문의 </ion-segment-button>
+    </ion-segment>
+  </div>
+</ion-header>
+
+<ion-content>
+  <ion-list [ngSwitch]="type">
+    <div *ngSwitchCase="'리뷰'">
+      <ng-container *ngIf="buylist$|async as buylist">
+        <p class="cont-none" *ngIf="buylist?.length === 0">리뷰가 없습니다.</p>
+        <div
+          *ngFor="let review of buylist"
+          class="cont-box"
+          (click)="goItem(review)"
+        >
+          <div class="cont-title">
+            <span class="date">
+              {{review.shipmentDate | date:'yyyy.MM.dd'}}
+            </span>
+
+            <span class="title-info">
+              <span
+                [ngClass]="{'complete-creat': review.reviewSwitch, 'wait-creat' : !review.reviewSwitch}"
+              >
+                {{review.reviewSwitch? '작성 완료' : '작성 대기'}}
+              </span>
+
+              <ion-button
+                fill="default"
+                (click)="DeleteReview(review);$event.stopPropagation();"
+                *ngIf="review.reviewSwitch"
+              >
+                <img src="assets/imgs/shop/close.png" alt="" />
+              </ion-button>
+            </span>
+          </div>
+
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <img [src]="review.productInfo.images[0]" alt="" />
+            </ion-thumbnail>
+
+            <ion-label>
+              {{review.productInfo.productName}}<br /><ng-container
+                *ngIf="review.options && review.options.length>0"
+              >
+                <span *ngFor="let option of review.options; last as isLast">
+                  {{option.value}}<ng-container *ngIf="!isLast"
+                    >,&nbsp;</ng-container
+                  >
+                </span>
+              </ng-container>
+            </ion-label>
+          </ion-item>
+
+          <ion-buttons class="detail-btn" *ngIf="review.reviewSwitch">
+            <ion-button
+              fill="default"
+              (click)="goReivew(review);$event.stopPropagation();"
+            >
+              상세보기
+            </ion-button>
+            <ion-button
+              fill="default"
+              (click)="goReivewInquiryEdit(review);$event.stopPropagation();"
+            >
+              편집하기
+            </ion-button>
+          </ion-buttons>
+
+          <ion-button
+            *ngIf="!review.reviewSwitch"
+            fill="default"
+            expand="block"
+            class="review-write"
+            (click)="goReivewInquiry(review);$event.stopPropagation();"
+          >
+            작성하기
+          </ion-button>
+        </div>
+      </ng-container>
+    </div>
+
+    <div *ngSwitchCase="'문의'">
+      <p class="cont-none" *ngIf="inquires?.length === 0">문의가 없습니다.</p>
+      <div
+        class="cont-box"
+        (click)="goItem2(item);$event.stopPropagation()"
+        *ngFor="let item of inquires; let i = index"
+      >
+        <div class="cont-title">
+          <span class="date"> {{item.dateCreated | date:'yyyy.MM.dd'}} </span>
+
+          <span class="title-info">
+            <span
+              [ngClass]="{'complete-answer': item.answerSwitch, 'wait-creat' : !item.answerSwitch}"
+            >
+              {{item.answerSwitch? '답변 완료' : '답변 대기'}}
+            </span>
+
+            <ion-button
+              fill="default"
+              (click)="DeleteInquiry(item);$event.stopPropagation()"
+            >
+              <img src="assets/imgs/shop/close.png" alt="" />
+            </ion-button>
+          </span>
+        </div>
+
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img [src]="item.productId.images[0]" alt="" />
+          </ion-thumbnail>
+
+          <!-- <ion-label>
+            {{item.productId.productName}}
+            <ng-container *ngFor="let item of item.options"> {{item.value}} </ng-container>
+          </ion-label> -->
+          <ion-label> {{item.productId.productName}} </ion-label>
+        </ion-item>
+
+        <ion-buttons class="detail-btn">
+          <ion-button
+            fill="default"
+            (click)="goInquiry(item);$event.stopPropagation();"
+          >
+            상세보기
+          </ion-button>
+          <ion-button
+            fill="default"
+            (click)="goEditInquiry(item, 'edit');$event.stopPropagation();"
+          >
+            편집하기
+          </ion-button>
+        </ion-buttons>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>기획전</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button fill="default" (click)="goSearch()">
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="default" (click)="goBasket()">
+        <ion-icon name="cart-outline"></ion-icon>
+        <ng-container *ngIf="user$|async as user">
+          <ion-badge *ngIf="user && user.cartCount >0 ">
+            {{user.cartCount}}
+          </ion-badge>
+        </ng-container>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <ion-list *ngIf="exhibitions?.length > 0">
+    <h2>
+      <strong>{{exhibitions?.length}}</strong>
+      개 기획전
+    </h2>
+
+    <div
+      class="cont-box"
+      (click)="goDetail(item)"
+      *ngFor="let item of exhibitions| slice:0:lastIndex;"
+    >
+      <div class="cont-inner">
+        <img
+          [src]="item.image | thumbs"
+          #exhibitionImage
+          (load)="exhibitionImage.style.opacity = 1"
+          alt=""
+        />
+      </div>
+
+      <div class="cont-txt">
+        <h3>{{item.title}}</h3>
+        <p>{{item.content}}</p>
+        <span>
+          {{item.startDate | date : 'yyyy.MM.dd'}} ~ {{item.endDate | date :
+          'yyyy.MM.dd'}}
+        </span>
+      </div>
+    </div>
+
+    <ion-infinite-scroll
+      (ionInfinite)="loadData($event)"
+      *ngIf="exhibitions?.length > lastIndex"
+    >
+      <ion-infinite-scroll-content loadingSpinner="bubbles">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-list>
+
+  <ion-fab id="scroll3" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="light" (click)="top()">
+      <img src="assets/imgs/shop/top.png" alt="페이지 상단으로 이동" />
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- 
+    없을 때
+   -->
+
+  <div class="cont-none" *ngIf="exhibitions?.length === 0">
+    진행중인 기획전이 없습니다.
+  </div>
+</ion-content>

@@ -1,0 +1,173 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>답글쓰기</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="feed-reply-container" *ngIf="comment">
+    <!-- 본댓글 -->
+    <div class="comment-wrapper">
+      <ion-item
+        class="comment-item"
+        [ngClass]="{'report': checkBlockedUser(comment.userId.id)}"
+      >
+        <!-- 프로필 -->
+        <div class="left">
+          <ion-avatar>
+            <img
+              src="{{comment?.userId.profileImage}}"
+              *ngIf="!checkBlockedUser(comment.userId.id)"
+              alt=""
+            />
+
+            <img
+              src="assets/imgs/icon-user-report.png"
+              *ngIf="checkBlockedUser(comment.userId.id)"
+              alt=""
+            />
+          </ion-avatar>
+        </div>
+        <div class="mid" *ngIf="checkBlockedUser(comment.userId.id)">
+          <ion-label>차단한 회원의 댓글입니다.</ion-label>
+        </div>
+        <div class="mid" *ngIf="!checkBlockedUser(comment.userId.id)">
+          <!-- 닉네임 -->
+          <ion-label class="nickname">{{comment?.userId.nickName}}</ion-label>
+          <!-- 댓글내용 -->
+          <ion-label class="txt">{{comment?.text}}</ion-label>
+          <!-- 시간 좋아요 답글 -->
+          <ion-label class="content">
+            <span class="time">{{comment?.dateCreated | dateFormat}}</span>
+            <ion-button
+              class="like"
+              [ngClass]="{'active': checkLikeComment(comment)}"
+              (click)="likeCommentToggle(comment)"
+            >
+              <img src="assets/imgs/icon-like.png" alt="" class="no" />
+              <img src="assets/imgs/icon-like-ac.png" alt="" class="ac" />
+              <span class="num">{{comment?.likedUsers.length}}</span>
+            </ion-button>
+          </ion-label>
+        </div>
+        <div class="right" (click)="showOption(comment)">
+          <ion-button>
+            <img src="assets/imgs/icon-more-sm.png" alt="" />
+          </ion-button>
+        </div>
+      </ion-item>
+    </div>
+
+    <!-- 리댓글 -->
+    <div class="comment-wrapper re">
+      <!-- 리댓글 -->
+      <ion-item
+        class="comment-item re"
+        *ngFor="let recomment of comment.recomments"
+        [ngClass]="{'report': checkBlockedUser(recomment.userId.id)}"
+      >
+        <!-- 프로필 -->
+        <div class="left">
+          <span class="icon">
+            <img src="assets/imgs/icon-re.png" alt="" />
+          </span>
+          <ion-avatar>
+            <img
+              src="{{recomment.userId.profileImage}}"
+              *ngIf="!checkBlockedUser(recomment.userId.id)"
+              alt=""
+            />
+            <img
+              src="assets/imgs/icon-user-report.png"
+              *ngIf=" checkBlockedUser(recomment.userId.id)"
+              alt=""
+            />
+          </ion-avatar>
+        </div>
+        <div class="mid" *ngIf=" checkBlockedUser(recomment.userId.id)">
+          <ion-label>차단한 회원의 댓글입니다.</ion-label>
+        </div>
+        <div class="mid" *ngIf="!checkBlockedUser(recomment.userId.id)">
+          <!-- 닉네임 -->
+          <ion-label class="nickname">{{recomment.userId.nickName}}</ion-label>
+          <!-- 댓글내용 -->
+          <ion-label class="txt">{{recomment.text}}</ion-label>
+          <!-- 시간 좋아요 답글 -->
+          <ion-label class="content">
+            <span class="time">{{recomment.dateCreated | dateFormat}}</span>
+            <ion-button
+              class="like"
+              (click)="likeCommentToggle(recomment)"
+              [ngClass]="{'active': checkLikeComment(recomment)}"
+            >
+              <img src="assets/imgs/icon-like.png" alt="" class="no" />
+              <img src="assets/imgs/icon-like-ac.png" alt="" class="ac" />
+              <span class="num">{{recomment.likedUsers.length}}</span>
+            </ion-button>
+          </ion-label>
+        </div>
+        <div class="right" (click)="showOptionRecomment(recomment)">
+          <ion-button>
+            <img src="assets/imgs/icon-more-sm.png" alt="" />
+          </ion-button>
+        </div>
+      </ion-item>
+
+      <!-- 차단한 회원의 댓글 -->
+      <!-- <ion-item class="comment-item report">
+        <div class="left">
+          <span class="icon">
+            <img src="assets/imgs/icon-re.png"
+              alt="" />
+          </span>
+          <ion-avatar>
+            <img src="assets/imgs/icon-user-report.png"
+              alt="" />
+          </ion-avatar>
+        </div>
+        <div class="mid">
+          <ion-label>차단한 회원의 댓글입니다.</ion-label>
+        </div>
+      </ion-item> -->
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <ion-textarea
+        inputmode="text"
+        type="text"
+        autoGrow
+        rows="1"
+        [(ngModel)]="recommentText"
+        enterkeyhint="done"
+        placeholder="답글을 남겨주세요."
+      ></ion-textarea>
+      <ion-button (click)="addReComment()">등록</ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

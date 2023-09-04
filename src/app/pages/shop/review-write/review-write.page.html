@@ -1,0 +1,119 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-button class="back" (click)="cancel()">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>{{header}}</ion-title>
+
+    <ion-button
+      class="save"
+      fill="default"
+      slot="end"
+      (click)="complete()"
+      [disabled]="!reviews.grade || !reviews.content"
+    >
+      완료
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <div class="cont-wrap">
+      <h2>상품</h2>
+
+      <ion-item *ngIf="product">
+        <ion-thumbnail slot="start">
+          <img [src]="product.productInfo.images[0]" />
+        </ion-thumbnail>
+
+        <ion-label>
+          {{product.productInfo.productName}}
+          <span *ngFor="let item of product.options">{{item.value}}</span>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <div class="cont-wrap">
+      <h2>평점</h2>
+
+      <div class="rating-wrap-write">
+        <mbsc-rating
+          [options]="formSettings"
+          [(ngModel)]="reviews.grade"
+          [(value)]="steps"
+          [step]=".5"
+          [min]="0"
+          [max]="5"
+          template="{value}/{max}"
+        >
+        </mbsc-rating>
+      </div>
+      <h2>내용</h2>
+      <ion-item class="mb-5 textarea-box">
+        <ion-textarea
+          placeholder="받아보신 상품은 어떠셨나요? 자세한 리뷰를 남겨주세요!"
+          type="text"
+          inputmode="text"
+          [(ngModel)]="reviews.content"
+          minlength="1"
+          maxlength="500"
+          (keyup)="lengthCheck()"
+        ></ion-textarea>
+      </ion-item>
+
+      <div class="text-info">{{reviews.content?.length}} / 500</div>
+    </div>
+
+    <div class="cont-wrap photo-wrap">
+      <h2>
+        사진
+        <span> (선택) </span>
+      </h2>
+
+      <div class="img-wrap-box">
+        <div
+          class="img-box-add"
+          *ngIf="reviews.images.length < 4"
+          (click)="camera()"
+        >
+          <div class="plus">
+            <img src="assets/imgs/shop/add.png" alt="" class="add" />
+
+            <span> {{reviews.images?.length}} / 4 </span>
+          </div>
+        </div>
+
+        <div
+          class="img-box-add"
+          *ngFor="let item of reviews.images; let i = index;"
+        >
+          <img [src]="item" alt="" />
+          <ion-button fill="default" (click)="delete(i)">
+            <img src="assets/imgs/shop/del.png" alt="" />
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>

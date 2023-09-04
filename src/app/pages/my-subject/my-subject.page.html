@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>관심 주제 설정</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list id="subject-container">
+    <ion-item *ngFor="let item of dataService.categories">
+      <ion-label>{{item.name}}</ion-label>
+      <ion-checkbox
+        slot="end"
+        (click)="updateInterested(item)"
+        [(ngModel)]="item.checked"
+      ></ion-checkbox>
+
+      <svg width="24px" height="24px" viewBox="0 0 24 24" class="off">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g transform="translate(-335.000000, -452.000000)">
+            <g transform="translate(335.000000, 452.000000)">
+              <rect class="fill-800" x="0" y="0" width="24" height="24"></rect>
+              <rect
+                class="stroke-600"
+                x="2.5"
+                y="2.5"
+                width="19"
+                height="19"
+              ></rect>
+              <line
+                x1="12"
+                y1="7"
+                x2="12"
+                y2="17"
+                class="stroke-600"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                class="stroke-600"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              ></line>
+            </g>
+          </g>
+        </g>
+      </svg>
+
+      <svg width="24px" height="24px" viewBox="0 0 24 24" class="on">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g transform="translate(-335.000000, -340.000000)">
+            <g transform="translate(335.000000, 340.000000)">
+              <rect class="fill-800" x="0" y="0" width="24" height="24"></rect>
+              <rect class="fill-main" x="2" y="2" width="20" height="20"></rect>
+              <polyline
+                class="stroke-800"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                points="16 9 10.5 14.5 8 12"
+              ></polyline>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </ion-item>
+  </ion-list>
+</ion-content>

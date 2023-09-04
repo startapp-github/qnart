@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>공지사항</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="noticeList?.length">
+    <ion-item *ngFor="let item of noticeList" (click)="goNoticeDetail(item)">
+      <ion-label>
+        <p class="title">{{item.title}}</p>
+        <p class="date">{{item.dateCreated | date:'YYYY.MM.dd'}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="noticeList?.length === 0" class="cont-none">
+    공지사항이 없습니다.
+  </div>
+</ion-content>

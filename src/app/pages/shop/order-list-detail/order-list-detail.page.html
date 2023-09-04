@@ -1,0 +1,157 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>주문 상세</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        *ngIf="order"
+        fill="default"
+        (click)="del()"
+        [disabled]="disabledCheck()"
+      >
+        삭제
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="order">
+    <div class="cont-wrap state">
+      <div>
+        <h2
+          [ngClass]="{'Preparing': order.status !== '배송완료' ||order.status !== '반품완료' || order.status !== '취소완료' || order.status !== '환불완료', 'Completion': order.status === '배송완료' || order.status === '반품완료' || order.status === '취소완료' || order.status === '환불완료'}"
+        >
+          {{order.status}}
+        </h2>
+
+        <span *ngIf="order.depositStatus"
+          >{{order.depositDate| date:'yyyy.MM.dd'}}</span
+        >
+        <span *ngIf="!order.depositStatus">입금대기중</span>
+      </div>
+    </div>
+
+    <div class="cont-wrap item-wrap">
+      <ng-container *ngFor="let item of order.cartIds">
+        <span
+          class="status-add"
+          *ngIf="item.productStatus && (item.productStatus !=='취소')"
+          [ngClass]="{'Preparing': !item.doneSwitch, 'Completion': item.doneSwitch}"
+        >
+          {{item.productStatus}}{{item.doneSwitch?'완료' : '대기'}}
+        </span>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img [src]="item.productInfo.images[0] | thumbs" />
+          </ion-thumbnail>
+
+          <ion-label>
+            <h4>{{item.productInfo.productName}}</h4>
+
+            <div class="item-box">
+              <div class="item-info">
+                <h5>
+                  <span
+                    *ngFor="let option of item.options; last as isLast"
+                    class="item-title"
+                  >
+                    {{option.value}}<ng-container *ngIf="!isLast"
+                      >,&nbsp;</ng-container
+                    ></span
+                  >
+                </h5>
+                X
+                <span class="number">{{item.count}}</span>
+              </div>
+
+              <h6>
+                <strong>
+                  {{item.productInfo.discountPrice ?
+                  (item.productInfo.discountPrice|number) :
+                  (item.productInfo.price|number)}}
+                </strong>
+                원
+              </h6>
+            </div>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+    </div>
+
+    <div class="cont-wrap info-Price">
+      <div>
+        <span> 상품 금액 </span>
+
+        <span> {{(order.totalPrice - deliveryCharge) | number:''}}원 </span>
+      </div>
+
+      <div class="deliveryCharge">
+        <span> 배송비 </span>
+
+        <span> {{deliveryCharge|number:''}}원 </span>
+      </div>
+
+      <div class="Final">
+        <strong> 최종 결제 금액 </strong>
+
+        <span> {{order.totalPrice | number:''}}원 </span>
+      </div>
+    </div>
+
+    <div class="top-box">
+      <h2>배송지</h2>
+
+      <div class="address">
+        <span class="address-detail">
+          {{order.address}}&nbsp;{{order.addressDetail}}
+        </span>
+
+        <span class="name"> {{order.recipient}} </span>
+
+        <span class="number"> {{order.deliveryPhone}} </span>
+        <ion-button
+          fill="defult"
+          (click)="showTrackingModal()"
+          *ngIf="order && (order.status !== '배송준비중' || order.status !== '취소대기' ||order.status !== '취소완료')"
+        >
+          배송 조회
+        </ion-button>
+      </div>
+    </div>
+  </ion-list>
+
+  <ion-fab
+    slot="fixed"
+    vertical="bottom"
+    horizontal="end"
+    class="c-fab-button"
+    (click)="goChat()"
+  >
+    <ion-fab-button class="write-btn">
+      <img src="assets/imgs/shop/fab-chat.png" alt="" />
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>차단 사용자 관리</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="black-container" *ngIf="( blockUserList$ | async ) as blockUserList">
+    <!-- 차단 사용자가 없는 경우 -->
+    <div class="list-none" *ngIf="!blockUserList.length">
+      <p>차단한 사용자가 없습니다.</p>
+    </div>
+
+    <!-- 차단 리스트 -->
+    <ion-list class="black-list" *ngIf="blockUserList.length">
+      <ion-item *ngFor="let item of blockUserList" lines="full">
+        <ion-label>
+          <ion-avatar>
+            <!-- 프로필이 없는 경우 -->
+            <!-- <img src="assets/imgs/icon-black-empty.png" alt="" /> -->
+            <!-- 프로필이 있는 경우 -->
+            <img [src]="item.profileImage" alt="" />
+          </ion-avatar>
+          {{item.nickName}}
+        </ion-label>
+        <!-- active 클래스가 생기면 [차단하기] css가 나타나게 작성하였습니다. -->
+        <ion-button (click)="userBlock(item)" class="active"
+          >차단해제</ion-button
+        >
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

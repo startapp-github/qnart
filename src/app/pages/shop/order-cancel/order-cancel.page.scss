@@ -1,0 +1,194 @@
+$gray: #5f5f5f;
+$gray2: #6f6f6f;
+$main: #1f1f1f;
+$main2: #333;
+$red: #ff3d1e;
+$blue: #0f85ff;
+$border: #f0f0f0;
+
+ion-toolbar {
+    ion-button {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+.cont {
+    border-bottom: 4px solid $border;
+    padding: 0 1rem;
+    h2 {
+        font-size: 1.125rem;
+        text-align: center;
+        line-height: 3rem;
+        padding: 1.9375rem 0 4rem;
+        font-weight: 500;
+        color: $main2;
+    }
+
+    .date {
+        display: block;
+        font-size: 1rem;
+        line-height: 1rem;
+        color: $gray;
+        margin-bottom: 0.5rem;
+    }
+
+    ion-item {
+        padding: 0.9375rem 0;
+        align-items: flex-start;
+        ion-thumbnail {
+            margin: 0;
+            width: 5.9375rem;
+            height: 5.9375rem;
+            margin-right: 0.8125rem;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        ion-label {
+            margin: 0;
+
+            h4 {
+                margin: 0;
+                margin-bottom: 1.25rem;
+                font-weight: 500;
+                color: $gray;
+                white-space: normal;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                max-height: 3.5625rem;
+                line-height: 1.1875rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .item-box {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                .item-info {
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+
+                    font-size: 1rem;
+                    font-weight: 500;
+                    color: $main;
+
+                    span {
+                        font-size: 1rem;
+                        line-height: 1.1875rem;
+                        font-weight: 500;
+                        margin-right: 0.625rem;
+                        color: $gray;
+                        display: block;
+                        white-space: pre-line;
+                    }
+
+                    h5 {
+                        margin: 0;
+                        display: flex;
+                        align-items: center;
+                        font-size: 1rem;
+                        font-weight: 500;
+                        color: $gray;
+                        line-height: 1.1875rem;
+                        margin-right: 0.625rem;
+                        white-space: pre-line;
+                    }
+
+                    .item-title {
+                        line-height: 1.1875rem;
+                        display: block;
+                        font-size: 1rem;
+                        font-weight: 500;
+                        color: $gray;
+
+                        // white-space: pre-line;
+                    }
+
+                    .number {
+                        margin-left: 0.625rem;
+                        font-size: 1rem;
+                        font-weight: 500;
+                        color: #333;
+                        background: #f0f0f0;
+                        border-radius: 4px;
+                        display: block;
+                        padding: 0 7px;
+                        line-height: 1.1875rem;
+                    }
+                }
+
+                h6 {
+                    font-size: 1rem;
+                    font-weight: 500;
+                    color: $main;
+
+                    strong {
+                        font-size: 1.125rem;
+                    }
+                }
+            }
+        }
+    }
+}
+.cont-item {
+    padding: 20px 1rem;
+}
+
+.info-Price {
+    padding: 20px 1rem;
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.6875rem;
+
+        span {
+            font-size: 1rem;
+            color: $gray;
+        }
+    }
+
+    .deliveryCharge {
+        margin-bottom: 1.25rem;
+    }
+
+    .Final {
+        margin-bottom: 0;
+        font-size: 1.125rem;
+        font-weight: bold;
+        color: $main;
+
+        span {
+            color: $main;
+        }
+    }
+}
+
+ion-buttons {
+    padding: 1.25rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .button-default {
+        width: calc(50% - 0.625rem);
+        height: 3.5rem;
+        --border-radius: 5px;
+        --border-style: solid;
+        --border-color: #ddd;
+        --border-width: 1px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        font-size: 1rem;
+        font-weight: 500;
+        color: $gray2;
+    }
+}

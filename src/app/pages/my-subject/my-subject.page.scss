@@ -1,0 +1,39 @@
+#subject-container {
+  ion-item {
+    ion-label {
+      padding: 1.125rem 4.26666666667%;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.25rem;
+    }
+    ion-checkbox {
+      width: 0;
+      height: 0;
+      // margin-right: 4.26666666667%;
+      // --size: 1.25rem;
+      // --border-width: 0;
+      // --border-radius: 0;
+      // --background: url(../../../assets/imgs/icon-my-check.png) no-repeat center center / 100% 100%;
+      // --background-checked: url(../../../assets/imgs/icon-my-check-ac.png) no-repeat center center / 100% 100%;
+      // --checkmark-width: 0;
+    }
+
+    svg {
+      margin-right: 4.26666666667%;
+    }
+    .on {
+      display: none;
+    }
+    .off {
+      display: block;
+    }
+    &.item-checkbox-checked {
+      .on {
+        display: block;
+      }
+      .off {
+        display: none;
+      }
+    }
+  }
+}

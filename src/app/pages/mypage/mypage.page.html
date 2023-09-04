@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>마이페이지</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="set" (click)="goSetting()"></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content>
+  <div id="mypage-container">
+    <div class="top">
+      <ion-item class="profile-wrapper" (click)="goProfileSet()">
+        <ion-label class="left">
+          <ion-avatar>
+            <img src="{{userService.userData?.profileImage}}" alt="" />
+          </ion-avatar>
+          <ion-label>
+            <p class="nickname">{{userService.userData?.nickName}}</p>
+            <p class="email">{{userService.userData?.email}}</p>
+          </ion-label>
+        </ion-label>
+        <span class="icon">
+          <img src="assets/imgs/icon-my-arrow.png" alt="" />
+        </span>
+      </ion-item>
+      <ion-item class="btn-wrapper">
+        <ion-label (click)="goMyWrite()">
+          <span class="icon l"></span>
+          <p class="text">내가 작성한 글</p>
+        </ion-label>
+        <ion-label (click)="goMyLike()">
+          <span class="icon m"></span>
+          <p class="text">좋아요한 글</p>
+        </ion-label>
+        <ion-label class="last" (click)="goMySubject()">
+          <span class="icon r"></span>
+          <p class="text">관심 주제 설정</p>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <ion-buttons class="middle-btns" *ngIf="dataService.type.includes('mall')">
+      <ion-button fill="default" (click)="goReview()">
+        <div>
+          <!-- <img src="assets/imgs/shop/mp-icon1.png" alt="상품 리뷰/문의" />  -->
+          상품 리뷰/문의
+        </div>
+      </ion-button>
+
+      <ion-button fill="default" (click)="goLike()">
+        <div>
+          <!-- <img src="assets/imgs/shop/mp-icon2.png" alt="찜한 상품" />  -->
+          찜한 상품
+        </div>
+      </ion-button>
+
+      <ion-button fill="default" (click)="goOrderList()">
+        <div>
+          <!-- <img src="assets/imgs/shop/mp-icon3.png" alt="주문 목록" />  -->
+          주문 목록
+        </div>
+      </ion-button>
+
+      <ion-button fill="default" (click)="goRefundList()">
+        <div>
+          <!-- <img src="assets/imgs/shop/mp-icon4.png" alt="취소/교환/반품" /> -->
+          취소/교환/반품
+        </div>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-list>
+      <ion-item (click)="goInquiry()">
+        <ion-label
+          >1:1 문의
+          <span class="icon">
+            <img src="assets/imgs/icon-my-arrow.png" alt="" />
+          </span>
+        </ion-label>
+      </ion-item>
+      <ion-item (click)="goCommonQusetion()">
+        <ion-label
+          >자주 묻는 질문
+          <span class="icon">
+            <img src="assets/imgs/icon-my-arrow.png" alt="" />
+          </span>
+        </ion-label>
+      </ion-item>
+      <ion-item (click)="goNotice()">
+        <ion-label
+          >공지사항
+          <span class="icon">
+            <img src="assets/imgs/icon-my-arrow.png" alt="" />
+          </span>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <ion-fab
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed"
+    *ngIf="!dataService.type.includes('mall') && !dataService.type.includes('chat')"
+  >
+    <ion-fab-button class="write-btn" (click)="feedWrite()">
+      <img src="assets/imgs/icon-tab-3.png" alt="" />
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

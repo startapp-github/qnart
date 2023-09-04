@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>취소·교환·반품</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="cartList">
+    <p class="cont-none" *ngIf="cartList?.length===0">목록이 없습니다.</p>
+    <div class="cont-box" *ngFor="let cart of cartList">
+      <div class="cont-title">
+        <span class="refund-info">
+          {{cart.productStatus}}{{cart.doneSwitch ? '완료':'대기'}}
+          <!-- 반품 완료 / 반품 대기 / 교환 완료 / 교환 대기 -->
+        </span>
+
+        <span class="date"> {{cart.dateCreated |date:'yyyy.MM.dd'}} </span>
+      </div>
+
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img [src]="cart.productInfo.images[0]" />
+        </ion-thumbnail>
+
+        <ion-label>
+          <h4>
+            {{cart.productInfo.productName}}&nbsp;
+            <ng-container *ngIf="cart.options && cart.options.length>0"
+              ><ng-container *ngFor="let option of cart.options; last as isLast"
+                >{{option.value}}<ng-container *ngIf="!isLast"
+                  >,&nbsp;</ng-container
+                ></ng-container
+              ></ng-container
+            >
+          </h4>
+
+          <div class="item-box">
+            <div class="item-info">
+              X
+              <span class="number">{{cart.count}}</span>
+            </div>
+
+            <h6>
+              <strong>
+                {{cart.productInfo.discountPrice?(cart.productInfo.discountPrice|number)
+                : (cart.productInfo.price|number)}}
+              </strong>
+              원
+            </h6>
+          </div>
+        </ion-label>
+      </ion-item>
+
+      <ion-buttons class="detail-btn">
+        <ion-button fill="default" (click)="goDetail(cart)">
+          상세보기
+        </ion-button>
+      </ion-buttons>
+    </div>
+  </ion-list>
+</ion-content>

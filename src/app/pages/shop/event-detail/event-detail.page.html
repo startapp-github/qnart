@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>기획전 상세</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <ng-container *ngIf="exhibition$ | async as exhibitions">
+    <ng-container *ngIf="exhibitions">
+      <div class="detail-img">
+        <img
+          [src]="exhibitions.detailImage | thumbs"
+          #detailImage
+          (load)="detailImage.style.opacity = 1"
+          alt=""
+        />
+      </div>
+
+      <p class="ex-title">{{exhibitions.title}}</p>
+      <p class="ex-content">{{exhibitions.content}}</p>
+
+      <ion-list *ngIf="exhibitions.productList.length>0">
+        <h2>
+          <strong> {{exhibitions.productList?.length}}</strong>
+          개 상품
+        </h2>
+
+        <div class="cont">
+          <div
+            class="cont-inner"
+            (click)="goItemDetail(item)"
+            *ngFor="let item of exhibitions.productList| slice:0:lastIndex;"
+          >
+            <div class="cont-img-inner">
+              <div class="cont-img">
+                <span *ngIf="item.stockCount === 0" class="sold-out">
+                  SOLD OUT
+                </span>
+                <img
+                  #swipeCardImage
+                  [src]="item.images[0] | thumbs"
+                  (load)="swipeCardImage.style.opacity = 1"
+                  alt="상품이미지"
+                />
+              </div>
+
+              <ion-button
+                fill="default"
+                *ngIf="!item.heart"
+                (click)="like(item);$event.stopPropagation();"
+              >
+                <img src="assets/imgs/shop/heart-btn.png" alt="" />
+              </ion-button>
+
+              <ion-button
+                fill="default"
+                *ngIf="item.heart"
+                (click)="like(item);$event.stopPropagation();"
+              >
+                <img src="assets/imgs/shop/heart-btn-ac.png" alt="" />
+              </ion-button>
+            </div>
+
+            <div class="cont-txt">
+              <h4>{{item.productName}}</h4>
+              <!-- 
+          원가 (할인율 있을 때)
+         -->
+              <span class="cost-price1" *ngIf="item.discountRate != 0">
+                {{item.price | number:''}}원
+              </span>
+
+              <!-- 
+          원가 (할인율 없을 때)
+         -->
+              <span class="cost-price2" *ngIf="item.discountRate == 0">
+                {{item.discountPrice | number:''}}원
+              </span>
+
+              <div class="sale" *ngIf="item.discountRate != 0">
+                <h5>{{item.discountPrice | number:''}}원</h5>
+
+                <span> {{item.discountRate}}% </span>
+              </div>
+              <div class="heart">
+                <img src="assets/imgs/shop/heart.png" alt="" />
+                <span> {{item.heartList?.length}} </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ion-infinite-scroll
+          (ionInfinite)="loadData($event)"
+          *ngIf="exhibitions.productList?.length > lastIndex"
+        >
+          <ion-infinite-scroll-content loadingSpinner="bubbles">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ion-list>
+
+      <div *ngIf="exhibitions.productList<1" class="cont-none">
+        등록된 상품이 없습니다.
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ion-fab id="scroll4" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="light" (click)="top()">
+      <img src="assets/imgs/shop/top.png" alt="페이지 상단으로 이동" />
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

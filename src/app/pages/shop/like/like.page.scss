@@ -1,0 +1,157 @@
+$main-txt: #3f3f3f;
+$main: #1f1f1f;
+$main2: #333;
+$gray: #bbbbbb;
+$line: #f7f7f7;
+
+$red: #ff3d1e;
+$gray2: #3f3f3f;
+/*
+* 컨텐츠
+*/
+.cont-item-box {
+    padding: 1.25rem 1rem;
+    h2 {
+        font-size: 1.125rem;
+        line-height: 1.3125rem;
+        margin-bottom: 0.9375rem;
+        color: $main;
+        font-weight: normal;
+        display: flex;
+        align-items: center;
+        strong {
+            display: block;
+        }
+    }
+
+    /*
+     * 컨텐츠
+     */
+    .cont {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .cont-inner {
+            width: calc(50% - 0.1563rem);
+            margin-bottom: 2.5rem;
+
+            .cont-img-inner {
+                position: relative;
+                margin-bottom: 0.625rem;
+
+                .cont-img {
+                    padding-bottom: 140%;
+                    position: relative;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        object-fit: cover;
+                    }
+                }
+
+                .button-default {
+                    z-index: 1;
+                    width: 1.5rem;
+                    position: absolute;
+                    --background: transparent;
+                    bottom: 0.3125rem;
+                    right: 0.3125rem;
+                }
+            }
+
+            .cont-txt {
+                min-height: 5rem;
+                h4 {
+                    font-size: 1rem;
+                    font-weight: normal;
+                    color: $main-txt;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin-bottom: 0.25rem;
+                }
+
+                .cost-price1 {
+                    display: block;
+                    font-size: 0.875rem;
+                    font-weight: normal;
+                    color: #999;
+                    text-decoration: line-through;
+                }
+                .cost-price2 {
+                    display: block;
+                    font-size: 1rem;
+                    font-weight: bold;
+                    color: #000;
+                }
+
+                .sale {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 2px;
+
+                    h5 {
+                        font-size: 1rem;
+                        font-weight: bold;
+                        color: #000;
+                    }
+
+                    span {
+                        display: block;
+                        font-size: 1rem;
+                        color: $red;
+                        font-weight: 500;
+                        line-height: 1.125rem;
+                    }
+                }
+
+                .heart {
+                    display: flex;
+                    align-items: center;
+                    img {
+                        width: 0.875rem;
+                        height: 0.875rem;
+                        margin-right: 3px;
+                    }
+                    span {
+                        display: block;
+                        font-size: 0.875rem;
+                        color: #999999;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cont-none {
+    height: calc(100vh - 3.5rem);
+    text-align: center;
+
+    h2 {
+        font-size: 1rem;
+        font-weight: 500;
+        color: $gray2;
+        margin-bottom: 1.5rem;
+    }
+
+    ion-button {
+        height: 3.5rem;
+        --box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+        --border-radius: 5px;
+        color: #333333;
+        font-size: 1rem;
+        --border-width: 1px;
+        --border-style: solid;
+        --border-color: #ddd;
+        --padding-start: 2.5rem;
+        --padding-end: 2.5rem;
+    }
+}

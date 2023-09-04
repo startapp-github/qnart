@@ -1,0 +1,123 @@
+#chat-container {
+    .top {
+        padding: 0.625rem 4.26666666667%;
+        background-color: #ededf2;
+        p {
+            display: flex;
+            align-items: flex-start;
+            font-weight: 400;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: #918f97;
+            &::before {
+                display: block;
+                content: "";
+                margin-right: 0.25rem;
+                width: 1.25rem;
+                height: 1.25rem;
+                background: url(../../../assets/imgs/icon-i.png) no-repeat center center / 100% 100%;
+            }
+        }
+    }
+
+    .chat-list {
+        ion-item {
+            --border-color: #d3d1d7;
+            &::part(native) {
+                align-items: center;
+            }
+            .profile {
+                position: relative;
+                margin: 1.25rem 3.2% 1.25rem 4.26666666667%;
+                width: 11.734%;
+                height: 0;
+                padding-bottom: 11.734%;
+                img {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    object-fit: cover;
+                }
+            }
+            .right {
+                padding: 1.25rem 4.26666666667%;
+                padding-left: 0;
+                ion-label {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+                }
+                .label-top {
+                    .name {
+                        font-weight: 600;
+                        font-size: 1rem;
+                        line-height: 1.5rem;
+                        color: #161616;
+                    }
+                    .time {
+                        font-weight: 400;
+                        font-size: 0.875rem;
+                        line-height: 1.5rem;
+                        color: #66656b;
+                    }
+                }
+                .label-bottom {
+                    .rows-ellipsis-title {
+                        flex: 1;
+                        margin-right: 4.26666666667%;
+                        font-weight: 400;
+                        font-size: 0.875rem;
+                        line-height: 1.25rem;
+                        color: #66656b;
+                    }
+                    ion-badge {
+                        padding: 0 0.25rem;
+                        min-width: 1.25rem;
+                        font-weight: 500;
+                        font-size: 0.875rem;
+                        line-height: 1.25rem;
+                        color: #ffffff;
+                        --background: #ffb833;
+                    }
+                }
+            }
+        }
+
+        ion-item-options {
+            padding: 0.25rem;
+            ion-item-option {
+                --color: #fff;
+                --background: transparent;
+                transition: background 0.1s;
+                &::part(native) {
+                    min-width: 3.75rem;
+                    background: #ededf2;
+                }
+                &.ion-activated {
+                    background: rgba(217, 217, 217, 0.75);
+                }
+                .icon {
+                    display: block;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    background: url(../../../assets/imgs/icon-empty.png) no-repeat center center / 100% 100%;
+                }
+            }
+        }
+    }
+}
+
+.list-none {
+    height: calc(100vh - 56px - 56px - (0.625rem * 2) - 1.25rem);
+}
+
+@media screen and (max-width: 300px) {
+    #chat-container {
+        .top {
+            p {
+                font-size: 0.8125rem;
+            }
+        }
+    }
+}

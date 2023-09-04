@@ -1,0 +1,471 @@
+/** @format */
+
+$red: #ff3d1e;
+$main: #1f1f1f;
+$gray: #999;
+
+.move {
+  animation-name: big;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-delay: 2s;
+  animation-iteration-count: 4;
+  animation-direction: alternate;
+  animation-fill-mode: none;
+  animation-play-state: running;
+  opacity: 1;
+  transition-duration: 0.15s;
+}
+
+ion-fab {
+  // bottom: 1.5625rem;
+  bottom: 0.9375rem;
+  ion-fab-button {
+    // --box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.5);
+    --background: #fff;
+    --background-activated: #fff;
+    --background-focused: #fff;
+    --background-hover: #fff;
+  }
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+ion-toolbar {
+  --ion-color-base: #fff !important;
+  ion-title {
+    img {
+      height: 1.25rem;
+      object-fit: contain;
+    }
+  }
+
+  ion-button {
+    position: relative;
+    --border-radius: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    height: 32px;
+    width: 2.25rem;
+    margin-right: 0.4375rem;
+
+    img {
+      width: 100%;
+    }
+    ion-badge {
+      position: absolute;
+      right: 8px;
+      top: 5px;
+      --background: #ff3d1e;
+      --color: transparent;
+      font-size: 0px;
+      text-indent: -99999px;
+      --padding-top: 0;
+      --padding-end: 0;
+      --padding-bottom: 0;
+      --padding-start: 0;
+      min-width: 5px;
+      max-width: 5px;
+      width: 5px;
+      min-height: 5px;
+      max-height: 5px;
+      height: 5px;
+    }
+  }
+}
+.category-btn {
+  margin-right: 0;
+  margin-left: 0.625rem;
+}
+
+ion-list {
+  .top-beener {
+    ion-slide {
+      height: 81.74%;
+
+      div {
+        height: 100%;
+        width: 100%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+
+          pointer-events: none;
+          // opacity: 0;
+          // transition: opacity 0.3s ease-in-out;
+        }
+      }
+    }
+  }
+
+  ion-segment {
+    --background: center / 100% no-repeat url(../../../../assets/imgs/shop/seg-back.png);
+    border-radius: 0;
+    margin-bottom: 1.875rem;
+
+    -ms-overflow-style: none; // IE에서 스크롤바 감춤
+    &::-webkit-scrollbar {
+      display: none !important; // 윈도우 크롬 등
+    }
+
+    ion-segment-button {
+      --background: none;
+      --background-checked: none;
+      --background-hover: none;
+      --background-hover-opacity: 0;
+      --background-focused: none;
+      --background-focused-opacity: 0;
+      --border-radius: 0;
+      --border-width: 1px;
+      --border-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12);
+      --border-style: solid;
+      --indicator-box-shadow: none;
+      --indicator-color: none;
+      --indicator-height: 100%;
+      --indicator-transition: transform 260ms cubic-bezier(0.4, 0, 0.2, 1);
+      --indicator-transform: none;
+      --transition: 100ms all linear;
+      --padding-top: 0.8125rem;
+      --padding-end: 1rem;
+      --padding-bottom: 1rem;
+      --padding-start: 1rem;
+      margin-top: 0;
+      margin-bottom: 0;
+      position: relative;
+      flex-basis: 0px;
+      flex-direction: row;
+      min-width: auto;
+      width: auto;
+      min-height: 3.125rem;
+      transform: translate3d(0px, 0px, 0px);
+      font-size: 1.125rem;
+      font-weight: 500;
+      line-height: 1.3125rem;
+      color: #595959;
+      position: relative;
+    }
+
+    ion-segment-button::after {
+      content: "";
+      box-shadow: 0 1px 1px rgb(0 0 0 / 8%);
+      display: block;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      height: 2px;
+    }
+
+    .segment-button-checked {
+      position: relative;
+      font-weight: bold;
+      color: var(--ion-color-main);
+    }
+    .segment-button-checked::after {
+      position: absolute;
+      bottom: 1px;
+      content: "";
+      width: 100%;
+      height: 2px;
+      background: var(--ion-color-main);
+      border-radius: 2px;
+    }
+
+    ion-segment-button:before {
+      display: none;
+    }
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.9375rem;
+    padding: 0 1rem;
+
+    h2 {
+      font-size: 1.125rem;
+      font-weight: bold;
+      color: $main;
+    }
+
+    .button-default {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #3f3f3f;
+      img {
+        width: 1.5rem;
+      }
+    }
+  }
+
+  .cartegory-cont-text {
+    min-height: 4.3125rem;
+
+    h3 {
+      font-weight: normal;
+      font-size: 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0.8125rem;
+    }
+
+    /*
+        * 할인률 있을 때
+        */
+    .costPrice1 {
+      display: block;
+      font-size: 0.875rem;
+      color: $gray;
+      text-decoration: line-through;
+    }
+
+    /*
+        * 할인률 있을 때
+        */
+    .costPrice2 {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .sale {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h4 {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #000;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      span {
+        display: block;
+        color: $red;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .cartegory-inner {
+    ion-slides {
+      width: calc(100% - 1rem - 0.6875rem);
+      padding-bottom: 3.125rem;
+
+      ion-slide {
+        margin-bottom: 1.875rem;
+      }
+    }
+
+    .cartegory-cont {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .cartegory-cont-inner {
+      width: calc(50% - 0.1563rem);
+      margin-bottom: 1.1875rem;
+      text-align: left;
+
+      .cartegory-cont-text {
+        min-height: 4.3125rem;
+      }
+
+      .inner-img {
+        width: 100%;
+        padding-bottom: 140%;
+        position: relative;
+        margin-bottom: 0.625rem;
+
+        img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out;
+        }
+      }
+    }
+  }
+
+  .beener {
+    width: 100%;
+    padding-bottom: 35%;
+    position: relative;
+    margin-bottom: 3.125rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+    }
+  }
+
+  .section2-slide {
+    display: flex;
+    align-items: center;
+    overflow-x: scroll;
+    margin-bottom: 3.125rem;
+
+    -ms-overflow-style: none; // IE에서 스크롤바 감춤
+    &::-webkit-scrollbar {
+      display: none !important; // 윈도우 크롬 등
+    }
+
+    .section-slide-inner {
+      min-width: 8.75rem;
+      width: 8.75rem;
+      margin-right: 0.875rem;
+      min-height: 13.8125rem;
+
+      .section-slide-img {
+        margin-bottom: 0.75rem;
+        width: 100%;
+        padding-bottom: 100%;
+        position: relative;
+
+        img {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          object-fit: cover;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out;
+        }
+      }
+    }
+
+    .section-slide-inner:first-of-type {
+      margin-left: 1rem;
+    }
+
+    .section-slide-inner:last-of-type {
+      position: relative;
+    }
+
+    .section-slide-inner:last-of-type::after {
+      content: "";
+      width: 1rem;
+      height: 1rem;
+      display: block;
+      position: absolute;
+      top: 0;
+      right: -1rem;
+    }
+  }
+
+  .section3 {
+    overflow: hidden;
+  }
+  .section3-slide {
+    display: flex;
+    align-items: flex-start;
+    overflow-x: scroll;
+    margin-bottom: 5rem;
+    -ms-overflow-style: none; // IE에서 스크롤바 감춤
+    &::-webkit-scrollbar {
+      display: none !important; // 윈도우 크롬 등
+    }
+
+    .section-mb-slide-inner {
+      min-width: 18.75rem;
+      margin-right: 0.875rem;
+      .section-mb-slide-img {
+        width: 100%;
+        padding-bottom: 66.67%;
+        margin-bottom: 0.75rem;
+        position: relative;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          position: absolute;
+          object-fit: cover;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out;
+        }
+      }
+
+      h5 {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: $main;
+        margin-bottom: 0.5rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      p {
+        margin: 0;
+        font-size: 1rem;
+        color: $gray;
+        white-space: pre-line;
+
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        max-height: 3rem;
+        line-height: 1.1875rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .section-mb-slide-inner:first-of-type {
+      margin-left: 1rem;
+    }
+
+    .section-mb-slide-inner:last-of-type {
+      position: relative;
+    }
+
+    .section-mb-slide-inner:last-of-type::after {
+      content: "";
+      width: 1rem;
+      height: 1rem;
+      display: block;
+      position: absolute;
+      top: 0;
+      right: -1rem;
+    }
+  }
+}
+
+.no-list {
+  min-height: 13.2066rem;
+  display: flex;
+  align-items: center !important;
+  justify-content: center !important;
+  p {
+    // width: 100%;
+    font-size: 1rem;
+    color: #494949;
+  }
+}

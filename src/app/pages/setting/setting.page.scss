@@ -1,0 +1,25 @@
+#setting-container {
+    ion-item {
+        ion-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.125rem 4.8% 1.125rem 4.26666666667%;
+            width: 100%;
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.25rem;
+        }
+
+        ion-toggle {
+            width: 2.75rem;
+            height: 1.5rem;
+            border-radius: 12px;
+            --handle-width: 1.25rem;
+            --handle-height: 1.25rem;
+            --handle-box-shadow: none;
+            --background: #d3d1d7;
+            --background-checked: var(--ion-color-main);
+        }
+    }
+}

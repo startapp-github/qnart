@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>배송 조회</ion-title>
+    <ion-button class="cancel" (click)="dismiss()" fill="defult" slot="end">
+      <img src="assets/imgs/shop/del.png" alt="" />
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="order">
+    <div class="wrap">
+      <div class="top-modal-box" *ngIf="order.companyCode">
+        <p><span>택배사</span>{{compay}}</p>
+        <p><span>송장번호</span>{{order.invoiceNum}}</p>
+      </div>
+      <ng-container *ngIf="trackingInfo">
+        <ng-container *ngIf="!trackingInfo.code">
+          <ion-grid fixed *ngIf="trackingInfo && trackingInfo.length>0">
+            <ion-row *ngFor="let info of trackingInfo">
+              <ion-col size="4"
+                >{{ info.timeString | date : 'yy-MM-dd HH:mm' }}</ion-col
+              >
+              <ion-col size="8" [ngClass]="{ done: info.kind == '배달완료' }"
+                >{{ info.where }} | {{ info.kind }}</ion-col
+              >
+            </ion-row>
+          </ion-grid>
+        </ng-container>
+        <div *ngIf="trackingInfo.code" class="err-box">
+          <span
+            >{{trackingInfo.msg || '배송 현황을 확인 할 수 없습니다.'}}</span
+          >
+        </div></ng-container
+      >
+
+      <ng-container *ngIf="!order.companyCode">
+        <div class="err-box">
+          <span>배송 현황을 확인 할 수 없습니다.</span>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</ion-content>

@@ -1,0 +1,102 @@
+ion-tabs {
+  position: relative;
+  ion-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    background: no-repeat center center / 100% 100%;
+  }
+
+  .write-btn {
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    // right: 12px;
+    // bottom: 70px;
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+}
+
+svg {
+  margin: 0.375rem;
+}
+
+ion-tab-button {
+  .off {
+    display: block;
+  }
+  .on {
+    display: none;
+  }
+  &.tab-selected {
+    .on {
+      display: block;
+    }
+    .off {
+      display: none;
+    }
+  }
+}
+
+.home {
+  ion-icon {
+    background-image: url(../../assets/imgs/icon-tab-1.png);
+  }
+  &.tab-selected {
+    ion-icon {
+      background-image: url(../../assets/imgs/icon-tab-1-ac.png);
+    }
+  }
+}
+
+.chat {
+  ion-icon {
+    background-image: url(../../assets/imgs/icon-tab-2.png);
+  }
+  &.tab-selected {
+    ion-icon {
+      background-image: url(../../assets/imgs/icon-tab-2-ac.png);
+    }
+  }
+}
+
+.push {
+  ion-icon {
+    background-image: url(../../assets/imgs/icon-tab-4.png);
+  }
+  &.tab-selected {
+    ion-icon {
+      background-image: url(../../assets/imgs/icon-tab-4-ac.png);
+    }
+  }
+}
+
+.mall {
+  .on {
+    display: none;
+  }
+  .off {
+    color: #666;
+  }
+  &.tab-selected {
+    .on {
+      display: block;
+      color: var(--ion-color-main);
+    }
+    .off {
+      display: none;
+    }
+  }
+}
+
+.my {
+  ion-icon {
+    background-image: url(../../assets/imgs/icon-tab-5.png);
+  }
+  &.tab-selected {
+    ion-icon {
+      background-image: url(../../assets/imgs/icon-tab-5-ac.png);
+    }
+  }
+}

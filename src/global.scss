@@ -1,0 +1,1632 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+*,
+html,
+body {
+  font-size: 16px; // rem 단위 폰트 지정
+  color: #161616;
+  --color: #161616;
+  font-weight: normal;
+  line-height: unset;
+  letter-spacing: unset;
+}
+
+/* You can add global styles to this file, and also import other style files */
+/*reset*/
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+address,
+em,
+img,
+ins,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+audio,
+video {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+body {
+  line-height: 1;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+main,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  box-sizing: border-box;
+  display: block;
+}
+ul,
+li,
+dl,
+dd,
+dt {
+  box-sizing: border-box;
+  list-style: none;
+}
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+input,
+select {
+  vertical-align: middle;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-style: none;
+  // object-fit: cover;
+}
+address {
+  font-style: normal;
+}
+button,
+input,
+textarea,
+select,
+a {
+  border: 0;
+  outline: none;
+  resize: none;
+  box-sizing: border-box;
+}
+
+input,
+select,
+button {
+  vertical-align: middle;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+}
+/** Correct the inability to style clickable types in iOS and Safari. */
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+/** * Remove the inner border and padding in Firefox. */
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+/** * Restore the focus styles unset by the previous rule. */
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+/** * 1. Add the correct box sizing in IE 10. * 2. Remove the padding in IE 10. */
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+/** * Correct the cursor style of increment and decrement buttons in Chrome. */
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+/** * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari. */
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+/** * Remove the inner padding in Chrome and Safari on macOS. */
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+/** * 1. Correct the inability to style clickable types in iOS and Safari.
+* 2. Change font properties to `inherit` in Safari. */
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+button {
+  cursor: pointer;
+}
+
+/*reset */
+
+/********** ionic reset ********/
+ion-header,
+ion-footer {
+  --min-height: 56px;
+  --background: #fff;
+}
+
+ion-toolbar {
+  --padding-top: 0.3125rem;
+  --padding-bottom: 0.3125rem;
+  --padding-start: 0.375rem;
+  --padding-end: 0.375rem;
+  --min-height: 56px;
+  --background: #fff;
+}
+
+.header-ios ion-toolbar:last-of-type {
+  --border-width: 0 0 0;
+}
+
+.footer-ios ion-toolbar:first-of-type {
+  --border-width: 0;
+}
+
+ion-tab-bar {
+  min-height: 56px;
+  --background: #fff;
+  --border-width: 0 0 1px;
+  --border-color: #d3d1d7;
+  ion-tab-button {
+    transition: all 0.05s ease;
+    ion-label {
+      font-weight: 400;
+      font-size: 0.75rem;
+      line-height: 0.8125rem;
+      letter-spacing: -0.4px;
+      color: #66656b;
+    }
+
+    &.tab-selected {
+      ion-label {
+        color: var(--ion-color-main);
+      }
+    }
+  }
+}
+// .home.tab-has-icon {
+//   background-image: url();
+//   &.tab-selected {
+//     background-image: url();
+//   }
+// }
+
+ion-label {
+  margin: 0;
+}
+.sc-ion-label-ios-s p {
+  margin-bottom: 0;
+}
+ion-list-header {
+  align-items: center;
+  padding: 0;
+  min-height: auto;
+}
+
+ion-card {
+  margin: 0;
+  border-radius: 0;
+  box-shadow: unset;
+}
+.card-content-ios p {
+  margin-bottom: 3.49854227405%;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.3125rem;
+  color: #66656b;
+  white-space: pre-line;
+  word-break: keep-all;
+}
+
+ion-card-header {
+  padding: 0;
+}
+ion-card-subtitle {
+  margin: 0;
+}
+
+ion-card-title {
+  font-weight: normal;
+}
+
+ion-card-content.card-content-ios {
+  padding: 0;
+  white-space: pre-line;
+}
+
+ion-segment {
+  --background: #fff;
+  border-radius: 0;
+}
+
+ion-segment-button {
+  margin: 0;
+  min-height: unset;
+  --border-width: 0;
+  --border-radius: 0;
+  --indicator-box-shadow: none;
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --min-height: unset;
+  --border-width: 0;
+  --inner-border-width: 0;
+  --background-activated: none;
+  --background-focused: none;
+  --background-hover: none;
+  --background-activated-opacity: 0;
+  --background-focused-opacity: 0;
+  --background-hover-opacity: 0;
+  &::part(native) {
+    padding: 0;
+  }
+}
+
+ion-badge {
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  padding: 0;
+}
+
+ion-button {
+  margin: 0;
+  height: auto;
+  --padding-start: 0;
+  --padding-end: 0;
+  --background-activated: none;
+  --background-focused: none;
+  --background-hover: none;
+  --border-radius: 0;
+  --background: transparent;
+  &.ion-activated {
+    opacity: 0.7;
+  }
+  &[disabled] {
+    opacity: 1;
+  }
+}
+
+.sc-ion-buttons-ios-s ion-button {
+  margin-inline-end: 0;
+  margin-inline-start: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+ion-button {
+  ion-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+ion-item-divider {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  min-height: auto;
+  --background: unset;
+}
+
+ion-grid,
+ion-col {
+  padding: 0;
+}
+
+ion-accordion {
+  ion-item {
+    --background-activated: #fff;
+  }
+}
+
+ion-radio,
+ion-checkbox {
+  margin: 0;
+}
+
+ion-select {
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --placeholder-opacity: 1;
+}
+
+ion-avatar {
+  --border-radius: 50%;
+  border-radius: 50%;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.sc-ion-input-ios-h,
+.sc-ion-textarea-ios-h {
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --placeholder-color: 1;
+  --placeholder-opacity: 1;
+  font-size: 1rem;
+  word-break: break-all;
+  white-space: pre-line;
+  caret-color: var(--ion-color-main);
+}
+.native-textarea.sc-ion-textarea-ios {
+  font-weight: 400;
+  font-size: 1rem;
+}
+.title-item {
+  ion-textarea {
+    .native-textarea.sc-ion-textarea-ios {
+      font-weight: 600;
+    }
+  }
+}
+.native-input[disabled].sc-ion-input-ios:not(.cloned-input) {
+  opacity: 1;
+}
+
+ion-searchbar {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.sc-ion-searchbar-ios-h {
+  padding: 0;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  --placeholder-opacity: 1;
+  word-break: break-all;
+  white-space: pre-line;
+}
+
+/********** ionic reset ********/
+
+////////그외 코드 참고사항
+
+//######### modal css #########
+//가로 세로 100%
+.modal-wrapper.sc-ion-modal-ios {
+  width: 100%;
+  border-radius: 0;
+}
+
+.comment-modal {
+  padding: 0 4.26666666667%;
+  --width: 100%;
+  --max-width: 280px;
+  --height: 100%;
+  --max-height: 250px;
+  --backdrop-opacity: 0.6 !important;
+  .modal-wrapper.sc-ion-modal-ios {
+    border-radius: 12px;
+  }
+}
+
+//######### alert css #########
+.alert {
+  padding: 0 4.26666666667%;
+  --max-width: 280px;
+  --width: 100%;
+  --backdrop-opacity: 0.6;
+  .alert-head {
+    padding: 0;
+  }
+  .alert-message {
+    padding: 1.75rem 1rem;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    white-space: pre-line;
+    word-break: keep-all;
+  }
+  .alert-button {
+    height: 3.125rem;
+    border-color: #d3d1d7;
+    span {
+      font-weight: 600;
+      font-size: 1.125rem;
+      line-height: 1.875rem;
+      color: var(--ion-color-main);
+    }
+  }
+
+  &.head {
+    .alert-head {
+      margin: 0;
+      padding-top: 1.75rem;
+      h2 {
+        font-weight: 600;
+        font-size: 1.125rem;
+        line-height: 1.4375rem;
+      }
+    }
+    .alert-message {
+      padding-top: 1rem;
+    }
+  }
+  &.confirm {
+    .alert-button {
+      height: 3.125rem;
+      border-color: #d3d1d7;
+      span {
+        font-weight: 600;
+        font-size: 1.125rem;
+        line-height: 1.875rem;
+        color: var(--ion-color-main);
+      }
+      &:first-child {
+        span {
+          font-weight: 400;
+          color: #161616;
+        }
+      }
+    }
+  }
+  &.input {
+    &.lh {
+      .alert-message {
+        padding-bottom: 1rem;
+        line-height: 1.4rem;
+      }
+    }
+    .alert-wrapper {
+      background-color: #fff;
+    }
+    .alert-input-group {
+      input {
+        margin-top: 0;
+        padding: 0.75rem;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 1.25rem;
+        --placeholder-color: #918f97;
+        border-radius: 0;
+        border-color: #d3d1d7;
+        caret-color: var(--ion-color-main);
+      }
+    }
+    .alert-button-group {
+      .alert-button {
+        span {
+          font-weight: 400;
+          color: #161616;
+        }
+        &.alert-cancel {
+          span {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}
+.alert-title.sc-ion-alert-ios {
+  margin-top: 0;
+}
+
+//######### @mixin css #########
+//font style
+@mixin font($color: red, $weight, $size, $line) {
+  color: $color;
+  font: {
+    size: $size;
+    weight: $weight;
+  }
+  line-height: $line;
+}
+
+// //말줄임 1줄
+// .row-ellipsis {
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
+//   overflow: hidden;
+// }
+.rows-ellipsis-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  white-space: pre-line;
+}
+
+.row-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  white-space: pre-line;
+}
+//말줄인 3줄
+.rows-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  white-space: pre-line;
+}
+
+.list-none {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  p {
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: #918f97;
+    text-align: center;
+  }
+}
+
+.cont-none {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // height: calc(100% - 3.375rem);
+  height: 100%;
+  font-size: 1rem;
+  color: #999;
+  font-weight: normal;
+  line-height: 1.5rem;
+}
+
+// *************************** start.  색상 공통
+// 색상 - Gray Scale
+.fill-0 {
+  fill: #000;
+}
+.fill-100 {
+  fill: var(--ion-color-step-100);
+}
+.fill-200 {
+  fill: var(--ion-color-step-200);
+}
+.fill-300 {
+  fill: var(--ion-color-step-300);
+}
+.fill-400 {
+  fill: var(--ion-color-step-400);
+}
+.fill-500 {
+  fill: var(--ion-color-step-500);
+}
+.fill-600 {
+  fill: var(--ion-color-step-600);
+}
+.fill-700 {
+  fill: var(--ion-color-step-700);
+}
+.fill-800 {
+  fill: var(--ion-color-step-800);
+}
+
+// 색상
+.fill-main {
+  fill: var(--ion-color-main);
+}
+.fill-yellow {
+  fill: var(--ion-color-yellow);
+}
+.fill-red {
+  fill: var(--ion-color-red);
+}
+.fill-sub {
+  fill: var(--ion-color-sub);
+}
+
+// 색상 - Gray Scale
+.stroke-0 {
+  stroke: #000;
+}
+
+.stroke-100 {
+  stroke: var(--ion-color-step-100);
+}
+.stroke-200 {
+  stroke: var(--ion-color-step-200);
+}
+.stroke-300 {
+  stroke: var(--ion-color-step-300);
+}
+.stroke-400 {
+  stroke: var(--ion-color-step-400);
+}
+.stroke-500 {
+  stroke: var(--ion-color-step-500);
+}
+.stroke-600 {
+  stroke: var(--ion-color-step-600);
+}
+.stroke-700 {
+  stroke: var(--ion-color-step-700);
+}
+.stroke-800 {
+  stroke: var(--ion-color-step-800);
+}
+
+// 색상
+.stroke-main {
+  stroke: var(--ion-color-main);
+}
+.stroke-yellow {
+  stroke: var(--ion-color-yellow);
+}
+.stroke-red {
+  stroke: var(--ion-color-red);
+}
+.stroke-sub {
+  stroke: var(--ion-color-sub);
+}
+
+// *************************** end. 색상 공통
+
+// 백버튼
+.back-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+
+  ion-back-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 44px;
+    height: 44px;
+  }
+
+  .back-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .back {
+    margin: 0 auto;
+  }
+}
+
+// .show-back-button {
+//   width: 44px;
+//   height: 44px;
+//   background: url(./assets/imgs/icon-back-button.png) no-repeat center center / 100% 100%;
+// }
+
+.show-done-button {
+  width: 44px;
+  height: 44px !important;
+  background: url(./assets/imgs/icon-modal-done.png) no-repeat center center /
+    100% 100%;
+}
+
+//#############################
+ion-header {
+  ion-title {
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.25rem;
+  }
+}
+
+.search-header {
+  .sc-ion-searchbar-ios-h .searchbar-input.sc-ion-searchbar-ios {
+    padding-inline-start: 2.5rem;
+    min-height: 2.5rem;
+    font-size: 0.9375rem;
+  }
+  .searchbar-search-icon.sc-ion-searchbar-ios {
+    top: 0.5rem;
+    left: 0.5rem;
+    --icon-color: transparent;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: url(./assets/imgs/icon-searchbar.png) no-repeat center center /
+      100% 100%;
+  }
+  .searchbar-clear-button {
+    right: 0.5rem;
+    top: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    .searchbar-clear-icon.sc-ion-searchbar-ios {
+      right: 11px;
+      width: 1.5rem;
+      height: 1.5rem;
+      color: transparent;
+      background: url(./assets/imgs/icon-clear.png) no-repeat center center /
+        100% 100%;
+    }
+  }
+}
+
+//
+.input-wrapper {
+  ion-item {
+    &::part(native) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    ion-label {
+      margin-bottom: 3.49854227405%;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.75rem;
+    }
+    ion-input {
+      --padding-top: 0.75rem;
+      --padding-end: 0.75rem;
+      --padding-bottom: 0.75rem;
+      --padding-start: 0.75rem;
+      border: 1px solid #d3d1d7;
+      --placeholder-color: #918f97;
+    }
+    ion-label {
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.25rem;
+    }
+  }
+}
+
+// 벨리데이션
+.val {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  color: #ff4242;
+}
+
+* {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.picker {
+  --border-width: 0;
+  --border-color: transparent;
+  --backdrop-opacity: 0.5;
+  .picker-toolbar {
+    --border-width: 0;
+    --border-color: #d3d1d7;
+  }
+  .picker-above-highlight.sc-ion-picker-ios {
+    // top: -4px;
+    // height: 78px;
+    border-width: 0;
+  }
+  .picker-opts {
+    .picker-opt {
+      // height: 39px;
+      font-weight: 600;
+      font-size: 1rem;
+      background: #ededf2;
+      // background: red;
+    }
+  }
+  .picker-button {
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: #918f97;
+    &.picker-done {
+      font-weight: 600;
+      color: var(--ion-color-main);
+      &.ion-activated {
+        color: var(--ion-color-main);
+      }
+    }
+    &.ion-activated {
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.25rem;
+      color: #918f97;
+      opacity: 0.7;
+    }
+  }
+
+  .picker-col {
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+  }
+}
+
+.actionsheet {
+  width: 100%;
+  --max-width: 414px;
+  --backdrop-opacity: 0.5;
+  .action-sheet-container {
+    padding: 0 4.26666666667%;
+  }
+  .action-sheet-group {
+    border-radius: 12px;
+    background: #fff;
+    &:last-child {
+      margin-bottom: 1rem;
+    }
+    .action-sheet-button {
+      height: 3.1875rem;
+
+      span {
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 1.375rem;
+      }
+      &.sheet-cancel {
+        span {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+// swiper-pagination
+.swiper-pagination {
+  bottom: 24px !important;
+  .swiper-pagination-bullet-active {
+    background: var(--ion-color-main);
+  }
+}
+
+// toast
+.toast {
+  --start: 12px;
+  --end: 12px;
+  --max-height: 36px;
+  --height: 100%;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #fff;
+  text-align: center;
+  --border-radius: 12px;
+  --background: #3e3d42;
+  transform: translateY(-16px);
+  &::part(header) {
+    margin-bottom: 0;
+  }
+  &::part(button) {
+    font-size: inherit;
+  }
+}
+
+// 공지사항(notice), 자주묻는질문(common-question)
+#accordion-container {
+  mat-expansion-panel {
+    &.mat-expansion-panel:first-of-type,
+    &.mat-expansion-panel:last-of-type {
+      border-bottom-right-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+    }
+    &:not([class*="mat-elevation-z"]) {
+      border-bottom: 1px solid #d3d1d7;
+      box-shadow: unset;
+    }
+    .mat-expansion-panel-header {
+      padding: 1.125rem 4.26666666667%;
+      min-height: 56px;
+      height: auto;
+      mat-panel-title {
+        font-size: 1rem;
+        line-height: 1.25rem;
+        white-space: pre-line;
+        word-break: break-all;
+      }
+
+      .mat-expansion-indicator::after {
+        padding: 0;
+        width: 1.25rem;
+        height: 1.25rem;
+        border-width: 0;
+        background-color: red;
+        background: url(./assets/imgs/icon-accordion-down.png) no-repeat center
+          center / 100% 100%;
+        transform: none;
+      }
+    }
+    .mat-expansion-panel-body {
+      padding: 0.75rem 4.26666666667%;
+      background-color: #f0f0f4;
+      mat-label {
+        font-weight: 400;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        color: #66656b;
+        white-space: pre-line;
+        word-break: break-all;
+      }
+    }
+  }
+  .mat-expansion-panel-spacing {
+    margin: 0;
+  }
+}
+
+ion-fab-button {
+  --ripple-color: var(--ion-color-main);
+  --box-shadow: 0 2px 6px rgba(62, 61, 66, 0.3);
+  --background: var(--ion-color-main);
+  --background-activated: var(--ion-color-main);
+  --background-focuse: var(--ion-color-main);
+  --background-hover: var(--ion-color-main);
+  --background-focused: var(--ion-color-main);
+  z-index: 999;
+  width: 3.25rem;
+  height: 3.25rem;
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.flex-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+@media screen and (max-width: 320px) {
+  html,
+  body {
+    font-size: 15px;
+  }
+
+  .val {
+    font-size: 0.8125rem;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  html,
+  body {
+    font-size: 14px;
+  }
+}
+
+ion-icon {
+  --ionicon-stroke-width: 20px;
+}
+
+.dialog-modal {
+  ion-backdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 99;
+  }
+  .modal-wrapper.sc-ion-modal-ios {
+    position: absolute;
+    z-index: 100;
+    width: 280px;
+    height: 400px;
+    margin: auto;
+    box-shadow: 5px 9px 20px 1px rgb(0 0 0 / 40%);
+    border-radius: 6px;
+  }
+}
+
+.ion-accordion-toggle-icon {
+  margin: 0 !important;
+  background: url(./assets/imgs/icon-accordion-down.png) no-repeat right center /
+    1.25rem 1.25rem;
+}
+
+/* 쇼핑몰 global scss */
+/*
+ * 카테고리
+ */
+app-category {
+  // .mat-expansion-panel.mat-expanded.mat-expansion-panel-spacing {
+  //   border-top: 0.625rem solid #f7f8f9;
+  //   border-bottom: 0.625rem solid #f7f8f9;
+  // }
+  .mat-expansion-panel-header {
+    border-bottom: 1px solid #f7f8f9;
+    padding: 0 1rem;
+    height: 3.5rem;
+    font-weight: 500;
+    font-size: 1.125rem;
+    color: #333333;
+  }
+  .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+    box-shadow: none;
+  }
+
+  .mat-accordion .mat-expansion-panel:last-of-type {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .mat-accordion .mat-expansion-panel:first-of-type {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+
+  .mat-expansion-indicator {
+    width: 1.5rem;
+    height: 1.5rem;
+    background: url(./assets/imgs/shop/cartegory-icon.png) no-repeat;
+    background-position: center;
+    background-size: 1.5rem;
+    opacity: 1;
+  }
+  .mat-expansion-indicator::after {
+    display: none;
+  }
+
+  .mat-expansion-panel-header.mat-expanded {
+    height: 3.5rem;
+    font-weight: bold;
+    font-size: 1.125rem;
+    background: #fff !important;
+
+    .mat-expansion-panel-header-title {
+      color: var(--ion-color-main);
+    }
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0;
+  }
+  .mat-expansion-panel-spacing {
+    margin: 0;
+  }
+}
+
+//다음 주소 창
+.daum {
+  width: 100% !important;
+  height: 100% !important;
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 10 !important;
+}
+.popup-top {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 3.5625rem;
+  background-color: #fff;
+  border-bottom: 1px solid #eeeeee;
+
+  p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    font-weight: 500;
+    color: #161616;
+  }
+
+  ion-button {
+    position: absolute;
+    top: 50%;
+    right: 0.375rem;
+    transform: translateY(-50%);
+    width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem !important;
+    --background: transparent;
+    // background: url(./assets/imgs/shop/close.png) center / 1.7188rem no-repeat;
+  }
+}
+
+.header-seg {
+  ion-segment {
+    --background: url(./assets/imgs/shop/seg-back.png) no-repeat center center /
+      100% #fff;
+    border-radius: 0;
+    -ms-overflow-style: none; // IE에서 스크롤바 감춤
+    &::-webkit-scrollbar {
+      display: none !important; // 윈도우 크롬 등
+    }
+
+    ion-segment-button {
+      --background: none;
+      --background-checked: none;
+      --background-hover: none;
+      --background-hover-opacity: 0;
+      --background-focused: none;
+      --background-focused-opacity: 0;
+      --border-radius: 0;
+      --border-width: 1px;
+      --border-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12);
+      --border-style: solid;
+      --indicator-box-shadow: none;
+      --indicator-color: none;
+      --indicator-height: 100%;
+      --indicator-transition: transform 260ms cubic-bezier(0.4, 0, 0.2, 1);
+      --indicator-transform: none;
+      --transition: 100ms all linear;
+      --padding-top: 0.8125rem;
+      --padding-end: 1rem;
+      --padding-bottom: 1rem;
+      --padding-start: 1rem;
+      margin-top: 0;
+      margin-bottom: 0;
+      position: relative;
+      flex-basis: 0px;
+      flex-direction: row;
+      min-width: auto;
+      width: auto;
+      min-height: 3.125rem;
+      transform: translate3d(0px, 0px, 0px);
+      font-size: 1.125rem;
+      font-weight: 500;
+      line-height: 1.3125rem;
+      color: #595959;
+      position: relative;
+    }
+
+    ion-segment-button::after {
+      content: "";
+      box-shadow: 0 1px 1px rgb(0 0 0 / 8%);
+      display: block;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      height: 2px;
+    }
+
+    .segment-button-checked {
+      position: relative;
+      font-weight: bold;
+      color: var(--ion-color-main);
+    }
+    .segment-button-checked::after {
+      position: absolute;
+      bottom: 1px;
+      content: "";
+      width: 100%;
+      height: 2px;
+      background: var(--ion-color-main);
+      border-radius: 2px;
+    }
+
+    ion-segment-button:before {
+      display: none;
+    }
+  }
+}
+
+/*
+ * 알림
+ */
+.push-popup {
+  width: 100%;
+  max-height: 80vh;
+}
+
+ion-popover {
+  ion-radio-group {
+    ion-item {
+      text-align: center;
+      font-weight: normal;
+      font-size: 1rem;
+      color: #000;
+      &:not(:last-child) {
+        border-bottom: 1px solid #bbb;
+      }
+
+      ion-label {
+        padding: 0.8125rem 0.625rem;
+      }
+    }
+
+    .item-radio-checked {
+      font-weight: bold;
+      font-size: 1rem;
+      color: #000;
+    }
+
+    ion-radio {
+      width: 100%;
+      --color-checked: transparent;
+      --background: transparent;
+      position: absolute;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .popover-content.sc-ion-popover-ios {
+    overflow: hidden;
+    border: 1px solid #d8d8d8;
+    width: 9.375rem;
+    left: 56% !important;
+  }
+
+  .popover-arrow.sc-ion-popover-ios {
+    left: 82.66% !important;
+  }
+  .popover-arrow.sc-ion-popover-ios::after {
+    border-radius: 0;
+    border: 1px solid #d8d8d8;
+    z-index: 11;
+  }
+
+  .popover-viewport.sc-ion-popover-ios {
+    overflow: hidden;
+  }
+}
+
+ion-toolbar {
+  ion-buttons[slot="end"] {
+    ion-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0.875rem;
+      min-height: 0.875rem;
+      font-size: 0.625rem;
+      color: #fff;
+      padding-inline: 3px;
+      border-radius: 24px;
+      --background: var(--ion-color-main);
+    }
+  }
+}
+
+/*
+ * 별점
+ */
+.review-rating {
+  .mbsc-rating .mbsc-ic {
+    font-size: 1.75rem;
+    margin: 0;
+    color: transparent;
+  }
+
+  .mbsc-ios.mbsc-progress {
+    min-height: auto;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .mbsc-rating.mbsc-progress .mbsc-progress-cont {
+    padding: 0;
+    margin: 0;
+  }
+
+  .mbsc-ic::before {
+    background: url(./assets/imgs/shop/rating-emtpy.png) no-repeat;
+    background-size: 1.75rem;
+    background-position: center;
+  }
+
+  .mbsc-rating .mbsc-progress-cont .mbsc-progress-bar {
+    .mbsc-ic:before {
+      background: url(./assets/imgs/shop/rating.png) no-repeat !important;
+      background-size: 1.75rem !important;
+      background-position: center !important;
+      width: 1.75rem !important;
+      height: 1.75rem !important;
+    }
+  }
+}
+
+.rating-wrap {
+  .mbsc-rating .mbsc-ic {
+    font-size: 1.5rem;
+    margin: 0;
+    color: transparent;
+  }
+
+  .mbsc-ios.mbsc-progress {
+    min-height: auto;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .mbsc-rating.mbsc-progress .mbsc-progress-cont {
+    padding: 0;
+    margin: 0;
+  }
+
+  .mbsc-ic::before {
+    background: url(./assets/imgs/shop/rating-emtpy.png) no-repeat;
+    background-size: 1.5rem;
+    background-position: center;
+  }
+
+  .mbsc-rating .mbsc-progress-cont .mbsc-progress-bar {
+    .mbsc-ic:before {
+      background: url(./assets/imgs/shop/rating.png) no-repeat !important;
+      background-size: 1.5rem !important;
+      background-position: center !important;
+      width: 1.5rem !important;
+      height: 1.5rem !important;
+    }
+  }
+}
+
+.rating-wrap-write {
+  .mbsc-rating .mbsc-ic {
+    font-size: 2.5rem;
+    margin: 0;
+    color: transparent;
+  }
+
+  .mbsc-ios.mbsc-progress {
+    min-height: auto;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .mbsc-rating.mbsc-progress .mbsc-progress-cont {
+    padding: 0;
+    margin: 0;
+  }
+
+  .mbsc-ic::before {
+    background: url(./assets/imgs/shop/rating-emtpy-b.png) no-repeat;
+    background-size: 2.5rem;
+    background-position: center;
+  }
+
+  .mbsc-rating .mbsc-progress-cont .mbsc-progress-bar {
+    .mbsc-ic:before {
+      background: url(./assets/imgs/shop/rating-b.png) no-repeat !important;
+      background-size: 2.5rem !important;
+      background-position: center !important;
+      width: 2.5rem !important;
+      height: 2.5rem !important;
+    }
+  }
+
+  .mbsc-ios.mbsc-control-w:before,
+  .mbsc-ios.mbsc-control-w:after {
+    display: none;
+  }
+}
+
+app-product-detail {
+  .swiper-container-horizontal > .swiper-pagination-bullets {
+    bottom: 2.8125rem;
+  }
+  .inquiry {
+    .mat-expansion-panel-header {
+      // padding: 1.25rem 3.125rem 0.625rem 1rem;
+      padding: 1.25rem 3.125rem 1.25rem 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .mat-accordion .mat-expansion-panel:last-of-type {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .mat-accordion .mat-expansion-panel:first-of-type {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+
+    .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+      box-shadow: none;
+    }
+
+    .mat-expansion-indicator {
+      width: 1.5rem;
+      height: 1.5rem;
+      background: url(./assets/imgs/shop/cartegory-icon.png) no-repeat;
+      background-position: center;
+      background-size: 1.5rem;
+      opacity: 1;
+    }
+    .mat-expansion-indicator::after {
+      display: none;
+    }
+
+    .mat-expansion-panel-body {
+      padding: 0;
+    }
+
+    .mat-expansion-panel-spacing {
+      margin: 0;
+    }
+
+    .mat-expansion-panel-header-title {
+      margin: 0;
+    }
+  }
+}
+
+.select-box {
+  .alert-head.sc-ion-alert-ios {
+    padding-top: 1.125rem;
+    padding-bottom: 1.125rem;
+  }
+
+  .alert-tappable.sc-ion-alert-ios {
+    height: 3.125rem;
+    border-bottom: 1px solid #f7f8f9;
+
+    .alert-radio-label.sc-ion-alert-ios {
+      font-size: 1rem;
+      color: #333333;
+    }
+  }
+  .alert-tappable.sc-ion-alert-ios:last-child {
+    border-bottom: 0;
+  }
+  .alert-radio-group.sc-ion-alert-ios {
+    max-height: 70%;
+  }
+  // .alert-radio-icon.sc-ion-alert-ios {
+  //   width: 1.5rem;
+  //   height: 1.5rem;
+  //   min-width: 1.5rem;
+  // }
+  [aria-checked="true"] {
+    .alert-radio-label {
+      font-weight: bold;
+    }
+
+    .sc-ion-alert-ios .alert-radio-inner.sc-ion-alert-ios {
+      // left: -1rem;
+      // top: 0;
+      /* right: 1rem; */
+      // position: absolute;
+      // width: 1.5rem;
+      // height: 1.5rem;
+      // background: url(./assets/imgs/shop/check-select.png) no-repeat;
+      // background-position: center;
+      // background-size: 1.5rem;
+      border-color: var(--ion-color-main);
+      // transform: none;
+      // border-width: 0;
+    }
+  }
+
+  .alert-button.sc-ion-alert-ios:last-child {
+    font-weight: normal;
+  }
+}
+
+.select-box2 {
+  .alert-button.sc-ion-alert-ios {
+    font-weight: normal;
+  }
+
+  .alert-button.sc-ion-alert-ios:last-child {
+    font-weight: 600;
+  }
+}
+
+.buy-popup {
+  --background: transparent;
+}
+
+.buy-popup:first-of-type {
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.6);
+}
+app-product-detail-popup {
+  --background: transparent;
+
+  ion-content {
+    --background: transparent;
+  }
+}
+
+@import "~@mobiscroll/angular/dist/css/mobiscroll.scss";

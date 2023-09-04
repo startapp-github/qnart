@@ -1,0 +1,540 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>게시물 상세</ion-title>
+    <!-- 내 게시글이 아닐 땐 없어졍야 합니다! -->
+    <ion-buttons slot="end">
+      <ion-button class="more-btn" (click)="showPostOption()">
+        <img src="assets/imgs/icon-more.png" alt="" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="feed-detail-container">
+    <div class="feed-wrapper">
+      <!--
+      사진 두장인 경우 nth-2 class,
+      세장 이상인 경우 nth-3 class,
+      이미지가 없는 경우는 none-img class를 붙여 작업하였습니다.
+      -->
+      <ion-item [ngClass]="checkClass(post.data.images)">
+        <ion-card>
+          <div class="type">
+            {{dataService.getCategoryNameById(post.data.categoryId)}}
+          </div>
+          <ion-card-header>
+            <ion-card-title>{{post?.data.title}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>{{post?.data.text}}</p>
+            <!-- 이미지 -->
+            <div
+              class="card-img"
+              *ngIf="post.data.images.length"
+              (click)="imagesMoreModal(post.data.images)"
+            >
+              <div class="left">
+                <img src="{{post.data.images[0]}}" alt="" />
+              </div>
+              <div class="right">
+                <span class="top" *ngIf="post.data.images.length > 1">
+                  <img src="{{post.data.images[1]}}" alt="" />
+                </span>
+                <span class="bottom" *ngIf="post.data.images.length > 2">
+                  <img src="{{post.data.images[2]}}" alt="" />
+                </span>
+              </div>
+            </div>
+            <ion-label class="profile-wrapper">
+              <ion-avatar>
+                <img src="{{post?.createdBy.profileImage}}" alt="" />
+              </ion-avatar>
+              <p>
+                <span class="nickname">{{post.createdBy.nickName}}</span>
+                <span class="time"
+                  >{{post.data.dateCreated | dateFormat }}</span
+                >
+              </p>
+            </ion-label>
+            <ion-label class="layout">
+              <div>
+                <span class="icon view">
+                  <svg width="16px" height="12px" viewBox="0 0 16 12">
+                    <g
+                      stroke="none"
+                      stroke-width="1"
+                      fill="none"
+                      fill-rule="evenodd"
+                    >
+                      <g
+                        transform="translate(-2.000000, -4.000000)"
+                        class="stroke-300"
+                      >
+                        <path
+                          d="M10,4.5 C11.6800205,4.5 13.2385517,5.06760326 14.5291765,6.03557188 C15.8268635,7.00883714 16.8541087,8.38573295 17.4670305,10.0001237 C16.853979,11.6144409 15.8267816,12.9912243 14.5291765,13.9644281 C13.2385517,14.9323967 11.6800205,15.5 10,15.5 C8.31997952,15.5 6.76144835,14.9323967 5.47082352,13.9644281 C4.1731365,12.9911629 3.14589129,11.614267 2.53296947,9.99987629 C3.14602102,8.38555906 4.17321845,7.00877569 5.47082352,6.03557188 C6.76144835,5.06760326 8.31997952,4.5 10,4.5 Z"
+                        ></path>
+                        <path
+                          d="M10,7 C8.34,7 7,8.34 7,10 C7,11.66 8.34,13 10,13 C11.66,13 13,11.66 13,10 C13,8.34 11.66,7 10,7 L10,7 Z"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
+                </span>
+                <span class="num">{{post.data.checkUserNumber}}</span>
+              </div>
+              <!-- like-btn에 active class가 생기면 클릭 상태로 나타나게 작업하였습니담. -->
+              <div>
+                <ion-button
+                  class="like-btn"
+                  (click)="likeToggle()"
+                  [ngClass]="{'active': checkLike()}"
+                >
+                  <span class="icon">
+                    <svg
+                      width="14px"
+                      height="14px"
+                      viewBox="0 0 14 14"
+                      class="no"
+                    >
+                      <g
+                        stroke="none"
+                        stroke-width="1"
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <g transform="translate(-279.000000, -544.000000)">
+                          <rect x="0" y="0" width="375" height="1656"></rect>
+                          <g
+                            transform="translate(276.000000, 541.000000)"
+                            class="stroke-300"
+                          >
+                            <g transform="translate(3.000000, 3.000000)">
+                              <path
+                                d="M6.78104418,0.568982475 C7.11384561,0.464419044 7.48629753,0.475401832 7.82756625,0.624643821 C8.16160726,0.770725023 8.4109617,1.02606955 8.5439583,1.32946495 C8.67400319,1.62612684 8.69178935,1.96803848 8.56917084,2.29263776 L8.56917084,2.29263776 L7.4938957,5.14928437 L12.0016374,5.15021672 C12.4389151,5.1501799 12.8559148,5.33028742 13.1422944,5.64779809 C13.4199656,5.95565385 13.5462596,6.36371765 13.4846721,6.76666651 L13.4846721,6.76666651 L12.7917163,11.2852517 C12.7367631,11.6314038 12.5530288,11.9315893 12.2933959,12.1464536 C12.0268064,12.3670751 11.6803461,12.4982522 11.3082335,12.5 L11.3082335,12.5 L3.5,12.5 L3.5,4.92676291 L5.97683035,1.20819259 C6.15629989,0.892582885 6.44948539,0.673155478 6.78104418,0.568982475 Z"
+                                fill-rule="nonzero"
+                              ></path>
+                              <rect
+                                x="0.5"
+                                y="3.5"
+                                width="3"
+                                height="10"
+                                rx="1"
+                              ></rect>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+
+                    <svg
+                      width="14px"
+                      height="14px"
+                      viewBox="0 0 14 14"
+                      class="ac"
+                    >
+                      <g
+                        stroke="none"
+                        stroke-width="1"
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <g transform="translate(-170.000000, -590.000000)">
+                          <rect x="0" y="0" width="375" height="1233"></rect>
+                          <g transform="translate(167.000000, 587.000000)">
+                            <path
+                              d="M9.78104418,3.56898248 C10.1138456,3.46441904 10.4862975,3.47540183 10.8275663,3.62464382 C11.1616073,3.77072502 11.4109617,4.02606955 11.5439583,4.32946495 C11.6740032,4.62612684 11.6917894,4.96803848 11.5691708,5.29263776 L11.5691708,5.29263776 L10.4938957,8.14928437 L15.0016374,8.15021672 C15.4389151,8.1501799 15.8559148,8.33028742 16.1422944,8.64779809 C16.4199656,8.95565385 16.5462596,9.36371765 16.4846721,9.76666651 L16.4846721,9.76666651 L15.7917163,14.2852517 C15.7367631,14.6314038 15.5530288,14.9315893 15.2933959,15.1464536 C15.0268064,15.3670751 14.6803461,15.4982522 14.3082335,15.5 L14.3082335,15.5 L6.5,15.5 L6.5,7.92676291 L8.97683035,4.20819259 C9.15629989,3.89258288 9.44948539,3.67315548 9.78104418,3.56898248 Z"
+                              class="stroke-main"
+                              fill-rule="nonzero"
+                            ></path>
+                            <rect
+                              class="fill-main"
+                              x="3"
+                              y="6"
+                              width="4"
+                              height="11"
+                              rx="1"
+                            ></rect>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </span>
+
+                  <span class="num">{{post.data.likedUsers.length}}</span>
+                </ion-button>
+              </div>
+              <div>
+                <span class="icon comment">
+                  <svg width="14px" height="14px" viewBox="0 0 14 14">
+                    <g
+                      stroke="none"
+                      stroke-width="1"
+                      fill="none"
+                      fill-rule="evenodd"
+                    >
+                      <g transform="translate(-326.000000, -544.000000)">
+                        <rect x="0" y="0" width="375" height="812"></rect>
+                        <g
+                          transform="translate(323.000000, 541.000000)"
+                          class="stroke-300"
+                        >
+                          <path
+                            d="M10.3761535,3.49999098 C12.0918843,3.58748233 13.5692708,4.23364123 14.6446236,5.24573819 C15.7359422,6.27286183 16.410597,7.67525541 16.5000187,9.23691906 C16.5009588,10.5481745 16.2836815,11.4899313 15.8527267,12.3431443 C15.3354253,13.378195 14.5479753,14.2227409 13.6005704,14.8086361 C12.6531654,15.3945313 11.5458054,15.7217757 10.3875736,15.7222252 C9.37154168,15.7248742 8.37024058,15.4702128 7.47748259,14.9804595 L7.47748259,14.9804595 L3.79056942,16.2094306 L5.01954039,12.5225177 C4.5297872,11.6297536 4.27512566,10.6285382 4.27777651,9.61131628 C4.27822426,8.45419465 4.6054687,7.34683461 5.19136389,6.39942963 C5.77725907,5.45202465 6.62180499,4.66457474 7.658753,4.14632007 C8.50131392,3.72074057 9.432124,3.49936216 10.3761535,3.49999098 Z"
+                          ></path>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
+                </span>
+                <span class="num">{{post.comments.length}}</span>
+              </div>
+            </ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </div>
+
+    <!-- comment-wrapper가 한 댓글 영역입니다. -->
+    <div
+      class="comment-wrapper"
+      *ngFor="let item of ( comments$ | async ); trackBy: trackById "
+    >
+      <!-- 댓글 -->
+      <ion-item
+        class="comment-item"
+        [ngClass]="{'report': checkBlockedUser(item.userId.id)}"
+      >
+        <!-- 프로필 -->
+        <div class="left">
+          <ion-avatar>
+            <img
+              src="{{item.userId.profileImage}}"
+              *ngIf="!checkBlockedUser(item.userId.id)"
+              alt=""
+            />
+            <img
+              src="assets/imgs/icon-user-report.png"
+              *ngIf="checkBlockedUser(item.userId.id)"
+              alt=""
+            />
+          </ion-avatar>
+        </div>
+        <div class="mid" *ngIf="checkBlockedUser(item.userId.id)">
+          <ion-label>차단한 회원의 댓글입니다.</ion-label>
+        </div>
+        <div class="mid" *ngIf=" !checkBlockedUser(item.userId.id)">
+          <!-- 닉네임 -->
+          <ion-label class="nickname">{{item.userId.nickName}}</ion-label>
+          <!-- 댓글내용 -->
+          <ion-label class="txt">{{item.text}}</ion-label>
+          <!-- 시간 좋아요 답글 -->
+          <ion-label class="content">
+            <span class="time">{{item.dateCreated | dateFormat}}</span>
+            <ion-button
+              class="like"
+              [ngClass]="{'active': checkLikeComment(item)}"
+              (click)="likeCommentToggle(item)"
+            >
+              <!-- <img src="assets/imgs/icon-like.png" alt="" class="no" />
+              <img src="assets/imgs/icon-like-ac.png" alt="" class="ac" /> -->
+
+              <div class="icon">
+                <svg width="14px" height="14px" viewBox="0 0 14 14" class="no">
+                  <g
+                    stroke="none"
+                    stroke-width="1"
+                    fill="none"
+                    fill-rule="evenodd"
+                  >
+                    <g transform="translate(-279.000000, -544.000000)">
+                      <rect x="0" y="0" width="375" height="1656"></rect>
+                      <g
+                        transform="translate(276.000000, 541.000000)"
+                        class="stroke-300"
+                      >
+                        <g transform="translate(3.000000, 3.000000)">
+                          <path
+                            d="M6.78104418,0.568982475 C7.11384561,0.464419044 7.48629753,0.475401832 7.82756625,0.624643821 C8.16160726,0.770725023 8.4109617,1.02606955 8.5439583,1.32946495 C8.67400319,1.62612684 8.69178935,1.96803848 8.56917084,2.29263776 L8.56917084,2.29263776 L7.4938957,5.14928437 L12.0016374,5.15021672 C12.4389151,5.1501799 12.8559148,5.33028742 13.1422944,5.64779809 C13.4199656,5.95565385 13.5462596,6.36371765 13.4846721,6.76666651 L13.4846721,6.76666651 L12.7917163,11.2852517 C12.7367631,11.6314038 12.5530288,11.9315893 12.2933959,12.1464536 C12.0268064,12.3670751 11.6803461,12.4982522 11.3082335,12.5 L11.3082335,12.5 L3.5,12.5 L3.5,4.92676291 L5.97683035,1.20819259 C6.15629989,0.892582885 6.44948539,0.673155478 6.78104418,0.568982475 Z"
+                            fill-rule="nonzero"
+                          ></path>
+                          <rect
+                            x="0.5"
+                            y="3.5"
+                            width="3"
+                            height="10"
+                            rx="1"
+                          ></rect>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+
+                <svg width="14px" height="14px" viewBox="0 0 14 14" class="ac">
+                  <g
+                    stroke="none"
+                    stroke-width="1"
+                    fill="none"
+                    fill-rule="evenodd"
+                  >
+                    <g transform="translate(-170.000000, -590.000000)">
+                      <rect x="0" y="0" width="375" height="1233"></rect>
+                      <g transform="translate(167.000000, 587.000000)">
+                        <path
+                          d="M9.78104418,3.56898248 C10.1138456,3.46441904 10.4862975,3.47540183 10.8275663,3.62464382 C11.1616073,3.77072502 11.4109617,4.02606955 11.5439583,4.32946495 C11.6740032,4.62612684 11.6917894,4.96803848 11.5691708,5.29263776 L11.5691708,5.29263776 L10.4938957,8.14928437 L15.0016374,8.15021672 C15.4389151,8.1501799 15.8559148,8.33028742 16.1422944,8.64779809 C16.4199656,8.95565385 16.5462596,9.36371765 16.4846721,9.76666651 L16.4846721,9.76666651 L15.7917163,14.2852517 C15.7367631,14.6314038 15.5530288,14.9315893 15.2933959,15.1464536 C15.0268064,15.3670751 14.6803461,15.4982522 14.3082335,15.5 L14.3082335,15.5 L6.5,15.5 L6.5,7.92676291 L8.97683035,4.20819259 C9.15629989,3.89258288 9.44948539,3.67315548 9.78104418,3.56898248 Z"
+                          class="stroke-main"
+                          fill-rule="nonzero"
+                        ></path>
+                        <rect
+                          class="fill-main"
+                          x="3"
+                          y="6"
+                          width="4"
+                          height="11"
+                          rx="1"
+                        ></rect>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              <span class="num">{{item.likedUsers.length}}</span>
+            </ion-button>
+            <ion-button class="reply-btn" (click)="goFeedReply(item)">
+              <span class="icon"></span>
+              답글쓰기
+            </ion-button>
+          </ion-label>
+        </div>
+        <div class="right" (click)="showOption(item)">
+          <ion-button>
+            <img src="assets/imgs/icon-more-sm.png" alt="" />
+          </ion-button>
+        </div>
+      </ion-item>
+      <!-- 리댓글엔 comment-item에 re class가 추가됩니다.)-->
+      <!-- 답글쓰기 버튼이 없어야 해용 -->
+      <ion-item
+        class="comment-item re"
+        [ngClass]="{'report': checkBlockedUser(recomment.userId.id)}"
+        *ngFor="let recomment of item.recomments; trackBy: trackById"
+      >
+        <!-- 프로필 -->
+        <div class="left">
+          <span class="icon">
+            <img src="assets/imgs/icon-re.png" alt="" />
+          </span>
+          <ion-avatar>
+            <img
+              src="{{recomment.userId.profileImage}}"
+              *ngIf=" !checkBlockedUser(recomment.userId.id)"
+              alt=""
+            />
+            <img
+              src="assets/imgs/icon-user-report.png"
+              *ngIf=" checkBlockedUser(recomment.userId.id)"
+              alt=""
+            />
+          </ion-avatar>
+        </div>
+        <div class="mid" *ngIf=" checkBlockedUser(recomment.userId.id)">
+          <ion-label>차단한 회원의 댓글입니다.</ion-label>
+        </div>
+        <div class="mid" *ngIf=" !checkBlockedUser(recomment.userId.id)">
+          <!-- 닉네임 -->
+          <ion-label class="nickname">{{recomment.userId.nickName}}</ion-label>
+          <!-- 댓글내용 -->
+          <ion-label class="txt">{{recomment.text}}</ion-label>
+          <!-- 시간 좋아요 답글 -->
+          <ion-label class="content">
+            <span class="time">{{recomment.dateCreated | dateFormat}}</span>
+            <ion-button
+              class="like"
+              (click)="likeCommentToggle(recomment)"
+              [ngClass]="{'active': checkLikeComment(recomment)}"
+            >
+              <div class="icon">
+                <svg width="14px" height="14px" viewBox="0 0 14 14" class="no">
+                  <g
+                    stroke="none"
+                    stroke-width="1"
+                    fill="none"
+                    fill-rule="evenodd"
+                  >
+                    <g transform="translate(-279.000000, -544.000000)">
+                      <rect x="0" y="0" width="375" height="1656"></rect>
+                      <g
+                        transform="translate(276.000000, 541.000000)"
+                        class="stroke-300"
+                      >
+                        <g transform="translate(3.000000, 3.000000)">
+                          <path
+                            d="M6.78104418,0.568982475 C7.11384561,0.464419044 7.48629753,0.475401832 7.82756625,0.624643821 C8.16160726,0.770725023 8.4109617,1.02606955 8.5439583,1.32946495 C8.67400319,1.62612684 8.69178935,1.96803848 8.56917084,2.29263776 L8.56917084,2.29263776 L7.4938957,5.14928437 L12.0016374,5.15021672 C12.4389151,5.1501799 12.8559148,5.33028742 13.1422944,5.64779809 C13.4199656,5.95565385 13.5462596,6.36371765 13.4846721,6.76666651 L13.4846721,6.76666651 L12.7917163,11.2852517 C12.7367631,11.6314038 12.5530288,11.9315893 12.2933959,12.1464536 C12.0268064,12.3670751 11.6803461,12.4982522 11.3082335,12.5 L11.3082335,12.5 L3.5,12.5 L3.5,4.92676291 L5.97683035,1.20819259 C6.15629989,0.892582885 6.44948539,0.673155478 6.78104418,0.568982475 Z"
+                            fill-rule="nonzero"
+                          ></path>
+                          <rect
+                            x="0.5"
+                            y="3.5"
+                            width="3"
+                            height="10"
+                            rx="1"
+                          ></rect>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+
+                <svg width="14px" height="14px" viewBox="0 0 14 14" class="ac">
+                  <g
+                    stroke="none"
+                    stroke-width="1"
+                    fill="none"
+                    fill-rule="evenodd"
+                  >
+                    <g transform="translate(-170.000000, -590.000000)">
+                      <rect x="0" y="0" width="375" height="1233"></rect>
+                      <g transform="translate(167.000000, 587.000000)">
+                        <path
+                          d="M9.78104418,3.56898248 C10.1138456,3.46441904 10.4862975,3.47540183 10.8275663,3.62464382 C11.1616073,3.77072502 11.4109617,4.02606955 11.5439583,4.32946495 C11.6740032,4.62612684 11.6917894,4.96803848 11.5691708,5.29263776 L11.5691708,5.29263776 L10.4938957,8.14928437 L15.0016374,8.15021672 C15.4389151,8.1501799 15.8559148,8.33028742 16.1422944,8.64779809 C16.4199656,8.95565385 16.5462596,9.36371765 16.4846721,9.76666651 L16.4846721,9.76666651 L15.7917163,14.2852517 C15.7367631,14.6314038 15.5530288,14.9315893 15.2933959,15.1464536 C15.0268064,15.3670751 14.6803461,15.4982522 14.3082335,15.5 L14.3082335,15.5 L6.5,15.5 L6.5,7.92676291 L8.97683035,4.20819259 C9.15629989,3.89258288 9.44948539,3.67315548 9.78104418,3.56898248 Z"
+                          class="stroke-main"
+                          fill-rule="nonzero"
+                        ></path>
+                        <rect
+                          class="fill-main"
+                          x="3"
+                          y="6"
+                          width="4"
+                          height="11"
+                          rx="1"
+                        ></rect>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              <span class="num">{{recomment.likedUsers.length}}</span>
+            </ion-button>
+          </ion-label>
+        </div>
+        <div class="right" (click)="showOptionRecomment(recomment)">
+          <ion-button>
+            <img src="assets/imgs/icon-more-sm.png" alt="" />
+          </ion-button>
+        </div>
+      </ion-item>
+      <!-- 차단한 회원의 리댓글은 re, report class가 추가됩니다.-->
+      <!-- <ion-item class="comment-item re report">
+        <div class="left">
+          <span class="icon"></span>
+          <ion-avatar>
+            <img src="assets/imgs/icon-user-report.png"
+              alt="" />
+          </ion-avatar>
+        </div>
+        <div class="mid">
+          <ion-label>차단한 회원의 댓글입니다.</ion-label>
+        </div>
+      </ion-item> -->
+    </div>
+
+    <!-- <div class="comment-wrapper"> -->
+    <!-- 차단한 회원의 리댓글이 아닐 땐 report class만 들어갑니다.-->
+    <!-- <ion-item class="comment-item report">
+        <div class="left">
+          <span class="icon"></span>
+          <ion-avatar>
+            <img src="assets/imgs/icon-user-report.png"
+              alt="" />
+          </ion-avatar>
+        </div>
+        <div class="mid">
+          <ion-label>차단한 회원의 댓글입니다.</ion-label>
+        </div>
+      </ion-item>
+    </div> -->
+
+    <!-- <div class="comment-wrapper">
+      <ion-item class="comment-item">
+        <div class="left">
+          <ion-avatar>
+            <img src="assets/samples/profile.png"
+              alt="" />
+          </ion-avatar>
+        </div>
+        <div class="mid">
+          <ion-label class="nickname">뀨???</ion-label>
+          <ion-label class="txt">내놔요</ion-label>
+          <ion-label class="content">
+            <span class="time">10분 전</span>
+            <ion-button class="like">
+              <img src="assets/imgs/icon-like.png"
+                alt=""
+                class="no" />
+              <img src="assets/imgs/icon-like-ac.png"
+                alt=""
+                class="ac" />
+              <span class="num">0</span>
+            </ion-button>
+            <ion-button class="reply-btn"
+              (click)="goFeedReply()">
+              <span class="icon"></span>
+              답글쓰기
+            </ion-button>
+          </ion-label>
+        </div>
+        <div class="right"
+          (click)="userCommentSheet()">
+          <ion-button>
+            <img src="assets/imgs/icon-more-sm.png"
+              alt="" />
+          </ion-button>
+        </div>
+      </ion-item>
+    </div> -->
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <ion-textarea
+        inputmode="text"
+        type="text"
+        autoGrow
+        rows="1"
+        [(ngModel)]="commentText"
+        enterkeyhint="done"
+        placeholder="댓글을 남겨주세요."
+      ></ion-textarea>
+      <ion-button (click)="addComment()" [disabled]="commentText.length === 0"
+        >등록</ion-button
+      >
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

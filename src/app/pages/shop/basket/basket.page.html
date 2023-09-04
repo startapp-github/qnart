@@ -1,0 +1,155 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>장바구니</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="carts && carts?.length>0">
+    <div class="top">
+      <ion-item [disabled]="!carts || carts?.length<1">
+        <ion-checkbox
+          (click)="checkCart(1)"
+          [(ngModel)]="allChecked"
+          slot="start"
+        ></ion-checkbox>
+        전체선택
+      </ion-item>
+
+      <ion-button
+        [disabled]="!carts || carts?.length<1"
+        fill="default"
+        (click)="allDel()"
+      >
+        삭제 ({{checkItems?.length || 0}})
+      </ion-button>
+    </div>
+
+    <div class="cont-wrap">
+      <div class="item-wrap" *ngFor="let cart of carts">
+        <ion-item>
+          <ion-checkbox
+            slot="start"
+            [(ngModel)]="cart.check"
+            (click)="$event.stopPropagation();checkCart(2)"
+          ></ion-checkbox>
+
+          <ion-thumbnail slot="start">
+            <img [src]="cart.productInfo.images[0] " />
+            <span class="sold-out" *ngIf="cart.productId.stockCount<1">
+              SOLD OUT
+            </span>
+          </ion-thumbnail>
+
+          <ion-label>
+            <h4>{{cart.productInfo.productName}}</h4>
+
+            <div class="item-box">
+              <h5>
+                <ng-container
+                  *ngFor="let option of cart.options; last as isLast"
+                  >{{option.value}}<ng-container *ngIf="!isLast"
+                    >,&nbsp;</ng-container
+                  >
+                </ng-container>
+              </h5>
+
+              <h6>
+                <strong> {{cart.totalPrice | number:''}} </strong>
+                원
+              </h6>
+            </div>
+          </ion-label>
+        </ion-item>
+
+        <div class="item-btn">
+          <ion-button fill="default" class="del" (click)="ItemDel(cart)">
+            삭제
+          </ion-button>
+
+          <div class="item-box-number">
+            <div class="count">
+              <ion-button
+                fill="default"
+                class="minus"
+                (click)="decreaseAmount(cart)"
+                [disabled]="2 > cart.count || cart.productId.stockCount<1"
+              >
+                -
+              </ion-button>
+              <div class="number">{{cart.count}}</div>
+
+              <ion-button
+                fill="default"
+                class="plus"
+                (click)="increaseAmount(cart)"
+                [disabled]="cart.productId.stockCount <= cart.count || cart.productId.stockCount<1"
+              >
+                +
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pay-info">
+      <div>
+        <span> 상품 금액 </span>
+        <span> {{ totalPrice() |number:''}}원 </span>
+      </div>
+
+      <div>
+        <span> 배송비 </span>
+        <span> {{deliveryCharge|number:''}}원 </span>
+      </div>
+    </div>
+
+    <div class="pay-info-all">
+      <span> 총 결제 금액 </span>
+
+      <span> {{ (totalPrice() + deliveryCharge) |number:''}}원 </span>
+    </div>
+  </ion-list>
+  <ion-list class="cont-none" *ngIf="!carts || carts?.length<1">
+    <div>
+      <h2>장바구니가 비었습니다.</h2>
+      <ion-button fill="default" (click)="goRecommend()">
+        상품 보러가기
+      </ion-button>
+    </div>
+  </ion-list>
+</ion-content>
+
+<ng-container *ngIf="carts && carts?.length>0">
+  <ion-footer>
+    <div class="footer-inner">
+      <ion-button fill="default" expand="block" (click)="goOrder()">
+        구매하기
+      </ion-button>
+    </div>
+  </ion-footer>
+</ng-container>

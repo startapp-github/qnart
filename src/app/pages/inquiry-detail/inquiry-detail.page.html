@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>1:1 문의</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="del" (click)="inquiryDelete()">삭제</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="inquiry-detail-container" *ngIf="inquiry">
+    <ion-item class="quest-wrapper">
+      <div class="quest-inner">
+        <div class="top">
+          <p>
+            <span>{{userService.userData?.nickName}}님의</span> 문의 내용입니다.
+          </p>
+        </div>
+
+        <div class="detail">
+          <div class="detail-title">
+            <h4>제목</h4>
+            <p>{{inquiry?.title}}</p>
+          </div>
+          <div class="detail-content">
+            <h4>내용</h4>
+            <p>{{inquiry?.text}}</p>
+          </div>
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item class="answer-wrapper" *ngIf="inquiry.isAnswer">
+      <div class="answer-inner">
+        <!-- 여기가 데이터 들어갈 곳 -->
+        <div>
+          <h4>답변 내용입니다.</h4>
+          <p><b>Re: {{inquiry?.answer | slice: 0:10 }}</b></p>
+          <p class="text">{{inquiry?.answer }}</p>
+        </div>
+      </div>
+    </ion-item>
+  </div>
+</ion-content>

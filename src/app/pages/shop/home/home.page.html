@@ -1,0 +1,274 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 카테고리 메뉴 버튼 -->
+    <ion-buttons slot="start">
+      <ion-button class="category-btn" (click)="goCategory()">
+        <ion-icon name="menu-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title> 쇼핑몰 </ion-title>
+
+    <!-- 장바구니 버튼 -->
+    <ion-buttons slot="end">
+      <ion-button (click)="goBasket()">
+        <ion-icon name="cart-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <ion-list *ngIf="slideLoading">
+    <ion-slides class="top-beener" [pager]="mainPagerSwitch" #mainSlides>
+      <ion-slide *ngFor="let item of mainBanners">
+        <div (click)="goUrl(item.url)">
+          <img [src]="item.image" #bannerImage [@inAnimation] alt="" />
+        </div>
+      </ion-slide>
+    </ion-slides>
+
+    <ion-segment
+      scrollable
+      [(ngModel)]="cartegory"
+      (ionChange)="segmentChange()"
+    >
+      <ion-segment-button *ngFor="let item of topCategories" [value]="item.id"
+        >{{item.title}}</ion-segment-button
+      >
+    </ion-segment>
+
+    <div class="cartegory-inner" [ngSwitch]="cartegory">
+      <!-- *ngSwitchCase="'상의'" -->
+      <ion-list [ngClass]="{'none-pager': !slideSwitch}">
+        <div class="section-title">
+          <h2>인기 상품</h2>
+
+          <ion-button fill="default" (click)="goPopular()">
+            더보기
+            <img src="assets/imgs/shop/more2.png" alt="" />
+          </ion-button>
+        </div>
+
+        <ion-slides class="popular-slides" pager [options]="slideOpts">
+          <ion-slide *ngIf="popularItems && popularItems.length === 0">
+            <div class="cartegory-cont no-list">
+              <p>해당 카테고리에 인기상품이 없습니다.</p>
+            </div>
+          </ion-slide>
+          <ion-slide *ngIf="popularItems && popularItems.length > 0">
+            <div class="cartegory-cont">
+              <!-- 
+                ngfor 돌 곳
+               -->
+              <div
+                *ngFor="let item of popularItems | slice:0:4"
+                class="cartegory-cont-inner"
+                (click)="goItemDetail(item)"
+              >
+                <div class="inner-img">
+                  <span *ngIf="item.stockCount <1" class="sold-out">
+                    SOLD OUT
+                  </span>
+                  <img
+                    [src]="item.images[0]"
+                    #itemImage
+                    (load)="itemImage.style.opacity = 1"
+                    alt="상품이미지"
+                  />
+                </div>
+                <div class="cartegory-cont-text">
+                  <h3>{{item.productName}}</h3>
+                  <!-- 
+                    원가 (할인률 있을 때)
+                   -->
+                  <span class="costPrice1" *ngIf="item.discountRate"
+                    >{{item.price | number:''}}원</span
+                  >
+
+                  <!-- 
+                    원가 (할인률 없을 때)
+                   -->
+                  <span class="costPrice2" *ngIf="!item.discountRate"
+                    >{{item.price | number:''}}원</span
+                  >
+
+                  <!-- 
+                    할인
+                   -->
+                  <div class="sale" *ngIf="item.discountRate">
+                    <h4>{{item.discountPrice|number:''}}원</h4>
+
+                    <span> {{item.discountRate}}% </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ion-slide>
+
+          <ion-slide *ngIf="popularItems && popularItems.length>4">
+            <div class="cartegory-cont">
+              <!-- 
+                ngfor 돌 곳
+               -->
+              <div
+                *ngFor="let item of popularItems | slice:4:8"
+                class="cartegory-cont-inner"
+                (click)="goItemDetail(item)"
+              >
+                <div class="inner-img">
+                  <span *ngIf="item.stockCount<1" class="sold-out">
+                    SOLD OUT
+                  </span>
+                  <img
+                    [src]="item.images[0]"
+                    #popularItem
+                    (load)="popularItem.style.opacity = 1"
+                    alt="상품이미지"
+                  />
+                </div>
+                <div class="cartegory-cont-text">
+                  <h3>{{item.productName}}</h3>
+                  <!-- 
+                    원가 (할인률 있을 때)
+                   -->
+                  <span class="costPrice1" *ngIf="item.discountRate != 0"
+                    >{{item.price | number:''}}원</span
+                  >
+
+                  <!-- 
+                    원가 (할인률 없을 때)
+                   -->
+                  <span class="costPrice2" *ngIf="item.discountRate === 0"
+                    >{{item.price | number:''}}원</span
+                  >
+
+                  <!-- 
+                    할인
+                   -->
+                  <div class="sale" *ngIf="item.discountRate != 0">
+                    <h4>{{item.discountPrice|number:''}}원</h4>
+
+                    <span> {{item.discountRate}}% </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ion-slide>
+        </ion-slides>
+      </ion-list>
+    </div>
+
+    <div
+      *ngIf="subBanner?.length>0"
+      class="beener"
+      (click)="goUrl(subBanner[0].url)"
+    >
+      <img [src]="subBanner[0].image" alt="" />
+    </div>
+
+    <div class="section2">
+      <div class="section-title">
+        <h2>MD's Pick</h2>
+
+        <ion-button fill="default" (click)="gorecommend()">
+          더보기
+          <img src="assets/imgs/shop/more2.png" alt="" />
+        </ion-button>
+      </div>
+
+      <div *ngIf="recommendList.length === 0" class="cartegory-cont no-list">
+        <p>MD's Pick(이)가 없습니다.</p>
+      </div>
+
+      <div *ngIf="recommendList.length" class="section2-slide">
+        <!-- 
+          ngfor 도는 곳
+         -->
+        <div
+          *ngFor="let rmitem of recommendList"
+          class="section-slide-inner"
+          (click)="goItemDetail(rmitem)"
+        >
+          <div class="section-slide-img">
+            <span *ngIf="rmitem.stockCount<1" class="sold-out"> SOLD OUT </span>
+            <img
+              [src]="rmitem.images[0]"
+              #recommendListImage
+              (load)="recommendListImage.style.opacity = 1"
+              alt=""
+            />
+          </div>
+
+          <div class="cartegory-cont-text">
+            <h3>{{rmitem.productName}}</h3>
+            <!-- 
+              원가 (할인률 있을 때)
+              -->
+            <span class="costPrice1" *ngIf="rmitem.discountRate != 0"
+              >{{rmitem.price | number:''}}원</span
+            >
+
+            <!-- 
+             원가 (할인률 없을 때)
+             -->
+            <span class="costPrice2" *ngIf="rmitem.discountRate == 0"
+              >{{rmitem.price | number:''}}원</span
+            >
+
+            <!-- 
+             할인
+              -->
+            <div class="sale" *ngIf="rmitem.discountRate != 0">
+              <h4>{{rmitem.discountPrice | number:''}}원</h4>
+
+              <span> {{rmitem.discountRate}}% </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section3">
+      <div class="section-title">
+        <h2>기획전</h2>
+
+        <ion-button fill="default" (click)="goeventList()">
+          더보기
+          <img src="assets/imgs/shop/more2.png" alt="" />
+        </ion-button>
+      </div>
+
+      <div *ngIf="exhibitions.length === 0" class="cartegory-cont no-list">
+        <p>기획전이 없습니다.</p>
+      </div>
+
+      <div *ngIf="exhibitions.length" class="section3-slide">
+        <div
+          class="section-mb-slide-inner"
+          (click)="goeventDetail(item)"
+          *ngFor="let item of exhibitions | slice:0:5"
+        >
+          <div class="section-mb-slide-img">
+            <img
+              [src]="item.image"
+              #exhibitionsImage
+              (load)="exhibitionsImage.style.opacity = 1"
+              alt=""
+            />
+          </div>
+
+          <h5>{{item.title}}</h5>
+
+          <p>{{item.content}}</p>
+        </div>
+      </div>
+    </div>
+  </ion-list>
+
+  <ion-fab id="scroll" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="top()">
+      <img src="/assets/imgs/shop/top.png" alt="" />
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,228 @@
+$gray: #595959;
+$gray2: #f7f8f9;
+$main: #1f1f1f;
+/*
+ * footer
+ */
+ion-footer {
+    .footer-box {
+        /* ... */
+        /* Status bar height on iOS 10 */
+        padding-bottom: 20px;
+        /* Status bar height on iOS 11.0 */
+        padding-bottom: constant(safe-area-inset-bottom);
+        /* Status bar height on iOS 11+ */
+        padding-bottom: env(safe-area-inset-bottom);
+        border-radius: 10px 10px 0 0;
+        background: #fff;
+
+        .footer-inner {
+            min-height: 4.375rem;
+
+            ion-buttons {
+                padding: 0 8px;
+                display: flex;
+                align-items: center;
+                height: 4.375rem;
+                // justify-content: center;
+            }
+
+            .like-btn {
+                width: 3.5rem;
+                height: 3.5rem;
+                margin-right: 0.5rem;
+                --background: #000;
+                --border-radius: 10px;
+                img {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+
+            .buy {
+                width: calc(100% - 0.5rem - 3.5rem);
+                --background: var(--ion-color-main);
+                height: 3.5rem;
+                --border-radius: 10px;
+                font-size: 1.125rem;
+                font-weight: bold;
+                color: #fff;
+            }
+
+            .sold-out-btn {
+                width: calc(100% - 0.5rem - 3.5rem);
+                --background: #3f3f3f;
+                height: 3.5rem;
+                --border-radius: 10px;
+                font-size: 1.125rem;
+                font-weight: bold;
+                color: #fff;
+                letter-spacing: 0.1px;
+            }
+        }
+    }
+
+    .footer-select {
+        overflow: hidden;
+        padding: 2.5rem 1rem 0;
+        margin-bottom: 0.9375rem;
+
+        ion-item {
+            border: 1px solid #ddd;
+            margin-bottom: 0.625rem;
+
+            ion-select {
+                width: 100%;
+                max-width: 100%;
+                --padding-top: 0.6875rem;
+                --padding-end: 0.5rem;
+                --padding-bottom: 0.6875rem;
+                --padding-start: 0.625rem;
+                --placeholder-color: #bbbbbb;
+                --placeholder-opacity: 1;
+                color: $main;
+                font-size: 1rem;
+            }
+            ion-select::part(icon) {
+                color: transparent;
+                opacity: 1;
+                background: url(../../../../assets/imgs/shop/select2.png) no-repeat;
+                background-size: cover;
+                background-position: center;
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+
+        ion-item:last-of-type {
+            margin-bottom: 1.5625rem;
+        }
+
+        .item-box-none {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1.25rem;
+            color: #aaaaaa;
+
+            h2 {
+                font-size: 1.125rem;
+                font-weight: 500;
+            }
+
+            span {
+                display: flex;
+                align-items: center;
+                font-size: 1.125rem;
+                strong {
+                    margin-right: 4px;
+                    display: block;
+                }
+            }
+        }
+
+        .item-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: $main;
+
+            h2 {
+                font-size: 1.125rem;
+                font-weight: 500;
+            }
+
+            span {
+                display: flex;
+                align-items: center;
+                font-size: 1.125rem;
+                strong {
+                    display: block;
+                    margin-right: 4px;
+                }
+            }
+        }
+
+        .item-box-detail {
+            background: $gray2;
+            margin-top: 0.9375rem;
+            margin-bottom: 1.5625rem;
+            padding: 0.625rem 0.625rem 0.8125rem;
+            border-radius: 10px;
+            overflow: hidden;
+            .item-box-info {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 0.8125rem;
+                h3 {
+                    font-size: 1rem;
+                    color: $gray;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    span {
+                        font-size: 1rem;
+                        color: $gray;
+                        font-weight: 500;
+                        display: block;
+                    }
+                }
+                .button-default {
+                    img {
+                        width: 1.5rem;
+                    }
+                }
+            }
+
+            .item-box-number {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .count {
+                    display: flex;
+                    align-items: center;
+
+                    .button-default {
+                        width: 1.5rem;
+                        --border-radius: 4px;
+                        height: 1.5rem;
+                    }
+                    .button-default.button-disabled {
+                        opacity: 1;
+                    }
+
+                    .minus {
+                        --background: #fff;
+                        color: $main;
+                        --border-width: 1px;
+                        --border-color: #000;
+                        --border-style: solid;
+                    }
+
+                    .plus {
+                        --background: #000;
+                        color: #fff;
+                        --border-width: 1px;
+                        --border-color: #000;
+                        --border-style: solid;
+                    }
+
+                    .number {
+                        padding: 0 1.8125rem;
+                        font-size: 1.125rem;
+                        font-weight: 500;
+                        color: $main;
+                    }
+                }
+
+                h4 {
+                    font-size: 1.125rem;
+                    color: $gray;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}

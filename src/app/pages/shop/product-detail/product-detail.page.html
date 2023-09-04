@@ -1,0 +1,419 @@
+<ng-container *ngIf="product$ | async as product"></ng-container>
+<ng-container *ngIf="reviewCheck$ | async"></ng-container>
+
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>상품 상세</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button fill="default" (click)="gosearch()">
+        <!-- <img src="assets/imgs/shop/nav-search.png" alt="" /> -->
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="default" (click)="gobasket()">
+        <!-- <img src="assets/imgs/shop/nav-basket.png" alt="" /> -->
+        <ion-icon name="cart-outline"></ion-icon>
+        <ng-container *ngIf="user$|async as user">
+          <ion-badge *ngIf="user && user.cartCount >0 ">
+            {{user.cartCount}}
+          </ion-badge>
+        </ng-container>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <ion-list *ngIf="product" [@inAnimation]>
+    <ion-slides pager>
+      <ion-slide
+        *ngFor="let image of product.images; let i=index"
+        (click)="imagesMoreModal(product.images, i)"
+      >
+        <div>
+          <img
+            [src]="image"
+            #productImage
+            (load)="productImage.style.opacity = '1'"
+            alt=""
+          />
+        </div>
+      </ion-slide>
+    </ion-slides>
+
+    <div class="info">
+      <div class="info-sub">
+        <span>
+          {{product.topCategory.title}} > {{product.subCategory.title}}
+        </span>
+
+        <div>
+          <img src="assets/imgs/shop/heart.png" alt="" />
+          {{product.heartList?product.heartList.length :0 }}
+        </div>
+      </div>
+
+      <h2>{{product.productName}}</h2>
+
+      <!-- 
+        원가 (할인률 있을 때)
+       -->
+      <span class="costPrice1" *ngIf="product.discountRate !== 0">
+        {{product.price | number:''}}원
+      </span>
+
+      <span class="costPrice2" *ngIf="product.discountRate === 0">
+        {{product.price | number:''}}원
+      </span>
+
+      <div class="sale" *ngIf="product.discountRate !== 0">
+        <h3>{{product.discountPrice | number:''}}원</h3>
+        <span>{{product.discountRate}}%</span>
+      </div>
+    </div>
+
+    <div class="header-seg">
+      <ion-segment [(ngModel)]="topSeg">
+        <ion-segment-button value="정보">상품 정보</ion-segment-button>
+        <ion-segment-button value="리뷰">리뷰</ion-segment-button>
+        <ion-segment-button value="문의">문의</ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <div [ngSwitch]="topSeg">
+      <ion-list *ngSwitchCase="'정보'">
+        <p class="cont-info-txt">{{product.infoText}}</p>
+
+        <div class="cont-img" *ngFor="let item of product.infoImages">
+          <img
+            [src]="item"
+            #productInfoImage
+            (load)="productInfoImage.style.opacity = '1'"
+            alt=""
+          />
+        </div>
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'리뷰'">
+        <div class="review-top">
+          <div class="review-top-box">
+            <h2>
+              <strong> {{reviews?.length}} </strong>
+              개 리뷰
+            </h2>
+          </div>
+
+          <div class="review-rating">
+            <mbsc-rating
+              [options]="formSettings"
+              [disabled]="true"
+              [(value)]="average"
+              [step]=".1"
+              [min]="0"
+              [max]="5"
+              template="{value}/{max}"
+            >
+            </mbsc-rating>
+            <span> {{average ? average: '0'}} </span>
+          </div>
+        </div>
+
+        <div class="cont-none" *ngIf="reviews?.length === 0">
+          리뷰가 없습니다.
+        </div>
+
+        <ion-list class="review-wrap">
+          <div
+            class="review-cont-box"
+            *ngFor="let item of reviews; let i = index"
+            [id]="item.id"
+          >
+            <div class="review-box">
+              <div class="review-inner">
+                <!-- 
+              내가 쓴 글
+             -->
+                <ion-button
+                  *ngIf="item.userId.uid === this.currentUser.id"
+                  fill="default"
+                  (click)="editReview(i,item)"
+                  class="more"
+                >
+                  <img src="assets/imgs/shop/more-review.png" alt="" />
+                </ion-button>
+
+                <div class="review-inner-txt">
+                  <h3>
+                    <span> {{item.userId.nickName}} </span>
+                    <span> {{item.dateCreated | date: 'yyyy.MM.dd'}} </span>
+                  </h3>
+
+                  <div class="rating-wrap">
+                    <mbsc-rating
+                      [options]="formSettings"
+                      [disabled]="true"
+                      [(value)]="item.grade"
+                      [step]=".5"
+                      [min]="0"
+                      [max]="5"
+                      template="{value}/{max}"
+                    >
+                    </mbsc-rating>
+
+                    <span> {{item.grade}} </span>
+                  </div>
+
+                  <div class="choice">
+                    <h4 *ngIf="item.cartId.options.length > 0">선택옵션</h4>
+                    <ng-container *ngFor="let option of item.cartId.options">
+                      <span> {{ option.value }} </span>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="review-inner-cont">
+                  <p>{{item.content}}</p>
+                  <div *ngIf="item.images?.length" class="review-inner-img">
+                    <div
+                      class="review-img-box"
+                      *ngFor="let image of item.images| slice:0:3; let i = index; "
+                      (click)="imagesMoreModal(item.images,i)"
+                    >
+                      <img
+                        [src]="image"
+                        #reviewImage
+                        (load)="reviewImage.style.opacity = '1'"
+                        alt=""
+                      />
+                      <span *ngIf="i === 2 && item.images?.length > 3">
+                        더보기
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="review-answer" *ngIf="item.answerSwitch">
+                <div class="answer-title">
+                  <h5>
+                    <span> 답변 </span>
+
+                    <img src="assets/imgs/shop/logo.png" alt="" />
+                  </h5>
+
+                  <span class="data">
+                    {{item.answerDate | date:'yyyy.MM.dd'}}
+                  </span>
+                </div>
+
+                <p>{{item.answer}}</p>
+              </div>
+            </div>
+
+            <span class="line"></span>
+          </div>
+        </ion-list>
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'문의'">
+        <div class="inquiry">
+          <div class="review-top-box">
+            <h2>
+              <strong> {{productInquires?.length}} </strong>
+              개 문의
+            </h2>
+            <ion-button fill="default" (click)="goInquiry()">
+              문의 작성하기
+            </ion-button>
+          </div>
+
+          <div *ngIf="productInquires?.length === 0" class="cont-none">
+            문의가 없습니다.
+          </div>
+
+          <mat-accordion *ngIf="productInquires?.length > 0">
+            <mat-expansion-panel
+              *ngFor="let item of productInquires; let i = index;"
+              [expanded]="reviewId && item.id === reviewId"
+              [id]="item.id"
+            >
+              <!-- (closed)="panelOpenState = false" -->
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <div>
+                    <div class="inquiry-title">
+                      <span class="Wait" *ngIf="!item.answerSwitch">
+                        답변 대기
+                      </span>
+                      <span class="Complete" *ngIf="item.answerSwitch">
+                        답변 완료
+                      </span>
+
+                      <div>
+                        <span> {{item.userId.nickName}}</span>
+                        <span>
+                          {{item.dateCreated | date : 'yyyy.MM.dd'}}
+                        </span>
+                      </div>
+                    </div>
+
+                    <span
+                      *ngIf="item.lockSwitch && item.userId.uid !== this.currentUser.id"
+                      class="secretTxt"
+                    >
+                      비밀글 입니다.
+                      <img src="assets/imgs/shop/secret.png" alt="" />
+                    </span>
+
+                    <span
+                      *ngIf="!item.lockSwitch || item.userId.uid === this.currentUser.id"
+                      class="titleTxt"
+                    >
+                      {{item.title}}
+                    </span>
+                  </div>
+
+                  <!-- 
+                      내가 쓴 글일 때만 보이기!
+                     -->
+                  <ion-button
+                    *ngIf="item.userId.uid === this.currentUser.id"
+                    fill="default"
+                    class="more-btn"
+                    (click)="editInquiry(i,item);$event.stopPropagation();"
+                  >
+                    <img src="assets/imgs/shop/more-review.png" alt="" />
+                  </ion-button>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div
+                *ngIf="item.lockSwitch && item.userId.uid !== this.currentUser.id"
+                class="secret-cont"
+              >
+                해당 글은 작성하신 회원님만 확인하실 수 있습니다.
+              </div>
+
+              <div
+                *ngIf="!item.lockSwitch || item.userId.uid === this.currentUser.id"
+                class="inquiry-cont-box"
+              >
+                <div class="inquiry-cont-inner">
+                  <h3>문의사항</h3>
+
+                  <p>{{item.content}}</p>
+
+                  <div *ngIf="item.images?.length" class="inquiry-cont-img-box">
+                    <div
+                      class="inquiry-img"
+                      *ngFor="let image of item.images| slice:0:3; let i = index; "
+                      (click)="imagesMoreModal(item.images, i)"
+                    >
+                      <img
+                        [src]="image"
+                        #inquiryImage
+                        (load)="inquiryImage.style.opacity = '1'"
+                        alt=""
+                      />
+                      <span *ngIf="i === 2 && item.images?.length > 3">
+                        더보기
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="item.answerSwitch" class="inquiry-answer">
+                  <div class="answer-title">
+                    <h5>
+                      <span> 답변 </span>
+
+                      <img src="assets/imgs/shop/logo.png" alt="" />
+                    </h5>
+
+                    <span class="data">
+                      {{item.answerDate | date : 'yyyy.MM.dd'}}
+                    </span>
+                  </div>
+
+                  <p>{{item.answer}}</p>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </ion-list>
+    </div>
+  </ion-list>
+
+  <ng-template #loading>
+    <p>상품 설명이 없습니다.</p>
+  </ng-template>
+  <ion-fab id="scroll2" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="light" (click)="top()">
+      <img src="assets/imgs/shop/top.png" alt="페이지 상단으로 이동" />
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<ion-footer>
+  <div *ngIf="product">
+    <ion-buttons>
+      <ion-button
+        class="like-btn"
+        fill="default"
+        *ngIf="!product.heart"
+        (click)="like(product)"
+      >
+        <img src="assets/imgs/shop/heart-btn-w.png" alt="" />
+      </ion-button>
+
+      <ion-button
+        class="like-btn"
+        fill="default"
+        *ngIf="product.heart"
+        (click)="DeletePick(product)"
+      >
+        <img src="assets/imgs/shop/heart-btn-ac.png" alt="" />
+      </ion-button>
+
+      <ion-button
+        fill="default"
+        class="buy"
+        (click)="Buyopen(product)"
+        *ngIf="product.stockCount>0"
+      >
+        구매하기
+      </ion-button>
+      <ion-button
+        fill="default"
+        class="sold-out-btn"
+        *ngIf="product.stockCount<=0"
+      >
+        SOLD OUT
+      </ion-button>
+    </ion-buttons>
+  </div>
+</ion-footer>

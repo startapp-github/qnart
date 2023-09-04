@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">KN커채몰</string>
+    <string name="title_activity_main">KN커채몰</string>
+    <string name="package_name">com.communitychatmall.knc</string>
+    <string name="custom_url_scheme">com.communitychatmall.knc</string>
+</resources>

@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"
+        text=""
+        icon="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>취소·교환·반품</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="cart">
+    <div class="cont-title cont-wrap">
+      <span class="refund-info error">
+        {{cart.productStatus}}{{cart.doneSwitch ? '완료':'대기'}}
+        <!-- 반품 완료 / 반품 대기 / 교환 완료 / 교환 대기 -->
+      </span>
+
+      <span class="date"> {{cart.dateCreated |date:'yyyy.MM.dd'}} </span>
+    </div>
+
+    <div class="cont-wrap cont-item">
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img [src]="cart.productInfo.images[0]  | thumbs" />
+        </ion-thumbnail>
+
+        <ion-label>
+          <h4>
+            {{cart.productInfo.productName}}&nbsp;<ng-container *ngFor="let option of cart.options; last as isLast">
+              {{option.value}}<ng-container *ngIf="!isLast">,&nbsp;</ng-container>
+            </ng-container>
+          </h4>
+
+          <div class="item-box">
+            <div class="item-info">
+              X
+              <span class="number">{{cart.count}}</span>
+            </div>
+
+            <h6>
+              <strong>
+                {{cart.productInfo.discountPrice?(cart.productInfo.discountPrice|number) :
+                (cart.productInfo.price|number)}}
+              </strong>
+              원
+            </h6>
+          </div>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <div class="cont-wrap info-Price">
+      <div>
+        <span> 상품 금액 </span>
+
+        <span>
+          {{cart.productInfo.discountPrice?(cart.productInfo.discountPrice|number) :
+          (cart.productInfo.price|number)}}원
+        </span>
+      </div>
+
+      <div class="deliveryCharge">
+        <span> 배송비 </span>
+
+        <span> {{deliveryCharge|number}}원 </span>
+      </div>
+    </div>
+
+    <div class="cancel-reson"
+      *ngIf="cart.productStatus !== '취소'">
+      <h2>{{cart.productStatus}} 사유</h2>
+      <p>{{cart.reason}}</p>
+    </div>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title></ion-title>
+
+    <ion-button slot="end" fill="clear" (click)="dismiss()">
+      <img src="assets/imgs/shop/nav-close.png" alt="" />
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="order">
+    <div class="cont">
+      <h2>취소 신청이 완료되었습니다.</h2>
+
+      <span class="date"> {{order.dateCreated | date:'yyyy.MM.dd'}} </span>
+    </div>
+
+    <div class="cont cont-item">
+      <ion-item *ngFor="let cart of order.cartIds">
+        <ion-thumbnail slot="start">
+          <img [src]="cart.productInfo.images[0] | thumbs" />
+        </ion-thumbnail>
+
+        <ion-label>
+          <h4>{{cart.productInfo.productName}}</h4>
+
+          <div class="item-box">
+            <div class="item-info">
+              <span>
+                <ng-container
+                  *ngFor="let option of cart.options; last as isLast"
+                  >{{option.value}}<ng-container *ngIf="!isLast">
+                    ,</ng-container
+                  >
+                </ng-container>
+              </span>
+
+              X
+              <span class="number">1</span>
+            </div>
+
+            <h6>
+              <strong>
+                {{cart.productInfo.discountPrice?
+                (cart.productInfo.discountPrice|number) :(cart.productInfo.price
+                | number) }}
+              </strong>
+              원
+            </h6>
+          </div>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <div class="cont info-Price">
+      <div>
+        <span> 상품 금액 </span>
+
+        <span> {{(order.totalPrice - deliveryCharge)|number }}원 </span>
+      </div>
+
+      <div class="deliveryCharge">
+        <span> 배송비 </span>
+
+        <span> {{deliveryCharge | number}}원 </span>
+      </div>
+
+      <div class="Final">
+        <strong> 환불 금액 </strong>
+
+        <span> {{order.totalPrice |number}}원 </span>
+      </div>
+    </div>
+
+    <ion-buttons>
+      <ion-button fill="default" (click)="goCheck()">
+        신청내역 확인하기
+      </ion-button>
+
+      <ion-button fill="default" (click)="goHome()"> 쇼핑 계속하기 </ion-button>
+    </ion-buttons>
+  </ion-list>
+</ion-content>

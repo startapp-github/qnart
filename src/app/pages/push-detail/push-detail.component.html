@@ -1,0 +1,15 @@
+<div class="cont-all">
+  <div class="title">
+    <h1>{{ title }} 알림</h1>
+
+    <ion-button fill="default" (click)="cancel()">
+      <img src="assets/imgs/shop/close.png" alt="" />
+    </ion-button>
+  </div>
+
+  <div class="cont-inner" *ngIf="data">
+    <p>
+      {{ data.content }}
+    </p>
+  </div>
+</div>

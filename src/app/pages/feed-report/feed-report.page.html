@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <!-- 게시물 신고 ? 댓글 신고 -->
+    <ion-title>{{type}} 신고</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="reportSuc()" [disabled]="!selectReason"
+        >신고</ion-button
+      >
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="feed-report-container" *ngIf="type">
+    <ion-item class="top">
+      <ion-label class="writer">
+        <p class="bold">작성자</p>
+        <p class="txt">
+          {{type =='게시글'?post.createdBy.nickName:comment.userId.nickName}}
+        </p>
+      </ion-label>
+      <ion-label class="title">
+        <p class="bold">{{type =='게시글'?'제목':'글'}}</p>
+        <p class="txt rows-ellipsis-title">
+          {{type =='게시글'? post.data.text: comment.text}}
+        </p>
+      </ion-label>
+    </ion-item>
+
+    <ion-list class="report-list">
+      <ion-list-header>신고사유</ion-list-header>
+      <ion-radio-group [(ngModel)]="selectReason">
+        <ion-item>
+          <ion-radio slot="start" value="욕설 / 비하발언"></ion-radio>
+          <ion-label>욕설 / 비하발언</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start" value="사생활 침해"></ion-radio>
+          <ion-label>사생활 침해</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start" value="19+ 만남"></ion-radio>
+          <ion-label>19+ 만남</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start" value="음란성"></ion-radio>
+          <ion-label>음란성</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start" value="게시글 / 댓글 도배"></ion-radio>
+          <ion-label>게시글 / 댓글 도배</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start" value="닉네임 신고"></ion-radio>
+          <ion-label>닉네임 신고</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start" value="채널에 맞지 않는"></ion-radio>
+          <ion-label>채널에 맞지 않는 글</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start" value="추천인 코드"></ion-radio>
+          <ion-label>추천인 코드</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start" value="홍보성 컨텐츠"></ion-radio>
+          <ion-label>홍보성 컨텐츠</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start" value="기타"></ion-radio>
+          <ion-label>기타</ion-label>
+        </ion-item>
+      </ion-radio-group>
+
+      <ion-textarea
+        inputmode="text"
+        type="text"
+        autoGrow
+        rows="5"
+        enterkeyhint="done"
+        [(ngModel)]="reason"
+        placeholder="신고 사유 설명이 필요하신 경우 작성해 주세요."
+      ></ion-textarea>
+    </ion-list>
+  </div>
+</ion-content>

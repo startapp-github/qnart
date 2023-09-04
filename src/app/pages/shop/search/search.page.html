@@ -1,0 +1,193 @@
+<ion-header class="search-header">
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+
+    <ion-title>검색</ion-title>
+  </ion-toolbar>
+
+  <div class="search">
+    <ion-searchbar
+      type="text"
+      placeholder="검색어를 입력해주세요."
+      (keyup)="search($event)"
+      [(ngModel)]="searchKeyword.keyword"
+      [debounce]="1000"
+      enterkeyhint="search"
+      searchIcon="/"
+      (ionChange)="checkKeyword()"
+    ></ion-searchbar>
+  </div>
+</ion-header>
+
+<ion-content #content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <!-- 
+    검색 결과 전
+   -->
+  <ion-list *ngIf="beforeSearch  || !searchKeyword.keyword">
+    <h2>최근 검색어</h2>
+    <ion-item
+      *ngFor="let item of searchKeywords; let i = index;"
+      (click)="searchRecently(item.keyword)"
+    >
+      <ion-label>
+        <h3>{{ item.keyword }}</h3>
+      </ion-label>
+
+      <span slot="end">
+        {{ item.dateCreated | date: 'MM.dd' }}
+
+        <ion-button fill="default" (click)="removeTag(i)">
+          <img src="assets/imgs/shop/close.png" alt="" />
+        </ion-button>
+      </span>
+    </ion-item>
+
+    <ion-button
+      *ngIf="searchKeywords?.length"
+      fill="default"
+      class="del"
+      (click)="removeAllAlert()"
+    >
+      전체 삭제
+    </ion-button>
+  </ion-list>
+
+  <div class="cont-none" *ngIf="searchKeywords?.length <1">
+    최근 검색어가 없습니다.
+  </div>
+
+  <ion-list
+    *ngIf="!beforeSearch && searchKeyword.keyword"
+    class="cont-item-box"
+  >
+    <ng-container *ngIf="filterContents?.length>0">
+      <div class="filter">
+        <h3>
+          <strong>{{filterContents?.length}} </strong>
+          개 상품
+        </h3>
+
+        <ion-item>
+          <ion-select
+            interface="popover"
+            [(ngModel)]="filter"
+            (ionChange)="filterChange()"
+          >
+            <ion-select-option value="최신순">최신순</ion-select-option>
+            <ion-select-option value="낮은가격순">낮은가격순</ion-select-option>
+            <ion-select-option value="높은가격순">높은가격순</ion-select-option>
+            <ion-select-option value="판매량순">판매량순</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="cont">
+        <div
+          class="cont-inner"
+          (click)="goItemDetail(item)"
+          *ngFor="let item of filterContents| slice:0:lastIndex;"
+        >
+          <div class="cont-img-inner">
+            <div class="cont-img">
+              <span class="sold-out" *ngIf="item.stockCount === 0">
+                SOLD OUT
+              </span>
+              <img
+                [src]="item.images[0] | thumbs"
+                #productImage
+                (load)="productImage.style.opacity = 1"
+                alt=""
+              />
+            </div>
+
+            <ion-button
+              fill="default"
+              *ngIf="!item.heart"
+              (click)="like(item);$event.stopPropagation();"
+            >
+              <img src="assets/imgs/shop/heart-btn.png" alt="" />
+            </ion-button>
+
+            <ion-button
+              fill="default"
+              *ngIf="item.heart"
+              (click)="like(item);$event.stopPropagation();"
+            >
+              <img src="assets/imgs/shop/heart-btn-ac.png" alt="" />
+            </ion-button>
+          </div>
+
+          <div class="cont-txt">
+            <h4>{{item.productName}}</h4>
+            <!-- 
+            원가 (할인율 있을 때)
+           -->
+            <span *ngIf="item.discountRate !== 0" class="cost-price1">
+              {{item.price | number:''}}
+            </span>
+
+            <!-- 
+           원가 (할인율 없을 때)
+          -->
+            <span *ngIf="item.discountRate === 0" class="cost-price2">
+              {{item.price | number:''}}
+            </span>
+
+            <div class="sale" *ngIf="item.discountRate !== 0">
+              <h5>{{item.discountPrice|number:''}}</h5>
+              <span> {{item.discountRate}}% </span>
+            </div>
+            <div class="heart">
+              <img src="assets/imgs/shop/heart.png" alt="" />
+              <span> {{item.heartList?.length}} </span>
+            </div>
+          </div>
+        </div>
+        <ion-infinite-scroll
+          (ionInfinite)="loadData($event)"
+          *ngIf="filterContents?.length > lastIndex"
+        >
+          <ion-infinite-scroll-content loadingSpinner="bubbles">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="filterContents?.length<1">
+      <div class="cont-none">검색 결과가 없습니다.</div>
+    </ng-container>
+  </ion-list>
+
+  <ion-fab
+    id="scroll10"
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed"
+    *ngIf="!beforeSearch || searchKeyword.keyword"
+  >
+    <ion-fab-button color="light" (click)="top()">
+      <img src="assets/imgs/shop/top.png" alt="페이지 상단으로 이동" />
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

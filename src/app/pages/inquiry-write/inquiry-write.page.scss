@@ -1,0 +1,49 @@
+ion-header {
+    ion-toolbar {
+        --padding-end: 1rem;
+        --padding-start: 1rem;
+        .cancel {
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.25rem;
+        }
+        .suc {
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.25rem;
+            --color: var(--ion-color-main);
+            &[disabled] {
+                --color: #918f98;
+            }
+        }
+    }
+}
+
+#inquiry-write-container {
+    .input-wrapper {
+        padding: 1.25rem 4.26666666667%;
+    }
+
+    .title-item {
+        margin-bottom: 3.49854227405%;
+        ion-item {
+            border-bottom: 1px solid #d3d1d7;
+        }
+    }
+    .content-item {
+        min-height: 60vh;
+        max-height: 60vh;
+        // max-height: calc(50vh - 56px - 3.125rem - 2.25rem - 2rem);
+        overflow-y: scroll;
+    }
+    ion-textarea {
+        line-height: 1.5rem;
+        --placeholder-color: #918f97;
+        &.title-textarea {
+            padding-bottom: 0.75rem;
+        }
+        // &.content-textarea {
+        //     max-height: 44vw;
+        // }
+    }
+}

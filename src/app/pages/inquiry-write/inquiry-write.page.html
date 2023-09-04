@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="cancel"
+        (click)="cancel()">취소</ion-button>
+    </ion-buttons>
+    <ion-title>1:1 문의</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="suc"
+        [disabled]="!title || !text"
+        (click)="writeUpload()">완료</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="inquiry-write-container">
+    <div class="input-wrapper">
+      <div class="title-item">
+        <ion-item>
+          <ion-textarea class="title-textarea"
+            inputmode="text"
+            type="text"
+            minlength="1"
+            rows="1"
+            autoGrow
+            [(ngModel)]="title"
+            placeholder="제목을 입력해주세요."></ion-textarea>
+        </ion-item>
+      </div>
+      <ion-item class="content-item"
+        (click)="setFocus(focusTextarea)">
+        <ion-textarea class="content-textarea"
+          #focusTextarea
+          inputmode="text"
+          type="text"
+          minlength="10"
+          rows="7"
+          autoGrow
+          enterkeyhint="done"
+          [(ngModel)]="text"
+          placeholder="내용을 입력해주세요."></ion-textarea>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

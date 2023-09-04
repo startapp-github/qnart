@@ -1,0 +1,87 @@
+ion-header {
+    ion-toolbar {
+        --padding-end: 1rem;
+        .del {
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.25rem;
+            --color: #66656b;
+        }
+    }
+}
+
+#inquiry-detail-container {
+    background-color: #ededf2;
+    .quest-wrapper {
+        // margin-bottom: 2.33236151603%;
+        padding-bottom: 0.5rem;
+        background: #ededf2;
+        --background: #fff;
+        overflow: visible;
+        .quest-inner {
+            padding: 1.25rem 4.26666666667% 2rem;
+            width: 100%;
+            box-shadow: 0 2px 6px rgba(62, 61, 66, 0.3);
+        }
+
+        .top {
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #d3d1d7;
+            p {
+                font-weight: 400;
+                font-size: 0.875rem;
+                line-height: 1.5rem;
+                color: #918f97;
+                span {
+                    font-size: 1rem;
+                    color: #161616;
+                }
+            }
+        }
+
+        .detail {
+            padding-top: 1.25rem;
+            .detail-title {
+                margin-bottom: 5.83090379009%;
+                p {
+                    font-weight: 600;
+                }
+            }
+            p {
+                font-weight: 400;
+                font-size: 1rem;
+                line-height: 1.5rem;
+            }
+        }
+    }
+
+    .answer-wrapper {
+        padding: 1.25rem 4.26666666667%;
+        background-color: #fff;
+        h4 {
+            margin-bottom: 4.66472303207%;
+            & + p {
+                margin-bottom: 1.16618075802%;
+                b {
+                    font-weight: 600;
+                    font-size: 1rem;
+                    line-height: 1.5rem;
+                }
+            }
+        }
+        .text {
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.5rem;
+        }
+    }
+}
+
+// 공통
+h4 {
+    margin-bottom: 1.16618075802%;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #918f97;
+}

@@ -1,0 +1,414 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>회원가입</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="signUpForm">
+    <div id="sign-container">
+      <div class="input-wrapper">
+        <!-- 이메일 -->
+        <div class="margin-item">
+          <ion-item class="input-item">
+            <ion-label>
+              이메일 주소
+              <span class="badge"></span>
+            </ion-label>
+            <ion-input
+              inputmode="email"
+              type="email"
+              formControlName="email"
+              placeholder="이메일 주소를 입력해 주세요."
+            ></ion-input>
+          </ion-item>
+          <p
+            class="val"
+            *ngIf="signUpForm.controls.email.touched && signUpForm.controls.email.dirty && !signUpForm.controls.email.valid"
+          >
+            이메일 형식에 맞춰 입력해 주세요.
+          </p>
+        </div>
+
+        <!-- 비밀번호 -->
+        <div class="margin-item">
+          <ion-item>
+            <ion-label>
+              비밀번호
+              <span class="badge"></span>
+            </ion-label>
+            <ion-input
+              inputmode="text"
+              type="password"
+              minlength="6"
+              formControlName="password"
+              placeholder="비밀번호는 6자리 이상 입력해 주세요."
+            ></ion-input>
+          </ion-item>
+          <p
+            class="val"
+            *ngIf="!signUpForm.controls.password.valid &&
+          signUpForm.controls.password.dirty"
+          >
+            6자리 이상 입력해 주세요.
+          </p>
+        </div>
+
+        <!-- 비밀번호 확인-->
+        <div class="margin-item">
+          <ion-item>
+            <ion-label>
+              비밀번호 확인
+              <span class="badge"></span>
+            </ion-label>
+            <ion-input
+              inputmode="text"
+              type="password"
+              minlength="6"
+              formControlName="confirm_password"
+              placeholder="비밀번호를 다시 입력해 주세요."
+            ></ion-input>
+          </ion-item>
+          <p
+            class="val"
+            *ngIf="signUpForm.controls.confirm_password.touched && signUpForm.hasError('mismatchedPasswords') && signUpForm.controls.confirm_password.valid"
+          >
+            비밀번호가 일치하지 않습니다.
+          </p>
+        </div>
+
+        <!-- 닉네임 -->
+        <div class="margin-item">
+          <ion-item class="nickname-item">
+            <ion-label>
+              닉네임
+              <span class="badge"></span>
+            </ion-label>
+            <div class="layout">
+              <ion-input
+                inputmode="text"
+                type="text"
+                minlength="2"
+                maxlength="8"
+                formControlName="nickName"
+                placeholder="닉네임을 입력해주세요"
+              ></ion-input>
+              <ion-button
+                class="db-btn"
+                [disabled]="!signUpForm.controls.nickName.valid &&
+              signUpForm.controls.nickName.dirty || signUpForm.controls.nickName.valid == 0"
+                (click)="checkNickname()"
+                >중복확인</ion-button
+              >
+            </div>
+          </ion-item>
+          <p
+            class="val"
+            *ngIf="signUpForm.controls.nickName.touched && !signUpForm.controls.nickName.valid &&
+          signUpForm.controls.nickName.dirty"
+          >
+            2자 이상 8자 이내 한글, 영어, 숫자로 입력해 주세요.
+          </p>
+        </div>
+      </div>
+
+      <div class="terms-wrapper">
+        <div class="check-item">
+          <ion-item>
+            <ion-checkbox
+              class="all"
+              [(ngModel)]="agreeAllTerms"
+              [ngModelOptions]="{standalone: true}"
+              (ionChange)="checkAgreeAll(0)"
+            ></ion-checkbox>
+            <svg width="24px" height="24px" viewBox="0 0 24 24" class="off">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-16.000000, -644.000000)">
+                  <g transform="translate(16.000000, 644.000000)">
+                    <rect
+                      class="fill-800"
+                      x="0"
+                      y="0"
+                      width="24"
+                      height="24"
+                    ></rect>
+                    <rect
+                      class="stroke-600"
+                      x="2.5"
+                      y="2.5"
+                      width="19"
+                      height="19"
+                    ></rect>
+                  </g>
+                </g>
+              </g>
+            </svg>
+
+            <svg width="24px" height="24px" viewBox="0 0 24 24" class="on">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-16.000000, -644.000000)">
+                  <g transform="translate(16.000000, 644.000000)">
+                    <rect
+                      class="fill-800"
+                      x="0"
+                      y="0"
+                      width="24"
+                      height="24"
+                    ></rect>
+                    <rect
+                      class="fill-main"
+                      x="2"
+                      y="2"
+                      width="20"
+                      height="20"
+                    ></rect>
+                    <polyline
+                      class="stroke-800"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      points="16 9 10.5 14.5 8 12"
+                    ></polyline>
+                  </g>
+                </g>
+              </g>
+            </svg>
+            <ion-label>전체동의</ion-label>
+          </ion-item>
+        </div>
+
+        <div class="check-item">
+          <ion-item>
+            <ion-checkbox
+              formControlName="serviceTerms"
+              (ionChange)="checkAgreeAll(1)"
+            ></ion-checkbox>
+            <svg width="24px" height="24px" viewBox="0 0 24 24" class="off">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-16.000000, -644.000000)">
+                  <g transform="translate(16.000000, 644.000000)">
+                    <rect
+                      class="fill-800"
+                      x="0"
+                      y="0"
+                      width="24"
+                      height="24"
+                    ></rect>
+                    <rect
+                      class="stroke-600"
+                      x="2.5"
+                      y="2.5"
+                      width="19"
+                      height="19"
+                    ></rect>
+                  </g>
+                </g>
+              </g>
+            </svg>
+
+            <svg width="24px" height="24px" viewBox="0 0 24 24" class="on">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-16.000000, -680.000000)">
+                  <g transform="translate(16.000000, 680.000000)">
+                    <rect
+                      class="fill-800"
+                      x="0"
+                      y="0"
+                      width="24"
+                      height="24"
+                    ></rect>
+                    <rect
+                      class="stroke-main"
+                      x="2.5"
+                      y="2.5"
+                      width="19"
+                      height="19"
+                    ></rect>
+                    <polyline
+                      class="stroke-main"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      points="16 9 10.5 14.5 8 12"
+                    ></polyline>
+                  </g>
+                </g>
+              </g>
+            </svg>
+            <ion-label>서비스 이용약관 (필수)</ion-label>
+          </ion-item>
+          <ion-button (click)="goService()">전체보기</ion-button>
+        </div>
+        <div class="check-item">
+          <ion-item>
+            <ion-checkbox
+              formControlName="personalInfo"
+              (ionChange)="checkAgreeAll(2)"
+            ></ion-checkbox>
+            <svg width="24px" height="24px" viewBox="0 0 24 24" class="off">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-16.000000, -644.000000)">
+                  <g transform="translate(16.000000, 644.000000)">
+                    <rect
+                      class="fill-800"
+                      x="0"
+                      y="0"
+                      width="24"
+                      height="24"
+                    ></rect>
+                    <rect
+                      class="stroke-600"
+                      x="2.5"
+                      y="2.5"
+                      width="19"
+                      height="19"
+                    ></rect>
+                  </g>
+                </g>
+              </g>
+            </svg>
+
+            <svg width="24px" height="24px" viewBox="0 0 24 24" class="on">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-16.000000, -680.000000)">
+                  <g transform="translate(16.000000, 680.000000)">
+                    <rect
+                      class="fill-800"
+                      x="0"
+                      y="0"
+                      width="24"
+                      height="24"
+                    ></rect>
+                    <rect
+                      class="stroke-main"
+                      x="2.5"
+                      y="2.5"
+                      width="19"
+                      height="19"
+                    ></rect>
+                    <polyline
+                      class="stroke-main"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      points="16 9 10.5 14.5 8 12"
+                    ></polyline>
+                  </g>
+                </g>
+              </g>
+            </svg>
+            <ion-label>개인정보 수집 및 이용 (필수)</ion-label>
+          </ion-item>
+          <ion-button (click)="goPersoanlInfo()">전체보기</ion-button>
+        </div>
+        <div class="check-item">
+          <ion-item>
+            <ion-checkbox
+              formControlName="marketing"
+              (ionChange)="checkAgreeAll(3)"
+            ></ion-checkbox>
+            <svg width="24px" height="24px" viewBox="0 0 24 24" class="off">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-16.000000, -644.000000)">
+                  <g transform="translate(16.000000, 644.000000)">
+                    <rect
+                      class="fill-800"
+                      x="0"
+                      y="0"
+                      width="24"
+                      height="24"
+                    ></rect>
+                    <rect
+                      class="stroke-600"
+                      x="2.5"
+                      y="2.5"
+                      width="19"
+                      height="19"
+                    ></rect>
+                  </g>
+                </g>
+              </g>
+            </svg>
+
+            <svg width="24px" height="24px" viewBox="0 0 24 24" class="on">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-16.000000, -680.000000)">
+                  <g transform="translate(16.000000, 680.000000)">
+                    <rect
+                      class="fill-800"
+                      x="0"
+                      y="0"
+                      width="24"
+                      height="24"
+                    ></rect>
+                    <rect
+                      class="stroke-main"
+                      x="2.5"
+                      y="2.5"
+                      width="19"
+                      height="19"
+                    ></rect>
+                    <polyline
+                      class="stroke-main"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      points="16 9 10.5 14.5 8 12"
+                    ></polyline>
+                  </g>
+                </g>
+              </g>
+            </svg>
+            <ion-label>마케팅 수신동의 (선택)</ion-label>
+          </ion-item>
+        </div>
+
+        <p
+          class="val"
+          *ngIf="!signUpForm.controls.serviceTerms.valid || !signUpForm.controls.personalInfo.valid"
+        >
+          서비스 이용약관과 개인정보 수집 및 이용에 동의해 주세요.
+        </p>
+      </div>
+
+      <!-- 회원가입 버튼 -->
+      <div class="button-area">
+        <ion-button
+          (click)="register()"
+          [disabled]="!signUpForm.valid || !nickNameAvailable"
+          expand="block"
+          fill="clear"
+          shape="round"
+          >회원가입</ion-button
+        >
+      </div>
+    </div>
+  </form>
+</ion-content>
+<!-- <ion-footer>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-footer> -->

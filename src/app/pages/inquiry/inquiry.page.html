@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>1:1 문의</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="inquiry-container">
+    <ion-fab-button (click)="goInquiryWrite()">문의<br />작성</ion-fab-button>
+
+    <!-- 문의가 없는 경우 -->
+    <div class="list-none" *ngIf="inquiryList && !inquiryList.length">
+      <p>작성된 문의글이 없습니다.</p>
+    </div>
+    <ng-container *ngIf="inquiryList?.length">
+      <ion-list class="inquiry-list">
+        <!-- ion-item에fin 클래스가 붙으면 답변완료로 나타나게 작성하였습니다. -->
+        <!-- default css -> 답변 대기중 -->
+        <ion-item
+          (click)="goInquiryDetail(item)"
+          *ngFor="let item of inquiryList"
+          [ngClass]="{'fin': item.isAnswer}"
+        >
+          <div class="item-inner">
+            <ion-label class="quest">
+              <ion-label
+                >{{item.title}}
+                <p class="date">{{item.dateCreated | date:'yyyy.MM.dd'}}</p>
+              </ion-label>
+              <span class="badge"
+                >{{item.isAnswer?'답변 완료':'답변 대기중'}}</span
+              >
+            </ion-label>
+            <!-- 답변 -->
+            <ion-label class="answer" *ngIf="item.isAnswer"
+              >Re: {{item.answer | slice: 0:10}}</ion-label
+            >
+          </div>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+  </div>
+</ion-content>

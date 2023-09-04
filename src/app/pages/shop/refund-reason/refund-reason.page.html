@@ -1,0 +1,120 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-button class="back" (click)="back()">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>교환, 반품 신청</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="cart">
+    <ion-list>
+      <span class="step"></span>
+      <div class="step-txt">
+        <span class="step-txt-ac"> 방법 선택 </span>
+
+        <span class="step-txt-ac"> 상품 선택 </span>
+
+        <span class="step-txt-ac"> 사유 작성 </span>
+
+        <span> 신청 완료 </span>
+      </div>
+
+      <div class="radio">
+        <h2>
+          반품 사유를 선택해주세요.
+          <span class="error"> (필수) </span>
+        </h2>
+
+        <ion-radio-group [(ngModel)]="cart.reason">
+          <ion-item *ngFor="let item of reasonList">
+            <ion-radio slot="start" [value]="item"></ion-radio>
+            <ion-label>{{item}}</ion-label>
+          </ion-item>
+        </ion-radio-group>
+      </div>
+
+      <div>
+        <h2>
+          사유를 작성해주세요.
+          <span class="error"> (필수) </span>
+        </h2>
+
+        <ion-item class="textarea-box">
+          <ion-textarea
+            placeholder="교환 및 반품 사유를 자세히 작성해주세요."
+            maxlength="500"
+            [(ngModel)]="cart.detailReason"
+          ></ion-textarea>
+        </ion-item>
+        <span class="textarea-length">
+          {{cart.detailReason.length}} / 500
+        </span>
+      </div>
+    </ion-list>
+
+    <div class="img-add-inner">
+      <h3>
+        사진
+        <span> (선택) </span>
+      </h3>
+
+      <div class="img-wrap-box">
+        <div class="img-box-add" *ngIf="cart?.reasonImages?.length<4">
+          <div class="plus" (click)="camera()">
+            <img src="assets/imgs/shop/add.png" alt="" class="add" />
+
+            <span> {{cart.reasonImages?.length}} / 4 </span>
+          </div>
+        </div>
+
+        <div
+          class="img-box-add"
+          *ngFor="let img of cart.reasonImages; let i = index"
+        >
+          <img [src]="img" alt="" />
+
+          <ion-button fill="default" (click)="deleteImage(i)">
+            <img src="assets/imgs/shop/del.png" alt="" />
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ion-content>
+
+<ion-footer>
+  <div class="footer-inner" *ngIf="cart">
+    <ion-button expand="block" fill="default" (click)="goproduct()">
+      이전
+    </ion-button>
+    <ion-button
+      expand="block"
+      fill="default"
+      (click)="gocomplete()"
+      [disabled]="!cart.reason || !cart.detailReason"
+    >
+      신청하기
+    </ion-button>
+  </div>
+</ion-footer>

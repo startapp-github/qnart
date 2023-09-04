@@ -1,0 +1,12 @@
+<ion-content scrollY="false">
+  <div id="correct-container">
+    <h2 class="title">댓글 수정</h2>
+    <ion-textarea [(ngModel)]="myComment" inputmode="text" type="text" autoGrow enterkeyhint="done" rows="3"></ion-textarea>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-buttons>
+    <ion-button (click)="close()">취소</ion-button>
+    <ion-button (click)="correct()">수정</ion-button>
+  </ion-buttons>
+</ion-footer>

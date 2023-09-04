@@ -1,0 +1,136 @@
+ion-header {
+  ion-toolbar {
+    --padding-start: 0.375rem;
+    --padding-end: 0.375rem;
+  }
+}
+
+#sign-container {
+  padding: 1.5rem 4.26666666667% 1rem;
+
+  // 공통
+  .input-wrapper {
+    .margin-item {
+      position: relative;
+      margin-bottom: 12.82798833819%;
+      &:last-of-type {
+        margin-bottom: 15.16034985423%;
+      }
+    }
+    .val {
+      position: absolute;
+      bottom: -1.6875rem;
+    }
+    ion-label {
+      display: flex;
+      align-items: flex-start;
+      .badge {
+        display: block;
+        margin-left: 0.25rem;
+        width: 0.375rem;
+        height: 0.375rem;
+        border-radius: 50%;
+        background-color: #ffb833;
+      }
+    }
+
+    // 중복확인 있는 css 수정
+    .layout {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      ion-input {
+        max-width: 72.887%;
+        width: 100%;
+      }
+      ion-button {
+        min-width: 25.656%;
+        height: 2.8125rem;
+        font-weight: 600;
+        font-size: 1rem;
+        color: var(--ion-color-main);
+        --border-width: 1px;
+        --border-style: solid;
+        --border-color: var(--ion-color-main);
+        &[disabled] {
+          color: #918f97;
+          --border-color: #918f97;
+        }
+      }
+    }
+  }
+
+  // terms
+  .terms-wrapper {
+    position: relative;
+    margin-bottom: 16%;
+    .check-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 3.2%;
+
+      ion-item {
+        ion-label {
+          font-weight: 400;
+          font-size: 1rem;
+          line-height: 1.5rem;
+        }
+        ion-checkbox {
+          width: 0;
+          height: 0;
+          --border-color: transparent;
+          --border-radius: 0;
+          --border-color-checked: transparent;
+          --background-checked: transparent;
+          background: transparent;
+          --checkmark-width: 0;
+        }
+        .off {
+          display: block;
+          margin-right: 0.5rem;
+        }
+        .on {
+          display: none;
+          margin-right: 0.5rem;
+        }
+        &.item-checkbox-checked {
+          background: transparent;
+          .off {
+            display: none;
+            margin-right: 0.5rem;
+          }
+          .on {
+            display: block;
+            margin-right: 0.5rem;
+          }
+        }
+      }
+      ion-button {
+        font-weight: 400;
+        font-size: 0.875rem;
+        line-height: 1.5rem;
+        color: #918f97;
+      }
+    }
+
+    .val {
+      word-break: keep-all;
+    }
+  }
+
+  .button-area {
+    ion-button {
+      height: 3.125rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+      --background: var(--ion-color-main);
+      &[disabled] {
+        --background: #bab8c0;
+      }
+    }
+  }
+}

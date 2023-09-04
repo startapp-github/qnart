@@ -1,0 +1,148 @@
+<ng-container *ngIf="carts$ |async as carts"></ng-container>
+
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>주문/결제</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <div class="top-box" *ngIf="user">
+      <div class="title-box">
+        <h2>배송지</h2>
+
+        <ion-button fill="default" (click)="goEditAddress()"> 수정 </ion-button>
+      </div>
+
+      <div class="address">
+        <ng-container *ngIf="address">
+          <span class="postCode"> {{user.postcode}} </span>
+
+          <span class="address-detail">
+            {{user.address}}&nbsp;{{user.addressDetail}}
+          </span>
+
+          <span class="name"> {{user.recipient}} </span>
+
+          <span class="number"> {{user.deliveryPhone}} </span>
+        </ng-container>
+      </div>
+
+      <div class="address-none" *ngIf="!user.address">
+        배송지를 아직 설정하지 않았습니다.
+      </div>
+    </div>
+
+    <div class="top-box">
+      <h3>상품 정보</h3>
+      <ion-item *ngFor="let item of carts">
+        <ion-thumbnail slot="start">
+          <img [src]="item.productInfo.images[0]" />
+        </ion-thumbnail>
+
+        <ion-label>
+          <h4>{{item.productInfo.productName}}</h4>
+
+          <div class="item-box">
+            <div class="item-info">
+              <h5 *ngIf="item.options && item.options.length>0">
+                <span
+                  class="item-title"
+                  *ngFor="let option of item.options; last as isLast"
+                >
+                  {{option.value}}<ng-container *ngIf="!isLast"
+                    >,&nbsp;</ng-container
+                  >
+                </span>
+              </h5>
+              X
+              <span class="number">{{item.count}}</span>
+            </div>
+
+            <h6>
+              <strong>
+                {{item.productInfo.discountPrice ?
+                ((item.productInfo.discountPrice *
+                item.count)|number:''):((item.productInfo.price *
+                item.count)|number:'') }}
+              </strong>
+              원
+            </h6>
+          </div>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <div class="info-Price">
+      <div>
+        <span> 상품 금액 </span>
+
+        <span> {{totalPrice()|number:''}}원 </span>
+      </div>
+
+      <div class="deliveryCharge">
+        <span> 배송비 </span>
+
+        <span> {{deliveryCharge|number:''}}원 </span>
+      </div>
+
+      <div class="Final">
+        <strong> 최종 결제 금액 </strong>
+
+        <span> {{ (totalPrice() + deliveryCharge) |number:''}}원 </span>
+      </div>
+    </div>
+  </ion-list>
+
+  <ion-list class="pay-box">
+    <ion-radio-group name="payMethod" [(ngModel)]="payMethod">
+      <ion-list-header>
+        <ion-label>결제 방법</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>가상 계좌</ion-label>
+        <ion-radio value="vbank"></ion-radio>
+      </ion-item>
+      <!-- <ion-item>
+        <ion-label>실시간 계좌 이체</ion-label>
+        <ion-radio value="trans"></ion-radio>
+      </ion-item> -->
+      <ion-item>
+        <ion-label>신용카드</ion-label>
+        <ion-radio value="card"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <div class="footer-inner">
+    <ion-button expand="block" fill="default" (click)="checkSoldOut()">
+      {{ (totalPrice() + deliveryCharge) |number:''}}원 결제하기
+    </ion-button>
+  </div>
+</ion-footer>

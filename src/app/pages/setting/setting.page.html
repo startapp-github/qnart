@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-back-button defaultHref="/" text="" icon="/"> </ion-back-button>
+      <div class="back-icon" slot="start">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </ion-buttons>
+    <ion-title>설정</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content scrollY="false">
+  <ion-list id="setting-container" *ngIf="userData">
+    <ion-item>
+      <ion-label
+        >알림설정<ion-toggle
+          [(ngModel)]="userData.pushSwitch"
+          (ionChange)="updateUserData()"
+        ></ion-toggle
+      ></ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label
+        >마케팅수신동의<ion-toggle
+          [(ngModel)]="userData.marketingAgreement"
+          (ionChange)="updateUserData()"
+        ></ion-toggle
+      ></ion-label>
+    </ion-item>
+
+    <ion-item (click)="goPersoanlInfo()">
+      <ion-label>개인정보처리방침</ion-label>
+    </ion-item>
+
+    <ion-item (click)="goService()">
+      <ion-label>이용약관</ion-label>
+    </ion-item>
+
+    <ion-item (click)="goChangePassword()">
+      <ion-label>비밀번호 변경</ion-label>
+    </ion-item>
+
+    <ion-item (click)="goBlackList()">
+      <ion-label>차단 사용자 관리</ion-label>
+    </ion-item>
+
+    <ion-item (click)="userLogoutAlert()">
+      <ion-label>로그아웃</ion-label>
+    </ion-item>
+
+    <ion-item (click)="userSignOutAlert()">
+      <ion-label>회원탈퇴</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

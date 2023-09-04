@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <!-- 백버튼 -->
+    <ion-buttons class="back-btn" slot="start">
+      <ion-button class="back" (click)="cancel()">
+        <svg width="24px" height="24px" viewBox="0 0 24 24">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-16.000000, -60.000000)">
+              <g transform="translate(0.000000, 44.000000)">
+                <g transform="translate(16.000000, 16.000000)">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <line x1="3" y1="12" x2="22" y2="12" class="stroke-0"></line>
+                  <polyline
+                    class="stroke-0"
+                    stroke-linecap="square"
+                    points="9.5 5.24815798 2.75 12.0086286 9.5 18.748158"
+                  ></polyline>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>{{header}}</ion-title>
+
+    <ion-button
+      class="save"
+      fill="default"
+      slot="end"
+      (click)="save()"
+      [disabled]="!inquiry.title || !inquiry.content"
+    >
+      저장
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <div class="cont-wrap">
+      <h2>상품</h2>
+
+      <ion-item *ngIf="product">
+        <ion-thumbnail slot="start">
+          <img [src]="product.images[0]" />
+        </ion-thumbnail>
+
+        <ion-label> {{product.productName}} </ion-label>
+      </ion-item>
+    </div>
+
+    <div class="cont-wrap">
+      <h2>문의내용</h2>
+
+      <ion-item class="mb-12">
+        <ion-select
+          [(ngModel)]="inquiry.title"
+          [interfaceOptions]="select"
+          placeholder="제목을 선택해주세요."
+          cancelText="닫기"
+          okText="확인"
+        >
+          <ion-label>문의 제목</ion-label>
+
+          <ion-select-option value="상품문의">상품문의</ion-select-option>
+          <ion-select-option value="배송문의">배송문의</ion-select-option>
+          <ion-select-option value="배송 전 교환 / 반품문의"
+            >배송 전 교환 / 반품문의</ion-select-option
+          >
+          <ion-select-option value="배송 후 교환 / 반품문의"
+            >배송 후 교환 / 반품문의</ion-select-option
+          >
+          <ion-select-option value="입금확인 / 미확인 입금자"
+            >입금확인 / 미확인 입금자</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="mb-5 textarea-box">
+        <ion-textarea
+          type="text"
+          inputmode="text"
+          [(ngModel)]="inquiry.content"
+          minlength="1"
+          maxlength="500"
+          (keyup)="lengthCheck()"
+          rows="17"
+          placeholder="문의 내용을 입력해주세요."
+        ></ion-textarea>
+      </ion-item>
+
+      <div class="text-info">
+        <ion-item>
+          <ion-checkbox [(ngModel)]="inquiry.lockSwitch"></ion-checkbox>
+          비밀글
+        </ion-item>
+
+        <span> {{inquiry.content.length}}/ 500 </span>
+      </div>
+    </div>
+
+    <div class="cont-wrap photo-wrap">
+      <h2>
+        사진
+        <span> (선택) </span>
+      </h2>
+
+      <div class="img-wrap-box">
+        <div
+          class="img-box-add"
+          *ngIf="inquiry.images.length < 4"
+          (click)="camera()"
+        >
+          <div class="plus">
+            <img src="assets/imgs/shop/add.png" alt="" class="add" />
+
+            <span> {{inquiry.images.length}} / 4 </span>
+          </div>
+        </div>
+
+        <div
+          class="img-box-add"
+          *ngFor="let item of inquiry.images; let i = index;"
+        >
+          <img [src]="item" alt="" />
+          <ion-button fill="default" (click)="delete(i)">
+            <img src="assets/imgs/shop/del.png" alt="" />
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>
